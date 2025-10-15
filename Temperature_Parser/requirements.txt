@@ -1,0 +1,4 @@
+pathlib
+typing
+requests
+pandas
