@@ -27,32 +27,6 @@ def _first_nonempty(row: pd.Series, keys):
     return None
 
 
-def get_coords(row: pd.Series) -> Optional[Tuple[float, float]]:
-    """
-    Extract latitude and longitude from a row, returning as floats.
-    Prefer LAT/LON columns (various capitalisations), fallback to geocoding LOCAL.
-    row: pandas Series representing a row from the dataframe
-    Returns None if no valid coordinates found.
-    """
-
-    # Prefer LAT/LON columns (various capitalisations), fallback to geocoding LOCAL
-    lat = _first_nonempty(row, ("LAT", "Lat", "lat"))
-    lon = _first_nonempty(row, ("LON", "Lon", "lon"))
-    try:
-        if lat is not None and lon is not None:
-            return float(lat), float(lon)
-    except Exception:
-        pass
-
-    local = _first_nonempty(row, ("LOCAL", "Local", "local"))
-    if local:
-        try:
-            return get_lat_lon(local, country="PT")
-        except Exception:
-            logging.debug(f"Geocoding failed for local='{local}'")
-    return None
-
-
 def get_date_range(row: pd.Series) -> Optional[Tuple[str, str]]:
     """
     Extract start and end dates from a row, returning as ISO format strings (YYYY-MM-DD).
@@ -108,12 +82,11 @@ def process_file(path: Path, out_dir: Path, incident_col: str = "id"):
         if not incident_id:
             continue
 
-        # Get coordinates
-        coords = get_coords(row)
-        if not coords:
+        lat = row.get("LAT") or row.get("Lat") or row.get("lat")
+        lon = row.get("LON") or row.get("Lon") or row.get("lon")
+        if not lat or not lon:
             logging.debug(f"No coords for incident {incident_id} in {path.name}")
             continue
-        lat, lon = coords
 
         # Get date range
         date_range = get_date_range(row)
