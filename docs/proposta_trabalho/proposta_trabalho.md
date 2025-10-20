@@ -1,4 +1,19 @@
-# Motivações e Objetivos
+# Proposta de Trabalho
+
+## Dataset
+
+### ICNF
+O principal dataset consiste numa versão reduzida dos dados recolhidos do repositório [icnf_fire_data](https://github.com/cityxdev/icnf_fire_data), que é um repositório no github que tem como objetivo filtrar os dados em xml para csv do site `https://fogos.icnf.pt/localizador/webserviceocorrencias.asp`, que contém um histórico detalhado sobre todas as ocorrênias e alertas de incêndios desde 2001. No Entanto vão ser somente analisados os dados desde 2020 até 2025, removendo:
+- falsos alarmes
+
+### Meteorologia
+Para além dos dados dos incêndios, foi realizado um script em python que vai à API do [open-meteo](https://open-meteo.com), onde, para cada ano serão criados dois ficheiros:
+- `meteorology_[ano].csv` - contém os registos diários de meteorologia associados a cada incêndio (uma linha por dia e por `incident_id`)
+- `summary_[ano].csv` - contém uma agregação por `incident_id` (intervalo de datas de incêndios, média das temperaturas, número de dias, e coordenadas)
+    - os dados do icnf já contêm dados acerca da média das temperaturas, portanto este ficheiro sere como validação dos registos do ficheiro `meteorology_[ano].csv`, para que este se torne numa fonte de verdade.
+
+
+## Objetivos
 1. Identificar as **áreas com mais risco de incêndios**
 2. Identificar quais **épocas do ano acontece mais incêndios**
 3. Identificar quais os **anos com mais incêndios** e mais graves
@@ -7,42 +22,42 @@
 6. Observar como o **tipo de vegetação** impacta os incêndios
 7. Como os **meios terrestres e aérios** afetam a duração e gravidade do incêndio
 
-#  Identificar Questões Analíticas
+## Questões Analíticas
 
-## Objetivo 1 (ICNF)
+### Objetivo 1 (ICNF)
 - Quantidade de incêndios por **zona / distrito / concelho**
 - Área ardida total por **zona / distrito / concelho**
 - Percentagem da área total ardida em relação à área do distrito/concelho
 - Número médio de ocorrências por km²
-## Objetivo 2 (ICNF)
+### Objetivo 2 (ICNF)
 - Número de incêndios por **mês / estação / semana**
 - Área ardida média por mês
 - Distribuição sazonal dos incêndios (gráfico de calor por mês e região)
-## Objetivo 3 (ICNF)
+### Objetivo 3 (ICNF)
 - Quantidade de incêndios por ano
 - Área ardida total e média por incêndio por ano
 - Tendência temporal (linha do tempo de evolução)
 - Comparação de gravidade (pequenos, médios, grandes incêndios)
 - Média de duração dos incêndios por ano
-## Objetivo 4 (ICNF e Open-Meteo)
+### Objetivo 4 (ICNF e Open-Meteo)
 - Número de incêndios por faixa de temperatura média diária
 - Área ardida total por faixa de temperatura máxima
 - Média de área ardida por incêndio por faixa de temperatura
 - Contagem de incêndios por combinação de temperatura e região
 - Duração média dos incêndios por faixa de temperatura
 - Índice de severidade de incêndios por faixa de temperatura
-## Objetivo 5 (arranjar dataset para isto)
+### Objetivo 5 (arranjar dataset para isto)
 - Correlação entre NDVI (índice de vegetação) e ocorrência de incêndios
 - NDVI médio nas áreas com e sem incêndios
 - Evolução do NDVI antes e depois de um incêndio
 - Percentagem de área ardida com NDVI elevado
-## Objetivo 6 (arranjar dataset para isto)
+### Objetivo 6 (arranjar dataset para isto)
 - Número de incêndios por tipo de vegetação (floresta, mato, pastagem, etc..) (o tipo de árvores acho que é importante, porque eucaliptos são quase gasolina quando está muito quente)
 - Área ardida média por tipo de vegetação
 - Percentagem de incêndios florestais vs. agrícolas
 - Tipos de vegetação mais recorrentes em incêndios graves
 
-## Objetivo 7 (ANEPC - Proteção Civil)
+### Objetivo 7 (ANEPC - Proteção Civil)
 - Tempo total de duração do incêndio por quantidade de meios terrestres mobilizados
 - Área ardida final por quantidade de meios aéreos utilizados
 - Tempo médio de extinção por tipo e quantidade de meios utilizados
@@ -52,7 +67,7 @@
 - Número de reacendimentos por tipo de combate utilizado
 - Eficácia média de contenção por combinação de meios (terrestres e aéreos)
 
-# Identificar Processos de Negócio
+## Identificação dos Processos de Negócio
 - **Ocorrência de Incêndio**
     - Registro de cada evento de incêndio, incluindo localização, duração, área ardida, causa
 - **Meteorologia Diária**
@@ -62,9 +77,9 @@
 - **Monotorização de Vegetação**
     - Medições periódicas de índices de vegetação (NDVI) e classificação de tipos de vegetação
 
-# Método dos 4 Passos
+## Método dos 4 Passos
 
-## Ocorrência de Incêncdio
+### Ocorrência de Incêncdio
 - **Grão:** Uma linha (evento) representa um incêndio
 - **Dimensões:** 
     - **What:** Tipo de incêndio (florestal, agrícula, urbano)
@@ -77,7 +92,7 @@
     - Número de focos iniciais - (elementar) (aditiva)
     - Severidade do incêndio - (derivada) (não-aditiva)
 
-## Meteorologia Diária
+### Meteorologia Diária
 - **Grão:** Uma linha (evento) representa as condições meteorológicas de um dia numa localização
 - **Dimensões:**
     - **What:** Tipo de condição meteorológica
@@ -91,7 +106,7 @@
     - Precipitação (mm) - (elementar) (aditiva)
     - Índice de risco de incêndio (derivado) (não-aditivo)
 
-## Operações de Combate a Incêndios
+### Operações de Combate a Incêndios
 - **Grão:** Uma linha (evento) representa uma operação de combate num incêndio específico
 - **Dimensões:**
     - **What:** Tipo de operação (primeira intervenção, combate prolongado, rescaldo)
@@ -106,7 +121,7 @@
     - Taxa de expansão do incêndio (ha/hora) - (derivada) (não-aditiva)
     - Eficácia da contenção (%) - (derivada) (não-aditiva)
 
-## Monitorização de Vegetação
+### Monitorização de Vegetação
 - **Grão:** Uma linha (evento) representa uma medição de vegetação numa área específica
 - **Dimensões:**
     - **What:** Tipo de vegetação e classificação
@@ -118,11 +133,14 @@
     - Percentagem por tipo de vegetação - (derivada) (não-aditiva)
     - Índice de combustibilidade - (derivado) (não-aditivo)
 
----
-**Tipos de Medida:**
-    - **Elementar:** Medidas básicas capturadas diretamente dos dados brutos, sem cálculos adicionais
-    - **Derivada:** Medidas calculadas a partir de outras medidas através de fórmulas ou algoritmos
 
-**Propriedades de Agregação:**
-    - **Aditivo:** Medidas que podem ser somadas de forma significativa ao longo de todas as dimensões (tempo, espaço, etc...)
-    - **Não-Aditivo:** Medidas que não podem ser somadas de forma significativa em pelo menos uma dimensão. 
+## Participantes
+- Diogo Pereira - 8200594
+- Duarte Sampaio - 8190553
+- Hugo Guimarães - 8220337
+- Nuno Silva - 8180393 
+
+# Anexo - Dicionário de Dados
+Inclui-se como anexo o dicionário de dados dos dados retirdaos do ICNF para referência e leitura dos campos que serão utilizados no projeto:
+
+- `DATA_DICTIONARY.pdf` — Dicionário de campos e notas de qualidade .
