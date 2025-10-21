@@ -5,12 +5,28 @@
 ### ICNF
 O principal dataset consiste numa versão reduzida dos dados recolhidos do repositório [icnf_fire_data](https://github.com/cityxdev/icnf_fire_data), que é um repositório no github que tem como objetivo filtrar os dados em xml para csv do site `https://fogos.icnf.pt/localizador/webserviceocorrencias.asp`, que contém um histórico detalhado sobre todas as ocorrênias e alertas de incêndios desde 2001. No Entanto vão ser somente analisados os dados desde 2020 até 2025, removendo:
 - falsos alarmes
+- registos com coordenadas em falta
+- incêndios com área ardida inferior a 5 hectares
+- queimadas controladas
+- ocorrências que não são classificadas como incêndios
+- registos sem data/hora de início ou fim
 
 ### Meteorologia
 Para além dos dados dos incêndios, foi realizado um script em python que vai à API do [open-meteo](https://open-meteo.com), onde, para cada ano serão criados dois ficheiros:
 - `meteorology_[ano].csv` - contém os registos diários de meteorologia associados a cada incêndio (uma linha por dia e por `incident_id`)
 - `summary_[ano].csv` - contém uma agregação por `incident_id` (intervalo de datas de incêndios, média das temperaturas, número de dias, e coordenadas)
     - os dados do icnf já contêm dados acerca da média das temperaturas, portanto este ficheiro sere como validação dos registos do ficheiro `meteorology_[ano].csv`, para que este se torne numa fonte de verdade.
+
+### RSS Google News
+Para complementar os dados principais, foi utilizada a API do Google News para extrair artigos noticiosos sobre incêndios florestais em Portugal. Os dados foram recolhidos através de:
+- Filtragem por idioma (português de Portugal)
+- Seleção de artigos contendo termos-chave relacionados com incêndios
+- Limitação ao período entre 2020 e 2025
+- Extração de metadados como título, data, fonte e URL
+
+Ainda não se sabe muito bem onde se irá utilizar estes dados, visto que ainda não se fez uma filtragem e análise mais profunda dos mesmos. No entanto visa-se que estes forneçam informação que não se conseguiu encontrar online, como: informações sobre meios aérios e terrestres.
+
+### ANEPC
 
 
 ## Objetivos
