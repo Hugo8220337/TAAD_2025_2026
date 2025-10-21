@@ -2,6 +2,8 @@ import logging
 from typing import Optional
 from zipfile import Path
 
+from filters.Not_Incendio_Filter import NotIncendioFilter
+from filters.Queimada_Filter import QueimadaFilter
 from filters.Custom_Filter import CustomFilter
 from utils.file_utils import get_data_files
 from filters.Area_Threshold_Filter import AreaThresholdFilter
@@ -46,19 +48,19 @@ def run(data_dir: str = "data", output_dir: Optional[str] = None,
     pipeline = FilterPipeline()
     pipeline.add_filter(FalseAlarmFilter())
     pipeline.add_filter(MissingCoordinatesFilter())
-    pipeline.add_filter(AreaThresholdFilter(min_area=0.5))  # remove areas < 0.5 ha
-    
-    # Example of adding a custom filters
-    pipeline.add_filter(CustomFilter(
-        lambda df: df[df["TIPO"] != "QUEIMADA"],
-        "Remove records of type QUEIMADA"
-        
-    ))
+    pipeline.add_filter(AreaThresholdFilter(min_area=5.0))  # remove areas < 5.0 ha
+    pipeline.add_filter(QueimadaFilter()) 
+    pipeline.add_filter(NotIncendioFilter())
     
     pipeline.add_filter(CustomFilter(
-        lambda df: df[df["TIPO"] != "Agrícola"],
-        "Remove records of type Agrícola"
+        lambda df: df.dropna(subset=["DHINICIO", "DHFIM"]),
+        "Remove entries with missing start/end times"
     ))
+    # Example of adding a custom filters    
+    # pipeline.add_filter(CustomFilter(
+    #     lambda df: df[df["TIPO"] != "Agrícola"],
+    #     "Remove records of type Agrícola"
+    # ))
 
     # Find all CSV files
     files = get_data_files(data_dir, pattern=pattern, recursive=recursive)
