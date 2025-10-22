@@ -191,7 +191,7 @@ def process_file(path: Path, out_dir: Path, incident_col: str = "id"):
         logging.debug(f"Added {day_count} days of data for incident {incident_id}")
         success_count += 1
 
-        time.sleep(1.0)  # be polite
+        time.sleep(0.4)  # be polite
 
     elapsed = time.time() - start_time
     logging.info(f"Completed {path.name} in {elapsed:.2f}s - Successful: {success_count}, Failed coords: {failed_coords}, Failed dates: {failed_date}, API errors: {failed_api}")
