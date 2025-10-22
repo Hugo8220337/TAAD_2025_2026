@@ -1,3 +1,4 @@
+import datetime
 import time
 import logging
 from pathlib import Path
@@ -9,8 +10,11 @@ from utils.file_utils import get_data_files
 from apis.open_meteo_api import get_temperature
 from apis.geo_api import get_lat_lon
 
-logging.basicConfig(level=logging.INFO, format="%(asctime)s %(levelname)s %(message)s")
-
+logging.basicConfig(level=logging.INFO, format="%(asctime)s %(levelname)s %(message)s",
+                   handlers=[
+                       logging.FileHandler("meteorology_extract.log"),
+                       logging.StreamHandler()
+                   ])
 
 def _first_nonempty(row: pd.Series, keys):
     """
@@ -66,64 +70,84 @@ def process_file(path: Path, out_dir: Path, incident_col: str = "id"):
         out_dir: output directory for results
         incident_col: name of the column with unique incident identifier (default "id")
     """
+    start_time = time.time()
     logging.info(f"Processing {path.name}")
+    
     try:
         df = pd.read_csv(path, sep="|", dtype=str, low_memory=False)
+        logging.info(f"Loaded {path.name} with {len(df)} rows and {len(df.columns)} columns")
     except Exception as e:
         logging.warning(f"Failed reading {path}: {e}")
         return
 
     df.columns = [c.strip() for c in df.columns]
     records = []
+    success_count = 0
+    failed_coords = 0
+    failed_date = 0
+    failed_api = 0
 
-    for _, row in df.iterrows():
+    for idx, row in df.iterrows():
         # Get incident ID
         incident_id = _first_nonempty(row, (incident_col, incident_col.upper(), incident_col.lower()))
         if not incident_id:
+            logging.warning(f"Missing incident ID in row {idx} of {path.name}")
             continue
 
         lat = row.get("LAT") or row.get("Lat") or row.get("lat")
         lon = row.get("LON") or row.get("Lon") or row.get("lon")
         if not lat or not lon:
             logging.debug(f"No coords for incident {incident_id} in {path.name}")
+            failed_coords += 1
             continue
 
         # Get date range
         date_range = get_date_range(row)
         if not date_range:
             logging.debug(f"No valid date for incident {incident_id} in {path.name}")
+            failed_date += 1
             continue
         start_date, end_date = date_range
 
         # Call API to get meteorological data
         try:
+            api_start = time.time()
             daily = get_temperature(float(lat), float(lon), start_date, end_date)
+            api_time = time.time() - api_start
+            logging.debug(f"API call for {incident_id} took {api_time:.2f}s")
         except Exception as e:
             logging.warning(f"API error for {incident_id} ({lat},{lon}) : {e}")
+            failed_api += 1
             continue
 
         # Extract daily data
         times = daily.get("time", [])
         tmax = daily.get("temperature_2m_max", [])
         tmin = daily.get("temperature_2m_min", [])
+        
         # Humidade relativa
         rh_max = daily.get("relative_humidity_2m_max", [])
         rh_min = daily.get("relative_humidity_2m_min", [])
+        
         # Precipitação
         precip = daily.get("precipitation_sum", [])
         rain = daily.get("rain_sum", [])
         precip_hours = daily.get("precipitation_hours", [])
+        
         # Vento
         wind_max = daily.get("windspeed_10m_max", [])
         gust_max = daily.get("windgusts_10m_max", [])
         wind_dir = daily.get("winddirection_10m_dominant", [])
+        
         # Radiação e sol
         radiation = daily.get("shortwave_radiation_sum", [])
         sunshine = daily.get("sunshine_duration", [])
+        
         # Evapotranspiração
         et0 = daily.get("et0_fao_evapotranspiration", [])
 
         # Append records for each day in range to results list (for later DataFrame creation)
+        day_count = 0
         for i, d in enumerate(times):
             records.append({
                 "incident_id": incident_id,
@@ -151,9 +175,16 @@ def process_file(path: Path, out_dir: Path, incident_col: str = "id"):
                 # Evapotranspiração
                 "et0": et0[i] if i < len(et0) else None,
             })
+            day_count += 1
 
-        time.sleep(0.5)  # be polite
+        logging.debug(f"Added {day_count} days of data for incident {incident_id}")
+        success_count += 1
 
+        time.sleep(0.2)  # be polite
+
+    elapsed = time.time() - start_time
+    logging.info(f"Completed {path.name} in {elapsed:.2f}s - Successful: {success_count}, Failed coords: {failed_coords}, Failed dates: {failed_date}, API errors: {failed_api}")
+    
     # Write detailed and summary CSVs (delegated)
     write_output_csvs(records, out_dir, path.stem)
 
@@ -250,14 +281,29 @@ def write_output_csvs(records, out_dir: Path, stem: str):
 
 
 def run(data_dir: str = "data", out_dir: str = "output/meteorology"):
+    logging.info(f"Starting meteorological data extraction from {data_dir} to {out_dir}")
+    start_time = time.time()
+    
     files = get_data_files(data_dir, pattern="*.csv", recursive=False)
     if not files:
         logging.error("No CSV files found.")
         return
+        
+    logging.info(f"Found {len(files)} CSV files to process")
     out_base = Path(out_dir)
-    for f in files:
+    
+    for i, f in enumerate(files):
+        logging.info(f"Processing file {i+1}/{len(files)}: {f}")
         process_file(Path(f), out_base)
+    
+    elapsed = time.time() - start_time
+    logging.info(f"Extraction complete! Processed {len(files)} files in {elapsed:.2f}s")
 
 
 if __name__ == "__main__":
-    run()
+    logging.info(f"Extract Meteorology Script started at {datetime.datetime.now()}")
+    try:
+        run()
+        logging.info(f"Script completed successfully at {datetime.datetime.now()}")
+    except Exception as e:
+        logging.exception(f"Script failed with error: {e}")
