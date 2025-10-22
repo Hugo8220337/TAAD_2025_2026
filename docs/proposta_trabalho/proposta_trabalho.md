@@ -3,13 +3,15 @@
 ## Dataset
 
 ### ICNF
-O principal dataset consiste numa versão reduzida dos dados recolhidos do repositório [icnf_fire_data](https://github.com/cityxdev/icnf_fire_data), que é um repositório no github que tem como objetivo filtrar os dados em xml para csv do site `https://fogos.icnf.pt/localizador/webserviceocorrencias.asp`, que contém um histórico detalhado sobre todas as ocorrênias e alertas de incêndios desde 2001. No Entanto vão ser somente analisados os dados desde 2020 até 2025, removendo:
+O principal dataset consiste numa versão reduzida dos dados recolhidos do repositório [icnf_fire_data](https://github.com/cityxdev/icnf_fire_data), que é um repositório no github que tem como objetivo filtrar os dados em xml para csv do site `https://fogos.icnf.pt/localizador/webserviceocorrencias.asp`, que contém um histórico detalhado sobre todas as ocorrências e alertas de incêndios desde 2001. No Entanto vão ser somente analisados os dados desde 2020 até 2025, removendo:
 - falsos alarmes
 - registos com coordenadas em falta
 - incêndios com área ardida inferior a 5 hectares
 - queimadas controladas
 - ocorrências que não são classificadas como incêndios
 - registos sem data/hora de início ou fim
+
+O dataset do ano 2025 só irá ter dados até dados até 06/10/2025
 
 ### Meteorologia
 Para além dos dados dos incêndios, foi realizado um script em python que vai à API do [open-meteo](https://open-meteo.com), onde, para cada ano serão criados dois ficheiros:
@@ -26,7 +28,15 @@ Para complementar os dados principais, foi utilizada a API do Google News para e
 
 Ainda não se sabe muito bem onde se irá utilizar estes dados, visto que ainda não se fez uma filtragem e análise mais profunda dos mesmos. No entanto visa-se que estes forneçam informação que não se conseguiu encontrar online, como: informações sobre meios aérios e terrestres.
 
-### ANEPC
+### DECIR - Dispositivo Especial de Combate a Incêndios Rurais
+Da DECIR encontrou-se pdfs da Diretiva Operacional Nacional nº 2 dos anos de 2020 a 2025, onde são disponibilizados dados sobre meios aéreos e meios terrestres a vários níveis utilizados durante o combate a incêndios desse ano.
+
+Infelizmente, até à entrega do documento, ainda não se conseguiu extrair os dados dos  pdf's para um outro formato mais conveniente, visto que os mesmos são bastante irregulares na sua formatação.
+
+### Google Earth Engine
+Através dos dados dos incêndios do ICNF, foi possível através do google earth engine, recolher dados sobre o NDVI (índice de vegetação) antes e depois de cada incêndio.
+
+Provavelmente não será possível arranjar dados para todos os incêndios filtrados do ICNF.
 
 
 ## Objetivos
@@ -36,7 +46,7 @@ Ainda não se sabe muito bem onde se irá utilizar estes dados, visto que ainda 
 4. Prever como as **temperaturas** impactam os incêndios (tanto no número de incêndios, na gravidade e duração)
 5. Observar como o **nível de vegetação** afeta os incêndios (tanto na ocorrência dos mesmos, na gravidade e na duração dos mesmos)
 6. Observar como o **tipo de vegetação** impacta os incêndios
-7. Como os **meios terrestres e aérios** afetam a duração e gravidade do incêndio
+7. Como os **meios terrestres e aéreos** afetam a duração e gravidade do incêndio
 
 ## Questões Analíticas
 
@@ -62,18 +72,18 @@ Ainda não se sabe muito bem onde se irá utilizar estes dados, visto que ainda 
 - Contagem de incêndios por combinação de temperatura e região
 - Duração média dos incêndios por faixa de temperatura
 - Índice de severidade de incêndios por faixa de temperatura
-### Objetivo 5 (arranjar dataset para isto)
+### Objetivo 5 (Gooogle Earth Engine)
 - Correlação entre NDVI (índice de vegetação) e ocorrência de incêndios
 - NDVI médio nas áreas com e sem incêndios
 - Evolução do NDVI antes e depois de um incêndio
 - Percentagem de área ardida com NDVI elevado
-### Objetivo 6 (arranjar dataset para isto)
+### Objetivo 6 (Gooogle Earth Engine)
 - Número de incêndios por tipo de vegetação (floresta, mato, pastagem, etc..) (o tipo de árvores acho que é importante, porque eucaliptos são quase gasolina quando está muito quente)
 - Área ardida média por tipo de vegetação
 - Percentagem de incêndios florestais vs. agrícolas
 - Tipos de vegetação mais recorrentes em incêndios graves
 
-### Objetivo 7 (ANEPC - Proteção Civil)
+### Objetivo 7 (DECIR)
 - Tempo total de duração do incêndio por quantidade de meios terrestres mobilizados
 - Área ardida final por quantidade de meios aéreos utilizados
 - Tempo médio de extinção por tipo e quantidade de meios utilizados
@@ -87,10 +97,10 @@ Ainda não se sabe muito bem onde se irá utilizar estes dados, visto que ainda 
 - **Ocorrência de Incêndio**
     - Registro de cada evento de incêndio, incluindo localização, duração, área ardida, causa
 - **Meteorologia Diária**
-    - Registro das condições meteorológicas diárias por região/localização
+    - Registo das condições meteorológicas diárias por região/localização
 - **Operações de Combate a Incêndios**
-    - Registro dos meios mobilizados, tempos de resposta e eficácia por incêndio
-- **Monotorização de Vegetação**
+    - Registo dos meios mobilizados, tempos de resposta e eficácia por incêndio
+- **Monitorização de Vegetação**
     - Medições periódicas de índices de vegetação (NDVI) e classificação de tipos de vegetação
 
 ## Método dos 4 Passos
@@ -98,7 +108,7 @@ Ainda não se sabe muito bem onde se irá utilizar estes dados, visto que ainda 
 ### Ocorrência de Incêncdio
 - **Grão:** Uma linha (evento) representa um incêndio
 - **Dimensões:** 
-    - **What:** Tipo de incêndio (florestal, agrícula, urbano)
+    - **What:** Tipo de incêndio (florestal, agrícola, urbano)
     - **Who:** Entidade responsável pelo registo (ICNF) 
     - **When:** Data e hora de início e extinsão
     - **Where:** Numa localização específica (município, concelho, distrito, cidade, coordenadas)
@@ -132,7 +142,7 @@ Ainda não se sabe muito bem onde se irá utilizar estes dados, visto que ainda 
 - **Medidas:**
     - Número de operacionais mobilizados - (elementar) (aditiva)
     - Número de veículos terrestres mobilizados - (elementar) (aditiva)
-    - Número de meios aérios mobilizados - (elementar) (aditiva)
+    - Número de meios aéreos mobilizados - (elementar) (aditiva)
     - Tempo de resposta inicial (minutos) - (elementar) (não-aditiva)
     - Taxa de expansão do incêndio (ha/hora) - (derivada) (não-aditiva)
     - Eficácia da contenção (%) - (derivada) (não-aditiva)
@@ -145,18 +155,12 @@ Ainda não se sabe muito bem onde se irá utilizar estes dados, visto que ainda 
     - **Where:** Área geográfica (município, concelho, distrito, cidade, coordenadas)
 - **Medidas:**
     - Índice NVDI - (elementar) (não-aditiva)
-    - Densidadede vegetação - (elementar) (não-aditiva)
+    - Densidade vegetação - (elementar) (não-aditiva)
     - Percentagem por tipo de vegetação - (derivada) (não-aditiva)
     - Índice de combustibilidade - (derivado) (não-aditivo)
-
 
 ## Participantes
 - Diogo Pereira - 8200594
 - Duarte Sampaio - 8190553
 - Hugo Guimarães - 8220337
-- Nuno Silva - 8180393 
-
-# Anexo - Dicionário de Dados
-Inclui-se como anexo o dicionário de dados dos dados retirdaos do ICNF para referência e leitura dos campos que serão utilizados no projeto:
-
-- `DATA_DICTIONARY.pdf` — Dicionário de campos e notas de qualidade .
+- Nuno Silva - 8180393

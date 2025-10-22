@@ -664,3 +664,6 @@ MigrationBackup/
 __pycache__/
 .idea/
 /db.ini
+
+
+*.csv
