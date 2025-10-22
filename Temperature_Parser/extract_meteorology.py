@@ -87,7 +87,18 @@ def process_file(path: Path, out_dir: Path, incident_col: str = "id"):
     failed_date = 0
     failed_api = 0
 
+    # Show progress every 10 records
+    progress_interval = 10
+
     for idx, row in df.iterrows():
+        # Progress logging every 10 records
+        if idx > 0 and idx % progress_interval == 0:
+            elapsed_so_far = time.time() - start_time
+            avg_time_per_record = elapsed_so_far / idx if idx > 0 else 0
+            estimated_remaining = avg_time_per_record * (len(df) - idx)
+            
+            logging.info(f"Progress: {idx}/{len(df)} rows ({idx/len(df)*100:.1f}%) - Est. remaining: {estimated_remaining/60:.1f} min")
+       
         # Get incident ID
         incident_id = _first_nonempty(row, (incident_col, incident_col.upper(), incident_col.lower()))
         if not incident_id:
@@ -180,7 +191,7 @@ def process_file(path: Path, out_dir: Path, incident_col: str = "id"):
         logging.debug(f"Added {day_count} days of data for incident {incident_id}")
         success_count += 1
 
-        time.sleep(0.2)  # be polite
+        time.sleep(1.0)  # be polite
 
     elapsed = time.time() - start_time
     logging.info(f"Completed {path.name} in {elapsed:.2f}s - Successful: {success_count}, Failed coords: {failed_coords}, Failed dates: {failed_date}, API errors: {failed_api}")
