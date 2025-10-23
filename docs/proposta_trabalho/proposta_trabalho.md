@@ -50,6 +50,9 @@ Campos/uso: código CLC (nível 3), descrição da classe, geometria polygonal; 
 
 **Tamanho (estimativa):** ficheiro vetorial para Portugal continental descarregado em GeoPackage/GeoJSON tem tipicamente alguns MB a ~tens de MB; operações rasterizadas ou tiles para todo o país podem ocupar mais espaço, mas as tabelas resultantes (áreas por perímetro) são pequenas (MBs).
 
+### INE
+Extração de indicadores socioeconómicos do Instituto Nacional de Estatística (INE) a nível municipal (NUTS III) ou de freguesia. Estes dados (e.g., demografia, emprego por setor, valor da produção agrícola, turismo) serão correlacionados com a ocorrência de grandes incêndios para quantificar o impacto pós-evento e identificar vulnerabilidades socioeconómicas regionais.
+
 ## Objetivos
 1. Identificar as **áreas com mais risco de incêndios**
 2. Identificar quais **épocas do ano acontece mais incêndios**
@@ -58,6 +61,7 @@ Campos/uso: código CLC (nível 3), descrição da classe, geometria polygonal; 
 5. Analisar como o **estado da vegetação** (NDVI) influencia a probabilidade de ocorrência, a gravidade e a evolução temporal dos incêndios em Portugal continental (2020–2024)
 6. Avaliar o impacto do **tipo de vegetação** / uso do solo na ocorrência, extensão e gravidade dos incêndios, incluindo diferenças por classes (florestal, mato, pastagem, agrícola) 
 7. Como os **meios terrestres e aéreos** afetam a duração e gravidade do incêndio
+8. Como os fogos afetaram a freguesia onde os mesmos ocorreram
 
 ## Questões Analíticas
 
@@ -103,6 +107,13 @@ Campos/uso: código CLC (nível 3), descrição da classe, geometria polygonal; 
 - Taxa de expansão do incêndio antes e depois da chegada dos meios aéreos
 - Número de reacendimentos por tipo de combate utilizado
 - Eficácia média de contenção por combinação de meios (terrestres e aéreos)
+
+### Objetivo 8 (ICNF + INE)
+- **Variação demográfica:** Comparar a evolução da população residente e da estrutura etária em freguesias afetadas por grandes incêndios com freguesias de controlo (não afetadas).
+- **Impacto no emprego:** Analisar a variação do número de postos de trabalho, especialmente nos setores agrícola e florestal, nos anos seguintes ao incêndio.
+- **Impacto no setor imobiliário e turismo:** Avaliar a evolução do valor mediano dos imóveis e do número de alojamentos turísticos em freguesias afetadas.
+- **Análise da atividade económica:** Correlacionar a ocorrência de grandes incêndios com a variação do volume de negócios de empresas locais ou do rendimento familiar disponível.
+- **Vulnerabilidade socioeconómica:** Identificar se freguesias com menor densidade populacional, maior envelhecimento ou maior dependência do setor primário sofrem impactos mais severos ou têm uma recuperação mais lenta.
 
 ## Identificação dos Processos de Negócio
 - **Ocorrência de Incêndio**
