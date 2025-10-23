@@ -20,7 +20,7 @@ Para além dos dados dos incêndios, foi realizado um script em python que vai �
     - os dados do icnf já contêm dados acerca da média das temperaturas, portanto este ficheiro sere como validação dos registos do ficheiro `meteorology_[ano].csv`, para que este se torne numa fonte de verdade.
 
 ### RSS Google News
-Para complementar os dados principais, foi utilizada a API do Google News para extrair artigos noticiosos sobre incêndios florestais em Portugal. Os dados foram recolhidos através de:
+Para complementar os dados principais, foi utilizada a API do Google News para extrair artigos noticiosos sobre incêndios florestais em Portugal. Os dados foram recolhidos através de: 
 - Filtragem por idioma (português de Portugal)
 - Seleção de artigos contendo termos-chave relacionados com incêndios
 - Limitação ao período entre 2020 e 2025
@@ -33,19 +33,30 @@ Da DECIR encontrou-se pdfs da Diretiva Operacional Nacional nº 2 dos anos de 20
 
 Infelizmente, até à entrega do documento, ainda não se conseguiu extrair os dados dos  pdf's para um outro formato mais conveniente, visto que os mesmos são bastante irregulares na sua formatação.
 
-### Google Earth Engine
-Através dos dados dos incêndios do ICNF, foi possível através do google earth engine, recolher dados sobre o NDVI (índice de vegetação) antes e depois de cada incêndio.
+### MODIS — MOD13Q1 (NDVI 16-day, 250 m)
+coleção MOD13Q1 fornece o índice NDVI em composites de 16 dias a 250 m (escala 0.0001 no produto bruto). Para o nosso estudo vamos usar a colecção disponibilizada no Google Earth Engine (MODIS/006/MOD13Q1) e extrair, por evento ICNF, estatísticas zonais (média, contagem de pixels) em janelas pré e pós-incêndio. Serão tratados os anos 2020–2024; cada feição de incêndio receberá valores agregados (ndvi_pre_mean, ndvi_pre_count, ndvi_post_mean, …).
 
-Provavelmente não será possível arranjar dados para todos os incêndios filtrados do ICNF.
+**Campos/uso:** NDVI (corrigido por escala), timestamp da cena, agregações por perímetro.
 
+**Período / resolução:** 16 dias / 250 m; cobertura global contínua (usaremos 2020–2024 para Portugal continental).
+
+**Tamanho (estimativa):** como usaremos o GEE para processar e exportar apenas estatísticas por perímetro, o dataset final exportado (CSV com uma linha por incêndio e colunas NDVI agregadas) terá tipicamente alguns MB a poucas dezenas de MB; o volume dos produtos raster brutos para Portugal 2020–2024 é consideravelmente maior (dependendo do formato, tipicamente algumas centenas de MB até ~a poucos GB se descarregares mosaicos 16-day para todo o território). Nota: o tamanho final depende do nível de descarregamento (imagens brutas vs. estatísticas agregadas).
+
+### CORINE Land Cover (CLC 2018 / Copernicus)
+**Descrição:** mapa de cobertura/uso do solo harmonizado à escala europeia (CORINE Land Cover 2018) — camada vetorial/raster com classes temáticas (florestas, matos, pastagens, agricultura, áreas urbanas, etc.). Usada para atribuir tipo de uso do solo a perímetros de incêndio e para amostragem pareada (áreas de controlo).
+Campos/uso: código CLC (nível 3), descrição da classe, geometria polygonal; intercetion/overlay com perímetros ICNF para calcular área por classe.
+
+**Período / resolução:** produto 2018 (resolução nominal ~100 m, MMU ≈ 25 ha para polígonos).
+
+**Tamanho (estimativa):** ficheiro vetorial para Portugal continental descarregado em GeoPackage/GeoJSON tem tipicamente alguns MB a ~tens de MB; operações rasterizadas ou tiles para todo o país podem ocupar mais espaço, mas as tabelas resultantes (áreas por perímetro) são pequenas (MBs).
 
 ## Objetivos
 1. Identificar as **áreas com mais risco de incêndios**
 2. Identificar quais **épocas do ano acontece mais incêndios**
 3. Identificar quais os **anos com mais incêndios** e mais graves
 4. Prever como as **temperaturas** impactam os incêndios (tanto no número de incêndios, na gravidade e duração)
-5. Observar como o **nível de vegetação** afeta os incêndios (tanto na ocorrência dos mesmos, na gravidade e na duração dos mesmos)
-6. Observar como o **tipo de vegetação** impacta os incêndios
+5. Analisar como o **estado da vegetação** (NDVI) influencia a probabilidade de ocorrência, a gravidade e a evolução temporal dos incêndios em Portugal continental (2020–2024)
+6. Avaliar o impacto do **tipo de vegetação** / uso do solo na ocorrência, extensão e gravidade dos incêndios, incluindo diferenças por classes (florestal, mato, pastagem, agrícola) 
 7. Como os **meios terrestres e aéreos** afetam a duração e gravidade do incêndio
 
 ## Questões Analíticas
@@ -72,16 +83,16 @@ Provavelmente não será possível arranjar dados para todos os incêndios filtr
 - Contagem de incêndios por combinação de temperatura e região
 - Duração média dos incêndios por faixa de temperatura
 - Índice de severidade de incêndios por faixa de temperatura
-### Objetivo 5 (Gooogle Earth Engine)
-- Correlação entre NDVI (índice de vegetação) e ocorrência de incêndios
-- NDVI médio nas áreas com e sem incêndios
-- Evolução do NDVI antes e depois de um incêndio
-- Percentagem de área ardida com NDVI elevado
-### Objetivo 6 (Gooogle Earth Engine)
-- Número de incêndios por tipo de vegetação (floresta, mato, pastagem, etc..) (o tipo de árvores acho que é importante, porque eucaliptos são quase gasolina quando está muito quente)
-- Área ardida média por tipo de vegetação
-- Percentagem de incêndios florestais vs. agrícolas
-- Tipos de vegetação mais recorrentes em incêndios graves
+### Objetivo 5 (CNF (perímetros) + MODIS MOD13Q1 + CORNIE)
+- Avaliar a correlação entre NDVI pré-incêndio e a ocorrência de incêndio - ICNF (perímetros) + MODIS MOD13Q1 (NDVI, 250 m, 16 dias)
+- Comparar o NDVI médio pré-incêndio em áreas que sofreram incêndio vs áreas de controlo - ICNF (perímetros) + MODIS MOD13Q1 + CORINE (uso do solo)
+- Examinar a evolução temporal do NDVI alinhada pela data do incêndio (t0) - ICNF (perímetros & t0) + MODIS MOD13Q1 (séries nacionais) 
+- Calcular a percentagem da área ardida que, antes do incêndio, apresentava NDVI elevado (thresholds a testar) - ICNF (perímetros) + MODIS MOD13Q1 
+### Objetivo 6 (ICNNF + CORNIE)
+-  Número de incêndios por classe de uso do solo / tipo de vegetação (ex.: florestas, mato, pastagens, agricultura) - ICNF (perímetros) + CORINE (mapa de classes)
+- Área ardida média por classe de uso do solo - ICNF + CORINE
+- Percentagem de incêndios em classes florestais vs classes agrícolas - ICNF + CORIN
+- Classes de uso do solo mais frequentemente associadas a incêndios graves - ICNF (para métricas de severidade) + CORINE
 
 ### Objetivo 7 (DECIR)
 - Tempo total de duração do incêndio por quantidade de meios terrestres mobilizados
