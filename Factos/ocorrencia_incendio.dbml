@@ -1,0 +1,102 @@
+// Fact table for fire occurrences
+Table fct_ocorrencia_incendio {
+  id string [pk] // Unique identifier for the record
+  data_alerta date // Date of the alert
+  hora_alerta time // Time of the alert
+  data_extincao date // Date of extinction
+  hora_extincao time // Time of extinction
+  data_primeira_intervencao date // Date of first intervention
+  hora_primeira_intervencao time // Time of first intervention
+  duracao integer // Duration in minutes
+  area_povoada decimal // Area of populated zone affected (hectares)
+  area_mato decimal // Area of bush/vegetation affected (hectares)
+  area_agricola decimal // Area of agricultural land affected (hectares)
+  area_total decimal // Total affected area (hectares)
+  perimetro decimal // Perimeter in meters
+  reacendimentos boolean // If there were reignitions
+  temperatura decimal // Temperature in Celsius
+  humidade_relativa decimal // Relative humidity (%)
+  vento_intensidade decimal // Wind speed
+  vento_direcao integer // Wind direction (0-360 degrees)
+  precipitacao decimal // Precipitation (mm)
+  ffmc decimal // Fine Fuel Moisture Code
+  dmc decimal // Duff Moisture Code
+  dc decimal // Drought Code
+  isi decimal // Initial Spread Index
+  bui decimal // Buildup Index
+  fwi decimal // Fire Weather Index
+  altitude_media decimal // Average altitude (meters)
+  declive_medio decimal // Average slope
+  latitude decimal
+  longitude decimal
+
+  // Foreign keys to dimension tables
+  dim_distrito_id integer [ref: > dim_distrito.id]
+  dim_freguesia_id integer [ref: > dim_freguesia.id]
+  dim_concelho_id integer [ref: > dim_concelho.id]
+  dim_tipo_ocorrencia_id integer [ref: > dim_tipo_ocorrencia.id]
+  dim_causa_id integer [ref: > dim_causa.id]
+  dim_fonte_alerta_id integer [ref: > dim_fonte_alerta.id]
+  dim_operador_id integer [ref: > dim_operador.id]
+
+  indexes {
+    id [pk]
+    (data_alerta, hora_alerta) [name: 'idx_data_hora_alerta']
+    dim_distrito_id [name: 'idx_distrito']
+    dim_concelho_id [name: 'idx_concelho']
+    dim_freguesia_id [name: 'idx_freguesia']
+    dim_tipo_ocorrencia_id [name: 'idx_tipo_ocorrencia']
+    dim_causa_id [name: 'idx_causa']
+  }
+}
+
+// Dimension tables
+
+Table dim_distrito {
+  id integer [pk, increment]
+  nome string
+  codigo_ine string
+}
+
+Table dim_concelho {
+  id integer [pk, increment]
+  nome string
+  codigo_ine string
+  distrito_id integer [ref: > dim_distrito.id]
+}
+
+Table dim_freguesia {
+  id integer [pk, increment]
+  nome string
+  codigo_ine string
+  concelho_id integer [ref: > dim_concelho.id]
+}
+
+Table dim_tipo_ocorrencia {
+  id integer [pk, increment]
+  tipo string // INCENDIO, QUEIMADA, etc.
+  fogacho boolean
+  agricola boolean
+  descricao string
+}
+
+Table dim_causa {
+  id integer [pk, increment]
+  causa string // Specific cause
+  tipo_causa string // ACIDENTAL, NATURAL, etc.
+  familia_causa string // Higher level grouping
+  descricao string
+}
+
+Table dim_fonte_alerta {
+  id integer [pk, increment]
+  fonte string // Source of the alert (112, CCO, Populares, etc.)
+  descricao string
+}
+
+Table dim_operador {
+  id integer [pk, increment]
+  codigo string
+  nome string
+  centro_coordenacao string // NCCO
+}
