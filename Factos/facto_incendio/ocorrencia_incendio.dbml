@@ -1,0 +1,87 @@
+//////////////////////////////////////////////////////////
+//  TABELA DE FACTOS
+//////////////////////////////////////////////////////////
+
+Table fato_incendio {
+  incident_id varchar [pk, note: 'Identificador único do incêndio']
+  tempo_id int [ref: > dim_tempo.tempo_id]
+  local_id int [ref: > dim_local.local_id]
+  tipo_id int [ref: > dim_tipo_incidente.tipo_id]
+  causa_id int [ref: > dim_causa.causa_id]
+  meteo_id int [ref: > dim_meteorologia.meteo_id]
+
+  areatotal float
+  areapov float
+  areamato float
+  areaagric float
+  duracao float
+  perimetro float
+
+  Note: 'Tabela de factos principal — medidas associadas a cada incêndio'
+}
+
+//////////////////////////////////////////////////////////
+//  DIMENSÕES
+//////////////////////////////////////////////////////////
+
+Table dim_tempo {
+  tempo_id int [pk, increment]
+  data date
+  dia int
+  mes int
+  ano int
+  semana int
+  estacao varchar
+  dia_da_semana varchar
+  Note: 'Dimensão de tempo para análise temporal dos incêndios'
+}
+
+Table dim_local {
+  local_id int [pk, increment]
+  distrito varchar
+  concelho varchar
+  freguesia varchar
+  latitude float
+  longitude float
+  altitude float
+  Note: 'Dimensão geográfica — localização do incêndio'
+}
+
+Table dim_tipo_incidente {
+  tipo_id int [pk, increment]
+  tipo varchar
+  queimada varchar
+  queima varchar
+  falsoalarme varchar
+  fogacho varchar
+  incendio varchar
+  agricola varchar
+  Note: 'Dimensão de classificação do tipo de incidente'
+}
+
+Table dim_causa {
+  causa_id int [pk, increment]
+  causa varchar
+  tipocausa varchar
+  causafamilia varchar
+  Note: 'Dimensão que descreve a causa do incêndio'
+}
+
+Table dim_meteorologia {
+  meteo_id int [pk, increment]
+  incident_id varchar [note: 'Chave que liga à ocorrência']
+  mean_temp_max float
+  mean_temp_min float
+  rh_max_mean float
+  rh_min_mean float
+  precip_sum_mean float
+  rain_sum_mean float
+  wind_max_mean float
+  gust_max_mean float
+  radiation_mean float
+  sunshine_mean float
+  et0_mean float
+  dry_day_sum int
+  high_wind_sum int
+  Note: 'Dimensão meteorológica agregada por incêndio (dataset resumo)'
+}

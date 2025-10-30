@@ -1,0 +1,85 @@
+//// Modelo Dimensional de Meteorologia de Incêndios (Esquema em Estrela)
+
+// =======================
+// TABELA FATO
+// =======================
+Table FatoMeteorologiaIncendio {
+  id int [pk, increment]
+  incendio_id int [ref: > DimIncendio.id] 
+  data_id int [ref: > DimData.id]
+  localizacao_id int [ref: > DimLocalizacao.id]
+  tempo_id int [ref: > DimTempo.id]
+  
+  temp_max float
+  temp_min float
+  rh_max float
+  rh_min float
+  precip_sum float
+  rain_sum float
+  precip_hours float
+  wind_max float
+  gust_max float
+  wind_dir float
+  radiation float
+  sunshine float
+  et0 float
+
+  // medidas agregadas do summary (caso juntes as tabelas)
+  mean_temp_max float
+  mean_temp_min float
+  precip_sum_mean float
+  wind_max_mean float
+  gust_max_mean float
+  radiation_mean float
+  sunshine_mean float
+  et0_mean float
+}
+
+// =======================
+// DIMENSÕES
+// =======================
+
+// Dimensão de Data
+Table DimData {
+  id int [pk, increment]
+  data date
+  ano int
+  mes int
+  dia int
+  dia_semana varchar
+  estacao varchar
+}
+
+// Dimensão de Localização
+Table DimLocalizacao {
+  id int [pk, increment]
+  latitude float
+  longitude float
+  distrito varchar
+  concelho varchar
+  freguesia varchar
+  altitude float
+}
+
+// Dimensão de Tempo (resumo do incêndio)
+Table DimTempo {
+  id int [pk, increment]
+  incident_id varchar
+  start_date date
+  end_date date
+  n_dias int
+  dry_day_sum int
+  high_wind_sum int
+}
+
+// Dimensão de Incêndio (caso tenhas mais info do ICNF)
+Table DimIncendio {
+  id int [pk, increment]
+  incident_id varchar [note: 'Código original do incêndio (ICNF)']
+  nome varchar
+  causa varchar
+  area_ardida float
+  tipo_combustivel varchar
+  distrito varchar
+  concelho varchar
+}
