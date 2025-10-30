@@ -146,7 +146,7 @@ Extração de indicadores socioeconómicos do Instituto Nacional de Estatística
     - **What:** Tipo de condição meteorológica
     - **When:** Dia, Mês e Ano (data)
     - **Where:** Estação meteorológica (não é relevante para o estudo)
-- **Dimensões:**
+- **Medidas:**
     - Temperatura média (ºC) - (elementar) (não-aditiva)
     - Temperatura máxima (ºC) - (elementar) (não aditiva)
     - Humidade relativa (%) - (elementar) (não-aditiva)
