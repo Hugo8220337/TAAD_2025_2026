@@ -87,12 +87,12 @@ Extração de indicadores socioeconómicos do Instituto Nacional de Estatística
 - Contagem de incêndios por combinação de temperatura e região
 - Duração média dos incêndios por faixa de temperatura
 - Índice de severidade de incêndios por faixa de temperatura
-### Objetivo 5 (CNF (perímetros) + MODIS MOD13Q1 + CORNIE)
+### Objetivo 5 (ICNF (perímetros) + MODIS MOD13Q1 + CORNIE)
 - Avaliar a correlação entre NDVI pré-incêndio e a ocorrência de incêndio - ICNF (perímetros) + MODIS MOD13Q1 (NDVI, 250 m, 16 dias)
 - Comparar o NDVI médio pré-incêndio em áreas que sofreram incêndio vs áreas de controlo - ICNF (perímetros) + MODIS MOD13Q1 + CORINE (uso do solo)
 - Examinar a evolução temporal do NDVI alinhada pela data do incêndio (t0) - ICNF (perímetros & t0) + MODIS MOD13Q1 (séries nacionais) 
 - Calcular a percentagem da área ardida que, antes do incêndio, apresentava NDVI elevado (thresholds a testar) - ICNF (perímetros) + MODIS MOD13Q1 
-### Objetivo 6 (ICNNF + CORNIE)
+### Objetivo 6 (ICNF + CORINE)
 -  Número de incêndios por classe de uso do solo / tipo de vegetação (ex.: florestas, mato, pastagens, agricultura) - ICNF (perímetros) + CORINE (mapa de classes)
 - Área ardida média por classe de uso do solo - ICNF + CORINE
 - Percentagem de incêndios em classes florestais vs classes agrícolas - ICNF + CORIN
