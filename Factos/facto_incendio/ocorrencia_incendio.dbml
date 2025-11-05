@@ -2,74 +2,89 @@
 //  TABELA DE FACTOS
 //////////////////////////////////////////////////////////
 
-Table fato_incendio {
-  incident_id varchar [pk, note: 'Identificador único do incêndio']
-  tempo_id int [ref: > dim_tempo.tempo_id]
-  local_id int [ref: > dim_local.local_id]
-  tipo_id int [ref: > dim_tipo_incidente.tipo_id]
-  causa_id int [ref: > dim_causa.causa_id]
-  meteo_id int [ref: > dim_meteorologia.meteo_id]
+// ------------------ FACT: general fire metrics ------------------
 
-  areatotal float
-  areapov float
-  areamato float
-  areaagric float
-  duracao float
-  perimetro float
+Table fact_fire {
+  fire_id varchar [pk, note: "Original ICNF fire identifier (natural key)"]
+  window varchar [note: 'Time window (pre_90, pre_30, post_90)']
+  time_id int [ref: > dim_time.time_id]
+  location_id int [ref: > dim_location.location_id]
+  fire_type_id int [ref: > dim_fire_type.fire_type_id]
+  cause_id int [ref: > dim_cause.cause_id]
+  meteo_fact_id int [note: 'Optional link to the meteo fact']
 
-  Note: 'Tabela de factos principal — medidas associadas a cada incêndio'
+  area_total_m2 float
+  area_pov_m2 float
+  area_shrub_m2 float
+  area_agri_m2 float
+  duration_hours float
+  perimeter_m float
+
+  processing_date datetime
+
+  Note: 'Main fact table — measures associated with each fire'
 }
 
 //////////////////////////////////////////////////////////
 //  DIMENSÕES
 //////////////////////////////////////////////////////////
 
-Table dim_tempo {
-  tempo_id int [pk, increment]
-  data date
-  dia int
-  mes int
-  ano int
-  semana int
-  estacao varchar
-  dia_da_semana varchar
-  Note: 'Dimensão de tempo para análise temporal dos incêndios'
+Table dim_time {
+  time_id int [pk, increment, note: "Surrogate key for the time dimension (auto-increment)"]
+  start_date date
+  day int
+  month int
+  year int
+  week int
+  season varchar
+  weekday varchar
+
+  end_date date
+  n_days int
+  dry_day_sum int
+  high_wind_sum int
+
+  Note: "Time dimension used in temporal analyses (date attributes + optional fire-period summary fields)"
 }
 
-Table dim_local {
-  local_id int [pk, increment]
-  distrito varchar
-  concelho varchar
-  freguesia varchar
+Table dim_location {
+  location_id int [pk, increment, note: "Surrogate key for geographic dimension (auto-increment)"]
+  district varchar
+  municipality varchar
+  parish varchar
+  centroid_lon float
+  centroid_lat float
   latitude float
   longitude float
   altitude float
-  Note: 'Dimensão geográfica — localização do incêndio'
+  nuts3 varchar
+  geom geometry
+
+  Note: 'Geographic dimension — administrative information and coordinates.'
 }
 
-Table dim_tipo_incidente {
-  tipo_id int [pk, increment]
-  tipo varchar
-  queimada varchar
-  queima varchar
-  falsoalarme varchar
-  fogacho varchar
-  incendio varchar
-  agricola varchar
-  Note: 'Dimensão de classificação do tipo de incidente'
+Table dim_fire_type {
+  fire_type_id int [pk, increment, note: "Surrogate key for fire type classification (auto-increment)"]
+  type_name varchar
+  is_control_burn boolean
+  is_false_alarm boolean
+  is_agricultural boolean
+
+  Note: 'Classification of fire types used to categorize fire events'
 }
 
-Table dim_causa {
-  causa_id int [pk, increment]
-  causa varchar
-  tipocausa varchar
-  causafamilia varchar
-  Note: 'Dimensão que descreve a causa do incêndio'
+Table dim_cause {
+  cause_id int [pk, increment, note: "Surrogate key for cause taxonomy (auto-increment)"]
+  cause_name varchar
+  cause_category varchar
+  cause_family varchar
+
+  Note: 'Cause taxonomy for fires (detailed and aggregated levels)'
 }
 
-Table dim_meteorologia {
-  meteo_id int [pk, increment]
-  incident_id varchar [note: 'Chave que liga à ocorrência']
+Table dim_meteorology {
+  meteorology_id int [pk, increment, note: "Surrogate key for meteorology summary (auto-increment)"]
+  fire_id varchar [ref: > dim_fire.fire_id, note: "FK linking to dim_fire (when available)"]
   mean_temp_max float
   mean_temp_min float
   rh_max_mean float
@@ -83,5 +98,7 @@ Table dim_meteorologia {
   et0_mean float
   dry_day_sum int
   high_wind_sum int
-  Note: 'Dimensão meteorológica agregada por incêndio (dataset resumo)'
+  processing_date datetime
+
+  Note: "Meteorological summary aggregated per fire (validation / summary dataset)"
 }

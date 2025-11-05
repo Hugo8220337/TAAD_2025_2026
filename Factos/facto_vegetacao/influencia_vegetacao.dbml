@@ -1,0 +1,134 @@
+//////////////////////////////////////////////////////////
+//  TABELA DE FACTOS
+//////////////////////////////////////////////////////////
+
+// ------------------ FACT: NDVI / vegetation ------------------
+
+Table fact_fire_ndvi {
+  fire_id varchar [ref: > dim_fire.fire_id, note: "FK to dim_fire (natural key)"]
+  window varchar [note: 'Time window (pre_90, pre_30, post_90)']
+  time_id int [ref: > dim_time.time_id]
+  location_id int [ref: > dim_location.location_id]
+  landcover_id int [ref: > dim_landcover.landcover_id]
+  sensor_id int [ref: > dim_sensor.sensor_id]
+  source_id int [ref: > dim_source.source_id]
+  cause_id int [ref: > dim_cause.cause_id]
+  species_id int [ref: > dim_species.species_id]
+
+  area_total_m2 float
+
+  ndvi_pre_mean float [note: 'Mean NDVI before the fire']
+  pct_area_ndvi_gt_thr float [note: 'Percent of fire area with NDVI above threshold']
+  veg_density_mean float [note: 'Vegetation density proxy (e.g., % cover)']
+
+  mean_temp float
+  precip_sum float
+
+  corine_dominant_code int
+  processing_date datetime
+
+  Note: "Simplified fact with main vegetation- and NDVI-related fields (grain: fire × window)"
+}
+
+//////////////////////////////////////////
+//  DIMENSÕES
+//////////////////////////////////////////
+
+Table dim_time {
+  time_id int [pk, increment, note: "Surrogate key for the time dimension (auto-increment)"]
+  start_date date
+  day int
+  month int
+  year int
+  week int
+  season varchar
+  weekday varchar
+
+  end_date date
+  n_days int
+  dry_day_sum int
+  high_wind_sum int
+  
+  Note: "Time dimension used in temporal analyses (date attributes + optional fire-period summary fields)"
+}
+
+Table dim_location {
+  location_id int [pk, increment, note: "Surrogate key for geographic dimension (auto-increment)"]
+  district varchar
+  municipality varchar
+  parish varchar
+  centroid_lon float
+  centroid_lat float
+  latitude float
+  longitude float
+  altitude float
+  nuts3 varchar
+  geom geometry
+
+  Note: 'Geographic dimension — administrative information and coordinates.'
+}
+
+Table dim_landcover {
+  landcover_id int [pk, increment, note: "Surrogate key for land cover class (auto-increment)"]
+  corine_code int
+  corine_description varchar
+  fuel_category varchar [note: 'e.g., Forest / Shrub / Agricultural']
+  typical_fuel_load float
+  dominant_species_hint varchar
+  
+  Note: 'Dimension representing land cover classes (CORINE) and fuel categories.'
+}
+
+Table dim_species {
+  species_id int [pk, increment, note: "Surrogate key for species (auto-increment)"]
+  species_name varchar
+  flammability_score float
+
+  Note: "Species dimension (link IFN / stand maps to facts)"
+}
+
+Table dim_sensor {
+  sensor_id int [pk, increment, note: "Surrogate key for sensor/dataset (auto-increment)"]
+  sensor_name varchar
+  spatial_resolution varchar
+  temporal_resolution varchar
+  dataset_ref varchar
+
+  Note: "Information about sensors and dataset collections"
+}
+
+Table dim_source {
+  source_id int [pk, increment, note: "Primary key for source metadata (auto-increment)"]
+  dataset varchar
+  version varchar
+  license varchar
+  url varchar
+
+  Note: 'Metadata about data sources and processing pipelines'
+}
+
+Table dim_fire {
+  fire_id varchar [pk, note: 'Original ICNF fire identifier (natural key)']
+  icnf_code varchar                   
+  name varchar                        
+  t0 date                             
+  burnt_area_m2 float                 
+  duration_reported_hours float      
+  cause varchar                       
+  fuel_type varchar                   
+  district varchar
+  municipality varchar
+  note varchar [note: 'Ingestion / quality notes']
+  processing_date datetime    
+
+  Note: 'Metadata about the fire from ICNF / ingestion; used as a join target.'
+}
+
+Table dim_cause {
+  cause_id int [pk, increment, note: "Surrogate key for cause taxonomy (auto-increment)"]
+  cause_name varchar
+  cause_category varchar
+  cause_family varchar
+
+  Note: 'Cause taxonomy for fires (detailed and aggregated levels)'
+}
