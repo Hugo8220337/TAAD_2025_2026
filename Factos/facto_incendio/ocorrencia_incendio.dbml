@@ -84,7 +84,7 @@ Table dim_cause {
 
 Table dim_meteorology {
   meteorology_id int [pk, increment, note: "Surrogate key for meteorology summary (auto-increment)"]
-  fire_id varchar [ref: > dim_fire.fire_id, note: "FK linking to dim_fire (when available)"]
+  fire_id varchar [ref: > fact_fire.fire_id, note: "FK linking to dim_fire (when available)"]
   mean_temp_max float
   mean_temp_min float
   rh_max_mean float
