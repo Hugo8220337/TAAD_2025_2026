@@ -11,8 +11,8 @@ Table fact_fire {
   extinguish_hour_id int [ref: > dim_hour.hour_id]
   first_intervention_hour_id int [ref: > dim_hour.hour_id]
 
-  start_date int [ref: > dim_day.date_id]
-  end_date int [ref: > dim_day.date_id]
+  start_day_id int [ref: > dim_day.day_id]
+  end_day_id int [ref: > dim_day.day_id]
 
   location_id int [ref: > dim_location.location_id]
   fire_type_id int [ref: > dim_fire_type.fire_type_id]
@@ -28,6 +28,8 @@ Table fact_fire {
 
   latitude float
   longitude float
+  centroid_lon float
+  centroid_lat float
 
   ndays int
   dry_day_sum int
@@ -51,7 +53,7 @@ Table dim_hour {
 
 Table dim_day {
   // id: aammdd (20250211) isto ajuda a não ter de fazer filtro
-  date_id int [pk]
+  day_id int [pk]
   day int
   month int
   year int
@@ -64,12 +66,8 @@ Table dim_location {
   location_id int [pk, increment, note: "Surrogate key for geographic dimension (auto-increment)"]
   district varchar
   municipality varchar
-  parish varchar
-  centroid_lon float
-  centroid_lat float
-  altitude float
-  nuts3 varchar
-  geom geometry
+  parish varchar // freguesia
+  nuts3 varchar // NUTS3 code (Nomenclatura das Unidades Territoriais para Fins Estatísticos)
 
   Note: 'Geographic dimension — administrative information and coordinates.'
 }

@@ -65,13 +65,7 @@ Table dim_location {
   district varchar
   municipality varchar
   parish varchar
-  centroid_lon float
-  centroid_lat float
-  latitude float
-  longitude float
-  altitude float
   nuts3 varchar
-  geom geometry
 
   Note: 'Geographic dimension — administrative information and coordinates.'
 }
