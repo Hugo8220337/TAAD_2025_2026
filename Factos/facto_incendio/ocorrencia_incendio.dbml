@@ -6,8 +6,14 @@
 
 Table fact_fire {
   fire_id varchar [pk, note: "Original ICNF fire identifier (natural key)"]
-  window varchar [note: 'Time window (pre_90, pre_30, post_90)']
-  time_id int [ref: > dim_time.time_id]
+  
+  alert_hour_id int [ref: > dim_hour.hour_id]
+  extinguish_hour_id int [ref: > dim_hour.hour_id]
+  first_intervention_hour_id int [ref: > dim_hour.hour_id]
+
+  start_date int [ref: > dim_day.date_id]
+  end_date int [ref: > dim_day.date_id]
+
   location_id int [ref: > dim_location.location_id]
   fire_type_id int [ref: > dim_fire_type.fire_type_id]
   cause_id int [ref: > dim_cause.cause_id]
@@ -20,6 +26,13 @@ Table fact_fire {
   duration_hours float
   perimeter_m float
 
+  latitude float
+  longitude float
+
+  ndays int
+  dry_day_sum int
+  high_wind_sum int
+
   processing_date datetime
 
   Note: 'Main fact table — measures associated with each fire'
@@ -29,22 +42,22 @@ Table fact_fire {
 //  DIMENSÕES
 //////////////////////////////////////////////////////////
 
-Table dim_time {
-  time_id int [pk, increment, note: "Surrogate key for the time dimension (auto-increment)"]
-  start_date date
+Table dim_hour {
+  // id: hhmmss (22) isto ajuda a não ter de fazer filtro
+  hour_id int [pk] 
+  hour int [note: "Hour of the day (0-23)"]
+  time_of_day varchar [note: "e.g., Manhã, Tarde, Noite, Madrugada"]
+}
+
+Table dim_day {
+  // id: aammdd (20250211) isto ajuda a não ter de fazer filtro
+  date_id int [pk]
   day int
   month int
   year int
   week int
   season varchar
   weekday varchar
-
-  end_date date
-  n_days int
-  dry_day_sum int
-  high_wind_sum int
-
-  Note: "Time dimension used in temporal analyses (date attributes + optional fire-period summary fields)"
 }
 
 Table dim_location {
@@ -54,8 +67,6 @@ Table dim_location {
   parish varchar
   centroid_lon float
   centroid_lat float
-  latitude float
-  longitude float
   altitude float
   nuts3 varchar
   geom geometry
@@ -98,7 +109,6 @@ Table dim_meteorology {
   et0_mean float
   dry_day_sum int
   high_wind_sum int
-  processing_date datetime
 
   Note: "Meteorological summary aggregated per fire (validation / summary dataset)"
 }
