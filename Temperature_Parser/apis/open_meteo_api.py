@@ -22,12 +22,14 @@ def get_temperature(lat, lon, start_date, end_date, max_retries=3, retry_delay=1
     """
     url = "https://archive-api.open-meteo.com/v1/archive"
     daily_vars = [
-        "temperature_2m_max","temperature_2m_min",
-        "relative_humidity_2m_max","relative_humidity_2m_min",
+        "temperature_2m_max","temperature_2m_min","temperature_2m_mean",
+        "relative_humidity_2m_max","relative_humidity_2m_min","relative_humidity_2m_mean",
         "precipitation_sum","rain_sum","precipitation_hours",
-        "windspeed_10m_max","windgusts_10m_max","winddirection_10m_dominant",
+        "windspeed_10m_max","windspeed_10m_mean","windgusts_10m_max","winddirection_10m_dominant",
         "shortwave_radiation_sum","sunshine_duration",
-        "et0_fao_evapotranspiration"
+        "et0_fao_evapotranspiration",
+        "pressure_msl_mean",
+        "cloudcover_mean"
     ]
     params = {
         "latitude": lat,
