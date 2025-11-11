@@ -4,8 +4,14 @@
 
 Este documento descreve os atributos presentes nos ficheiros de meteorologia diária associados a cada incêndio.
 
+---
+
+# Dicionário de Dados — Ficheiros de Meteorologia (`meteorology_*.csv`)
+
+Este documento descreve os atributos presentes nos ficheiros de meteorologia diária associados a cada incêndio.
+
 | Campo | Descrição | Tipo | Exemplo | Notas |
-| :--- | :--- | :--- | :--- | :--- |
+|-------|-----------|------|---------|-------|
 | `incident_id` | Identificador único do incêndio, correspondente ao `id` do ICNF. | string | `AG120357` | Chave para ligar aos dados principais do incêndio. |
 | `source_file` | Ficheiro de origem dos dados do incêndio. | string | `2020.csv` | Indica o ano do dataset original. |
 | `date` | Data do registo meteorológico. | date | `2020-05-03` | Formato: YYYY-MM-DD. |
