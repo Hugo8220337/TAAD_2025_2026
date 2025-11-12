@@ -135,5 +135,3 @@ Este documento descreve os atributos presentes nos ficheiros `data/*.csv` (separ
 - Unidades: deduzir por ordem de grandeza (ex.: áreas muito grandes → m²; valores tipicamente 0–1000 → hectares). Confirme com o fornecedor quando possível.
 
 ---
-
-## Snippet Python (loader)
