@@ -4,35 +4,35 @@
 
 // ------------------ FACT: NDVI / vegetation ------------------
 
-Table fact_fire_ndvi {
-  fire_id varchar [ref: > dim_fire.fire_id, note: "FK to dim_fire (natural key)"]
-  window varchar [note: 'Time window (pre_90, pre_30, post_90)']
-  time_id int [ref: > dim_time.time_id]
-  location_id int [ref: > dim_location.location_id]
-  landcover_id int [ref: > dim_landcover.landcover_id]
-  sensor_id int [ref: > dim_sensor.sensor_id]
-  source_id int [ref: > dim_source.source_id]
-  cause_id int [ref: > dim_cause.cause_id]
-  species_id int [ref: > dim_species.species_id]
+Table fact_vegetation {
+  veg_fact_id int [pk, increment, note: "Surrogate PK for vegetation fact (auto-increment)"]
+  time_id int [ref: > dim_time.time_id, note: "Reference to time dimension (window representative date)"]
+  location_id int [ref: > dim_location.location_id, note: "Reference to geographic aggregation unit"]
+  landcover_id int [ref: > dim_landcover.landcover_id, note: "Landcover class used for aggregation"]
+  species_id int [ref: > dim_species.species_id, note: "Dominant species hint (optional)"]
+  sensor_id int [ref: > dim_sensor.sensor_id, note: "Sensor/product used for aggregation"]
+  source_id int [ref: > dim_source.source_id, note: "Dataset source/version"]
 
-  area_total_m2 float
+  time_window varchar [note: "Window label (e.g., pre_30, pre_90, post_90, annual_2023)"]
+  area_m2 float [note: "Area of the aggregated polygon (m²)"]
 
-  ndvi_pre_mean float [note: 'Mean NDVI before the fire']
-  pct_area_ndvi_gt_thr float [note: 'Percent of fire area with NDVI above threshold']
-  veg_density_mean float [note: 'Vegetation density proxy (e.g., % cover)']
+  ndvi_mean float [note: "Mean NDVI over area and window"]
+  ndvi_median float
+  ndvi_std float
+  ndvi_count int [note: "Number of valid NDVI pixels/observations used"]
+  pct_area_ndvi_gt_thr float [note: "Percent of area with NDVI above configured threshold"]
+  veg_density_mean float [note: "Vegetation density proxy (e.g., % canopy cover)"]
+  fuel_index float [note: "Optional derived flammability proxy"]
 
-  mean_temp float
-  precip_sum float
+  external_fire_id varchar [note: "Optional external fire identifier for visual joins to fire dataset (NO FK)"]
+  processing_date datetime [note: "When this aggregated record was produced"]
 
-  corine_dominant_code int
-  processing_date datetime
-
-  Note: "Simplified fact with main vegetation- and NDVI-related fields (grain: fire × window)"
+  Note: "Vegetation fact table: aggregated vegetation metrics per area × window (one fact table for vegetation analyses)"
 }
 
-//////////////////////////////////////////
+//////////////////////////////////////////////////////////
 //  DIMENSÕES
-//////////////////////////////////////////
+//////////////////////////////////////////////////////////
 
 Table dim_time {
   time_id int [pk, increment, note: "Surrogate key for the time dimension (auto-increment)"]
@@ -48,7 +48,7 @@ Table dim_time {
   n_days int
   dry_day_sum int
   high_wind_sum int
-  
+
   Note: "Time dimension used in temporal analyses (date attributes + optional fire-period summary fields)"
 }
 
@@ -65,18 +65,18 @@ Table dim_location {
   nuts3 varchar
   geom geometry
 
-  Note: 'Geographic dimension — administrative information and coordinates.'
+  Note: "Geographic dimension — administrative information and coordinates."
 }
 
 Table dim_landcover {
   landcover_id int [pk, increment, note: "Surrogate key for land cover class (auto-increment)"]
   corine_code int
   corine_description varchar
-  fuel_category varchar [note: 'e.g., Forest / Shrub / Agricultural']
+  fuel_category varchar [note: "e.g., Forest / Shrub / Agricultural"]
   typical_fuel_load float
   dominant_species_hint varchar
-  
-  Note: 'Dimension representing land cover classes (CORINE) and fuel categories.'
+
+  Note: "Dimension representing land cover classes (CORINE) and fuel categories."
 }
 
 Table dim_species {
@@ -104,31 +104,37 @@ Table dim_source {
   license varchar
   url varchar
 
-  Note: 'Metadata about data sources and processing pipelines'
+  Note: "Metadata about data sources and processing pipelines"
 }
 
-Table dim_fire {
-  fire_id varchar [pk, note: 'Original ICNF fire identifier (natural key)']
-  icnf_code varchar                   
-  name varchar                        
-  t0 date                             
-  burnt_area_m2 float                 
-  duration_reported_hours float      
-  cause varchar                       
-  fuel_type varchar                   
-  district varchar
-  municipality varchar
-  note varchar [note: 'Ingestion / quality notes']
-  processing_date datetime    
 
-  Note: 'Metadata about the fire from ICNF / ingestion; used as a join target.'
-}
 
-Table dim_cause {
-  cause_id int [pk, increment, note: "Surrogate key for cause taxonomy (auto-increment)"]
-  cause_name varchar
-  cause_category varchar
-  cause_family varchar
 
-  Note: 'Cause taxonomy for fires (detailed and aggregated levels)'
-}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
