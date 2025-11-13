@@ -6,7 +6,7 @@
 
 Table fact_vegetation {
   veg_fact_id int [pk, increment, note: "Surrogate PK for vegetation fact (auto-increment)"]
-  time_id int [ref: > dim_time.time_id, note: "Reference to time dimension (window representative date)"]
+  day_id int [ref: > dim_day.day_id, note: "Reference to day dimension (window representative date)"]
   location_id int [ref: > dim_location.location_id, note: "Reference to geographic aggregation unit"]
   landcover_id int [ref: > dim_landcover.landcover_id, note: "Landcover class used for aggregation"]
   species_id int [ref: > dim_species.species_id, note: "Dominant species hint (optional)"]
@@ -34,22 +34,16 @@ Table fact_vegetation {
 //  DIMENSÕES
 //////////////////////////////////////////////////////////
 
-Table dim_time {
-  time_id int [pk, increment, note: "Surrogate key for the time dimension (auto-increment)"]
-  start_date date
+
+Table dim_day {
+  // id: aammdd (20250211) isto ajuda a não ter de fazer filtro
+  day_id int [pk]
   day int
   month int
   year int
   week int
   season varchar
   weekday varchar
-
-  end_date date
-  n_days int
-  dry_day_sum int
-  high_wind_sum int
-
-  Note: "Time dimension used in temporal analyses (date attributes + optional fire-period summary fields)"
 }
 
 Table dim_location {
