@@ -1,0 +1,142 @@
+=== ANÁLISE DETALHADA DE COLUNAS NUMÉRICAS ===
+
+
+============================================================
+COLUNA: AREATOTAL
+============================================================
+Valores válidos: 2451
+Valores nulos: 0
+Média: 233.3489
+Mediana: 17.6400
+Desvio padrão: 1934.3762
+Mínimo: 5.0000
+Máximo: 65416.8776
+Percentil 1%: 5.0000
+Percentil 99%: 4309.3966
+
+
+============================================================
+COLUNA: AREAMATO
+============================================================
+Valores válidos: 2451
+Valores nulos: 0
+Média: 96.1426
+Mediana: 9.3000
+Desvio padrão: 754.0369
+Mínimo: 0.0000
+Máximo: 22991.9010
+Percentil 1%: 0.0000
+Percentil 99%: 1578.3777
+
+
+============================================================
+COLUNA: AREAPOV
+============================================================
+Valores válidos: 2451
+Valores nulos: 0
+Média: 117.7229
+Mediana: 4.0000
+Desvio padrão: 1073.5661
+Mínimo: 0.0000
+Máximo: 38543.9493
+Percentil 1%: 0.0000
+Percentil 99%: 2217.3927
+
+
+============================================================
+COLUNA: AREAAGRIC
+============================================================
+Valores válidos: 2451
+Valores nulos: 0
+Média: 19.4835
+Mediana: 0.0000
+Desvio padrão: 196.6163
+Mínimo: 0.0000
+Máximo: 7333.5940
+Percentil 1%: 0.0000
+Percentil 99%: 418.8811
+
+
+============================================================
+COLUNA: TEMPERATURA
+============================================================
+Valores válidos: 1719
+Valores nulos: 732
+Média: 21.8856
+Mediana: 22.0377
+Desvio padrão: 8.1696
+Mínimo: -1.7585
+Máximo: 42.3451
+Percentil 1%: 3.6424
+Percentil 99%: 38.2693
+
+
+============================================================
+COLUNA: HUMIDADERELATIVA
+============================================================
+Valores válidos: 1719
+Valores nulos: 732
+Média: 47.7416
+Mediana: 45.0189
+Desvio padrão: 18.7556
+Mínimo: 11.7795
+Máximo: 99.9990
+Percentil 1%: 14.2860
+Percentil 99%: 93.8972
+
+
+============================================================
+COLUNA: FFMC
+============================================================
+Valores válidos: 2445
+Valores nulos: 6
+Média: 89.0590
+Mediana: 89.7114
+Desvio padrão: 6.1140
+Mínimo: 34.5587
+Máximo: 98.7000
+Percentil 1%: 63.0185
+Percentil 99%: 97.6000
+
+
+============================================================
+COLUNA: FWI
+============================================================
+Valores válidos: 2445
+Valores nulos: 6
+Média: 24.7222
+Mediana: 24.6389
+Desvio padrão: 18.2399
+Mínimo: 0.0081
+Máximo: 97.7400
+Percentil 1%: 0.3962
+Percentil 99%: 69.2262
+
+
+============================================================
+COLUNA: LAT
+============================================================
+Valores válidos: 2451
+Valores nulos: 0
+Média: 41.0017
+Mediana: 41.3570
+Desvio padrão: 1.0620
+Mínimo: 37.0347
+Máximo: 42.1128
+Percentil 1%: 37.4094
+Percentil 99%: 42.0492
+
+
+============================================================
+COLUNA: LON
+============================================================
+Valores válidos: 2451
+Valores nulos: 0
+Média: -8.0093
+Mediana: -8.0753
+Desvio padrão: 0.5123
+Mínimo: -9.4411
+Máximo: -6.3045
+Percentil 1%: -9.1827
+Percentil 99%: -6.6954
+

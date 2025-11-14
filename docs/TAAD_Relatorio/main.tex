@@ -1,0 +1,93 @@
+% This is samplepaper.tex, a sample chapter demonstrating the
+% LLNCS macro package for Springer Computer Science proceedings;
+% Version 2.21 of 2022/01/12
+%
+\documentclass[runningheads]{llncs}
+%
+\usepackage[portuguese]{babel}
+\usepackage[T1]{fontenc}
+\usepackage[hidelinks]{hyperref} % Ativa links clicáveis no PDF
+\usepackage{graphicx}
+
+\begin{document}
+%
+\title{Business Intelligence para a Análise de Incêndios Florestais}
+%
+%\titlerunning{Abbreviated paper title}
+% If the paper title is too long for the running head, you can set
+% an abbreviated paper title here
+%
+
+\author{Hugo Guimarães\orcidID{8220337} \and
+Nuno Silva\orcidID{8180393} \and
+Diogo Pereira\orcidID{8200594} \and
+Duarte Sampaio\orcidID{8190553}}
+%
+% First names are abbreviated in the running head.
+% If there are more than two authors, 'et al.' is used.
+%
+
+\institute{Escola Superior de Tecnologia e Gestão \\
+\url{https://www.estg.ipp.pt/}}
+%
+\maketitle              % typeset the header of the contribution
+%
+\begin{abstract}
+Este trabalho apresenta o desenvolvimento de um sistema de Business Intelligence para análise de incêndios florestais em Portugal Continental (2020-2025). O projeto assenta na construção de um Data Warehouse dimensional que integra dados do ICNF, informação meteorológica (Open-Meteo), índices de vegetação NDVI (MODIS), cobertura do solo (CORINE Land Cover), e indicadores socioeconómicos (INE).
+
+O processo ETL desenvolvido garante a extração, transformação e integração das diversas fontes de dados. A modelação dimensional segue a metodologia de Kimball, identificando quatro processos de negócio: Ocorrência de Incêndio, Meteorologia Diária, Operações de Combate e Monitorização de Vegetação. O sistema permite análises sobre áreas de risco, sazonalidade, impacto meteorológico, influência da vegetação, eficácia dos meios de combate e impacto socioeconómico. A visualização é realizados através de dashboards interativos em Microsoft Power BI, proporcionando uma ferramenta de apoio à decisão para entidades responsáveis pela prevenção e combate a incêndios florestais.
+
+\keywords{Data Warehouse \and Business Intelligence \and Incêndios Florestais \and ETL \and Modelação Dimensional \and Power BI \and NDVI \and Portugal \and Apoio à Decisão}
+\end{abstract}
+%
+%
+%
+
+\include{seccoes/data_profilling}
+
+\begin{credits}
+\subsubsection{\ackname} A bold run-in heading in small font size at the end of the paper is
+used for general acknowledgments, for example: This study was funded
+by X (grant number Y).
+
+\subsubsection{\discintname}
+It is now necessary to declare any competing interests or to specifically
+state that the authors have no competing interests. Please place the
+statement with a bold run-in heading in small font size beneath the
+(optional) acknowledgments\footnote{If EquinOCS, our proceedings submission
+system, is used, then the disclaimer can be provided directly in the system.},
+for example: The authors have no competing interests to declare that are
+relevant to the content of this article. Or: Author A has received research
+grants from Company W. Author B has received a speaker honorarium from
+Company X and owns stock in Company Y. Author C is a member of committee Z.
+\end{credits}
+%
+% ---- Bibliography ----
+%
+% BibTeX users should specify bibliography style 'splncs04'.
+% References will then be sorted and formatted in the correct style.
+%
+% \bibliographystyle{splncs04}
+% \bibliography{mybibliography}
+%
+\begin{thebibliography}{8}
+\bibitem{ref_article1}
+Author, F.: Article title. Journal \textbf{2}(5), 99--110 (2016)
+
+\bibitem{ref_lncs1}
+Author, F., Author, S.: Title of a proceedings paper. In: Editor,
+F., Editor, S. (eds.) CONFERENCE 2016, LNCS, vol. 9999, pp. 1--13.
+Springer, Heidelberg (2016). \doi{10.10007/1234567890}
+
+\bibitem{ref_book1}
+Author, F., Author, S., Author, T.: Book title. 2nd edn. Publisher,
+Location (1999)
+
+\bibitem{ref_proc1}
+Author, A.-B.: Contribution title. In: 9th International Proceedings
+on Proceedings, pp. 1--2. Publisher, Location (2010)
+
+\bibitem{ref_url1}
+LNCS Homepage, \url{http://www.springer.com/lncs}, last accessed 2023/10/25
+\end{thebibliography}
+\end{document}

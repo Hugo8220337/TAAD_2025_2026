@@ -1,0 +1,19 @@
+{
+    "cSpell.language": "en,pt,pt-PT",
+    "cSpell.enableFiletypes": [
+        "latex",
+        "tex"
+    ],
+    "cSpell.words": [
+        "bibliografia",
+        "capítulo",
+        "secção",
+        "figura",
+        "tabela"
+    ],
+    "spellright.language": "pt_PT",
+    "spellright.documentTypes": [
+        "latex",
+        "plaintext"
+    ]
+}
