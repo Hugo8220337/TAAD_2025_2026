@@ -1,3 +1,4 @@
+import argparse
 import concurrent.futures
 import datetime
 import io
@@ -81,24 +82,41 @@ def concat(df1, df2, year=None, month=None):
 
 
 def save_year_2_file(df, year, lock):
-    filename = "data/" + str(year) + ".csv"
+    filename = "icnf_data/" + str(year) + ".csv"
+    # garantir DataFrame com colunas mesmo se None ou sem colunas
+    if df is None or df.shape[1] == 0:
+        df = pd.DataFrame(columns=ALL_COLUMNS)
+    # garantir coluna identificador como string
+    if IDENTIFIER_COLUMNS[0] not in df.columns:
+        df[IDENTIFIER_COLUMNS[0]] = pd.Series(dtype=str)
+    else:
+        df[IDENTIFIER_COLUMNS[0]] = df[IDENTIFIER_COLUMNS[0]].astype(str)
     if 'index' in df.columns:
         df = df.drop("index", axis=1)
     lock.acquire()
+    # escreve sempre o header (mesmo vazio)
     df.to_csv(filename, index=False, sep="|")
     lock.release()
     print("Saved " + str(len(df)) + " entries into " + filename)
 
 
 def read_year_from_file(year, lock):
-    filename = "data/" + str(year) + ".csv"
+    filename = "icnf_data/" + str(year) + ".csv"
     lock.acquire()
     if exists(filename):
-        df = pd.read_csv(filename, header=0, sep='|', low_memory=False)
-        df[IDENTIFIER_COLUMNS[0]] = df[IDENTIFIER_COLUMNS[0]].astype(str)
-        print("Read " + str(len(df)) + " entries from " + filename)
-        lock.release()
-        return df
+        try:
+            df = pd.read_csv(filename, header=0, sep='|', low_memory=False)
+            # se o ficheiro existir mas não tiver colunas, tratar como vazio
+            if df is None or df.shape[1] == 0:
+                lock.release()
+                return pd.DataFrame(columns=ALL_COLUMNS)
+            df[IDENTIFIER_COLUMNS[0]] = df[IDENTIFIER_COLUMNS[0]].astype(str)
+            print("Read " + str(len(df)) + " entries from " + filename)
+            lock.release()
+            return df
+        except pd.errors.EmptyDataError:
+            lock.release()
+            return pd.DataFrame(columns=ALL_COLUMNS)
     else:
         lock.release()
         return None
@@ -223,9 +241,25 @@ def retrieve_all():
         print('End')
 
 
-if sys.argv[1] == 'ndays':
-    retrieve_last_days(int(sys.argv[2]))
-elif sys.argv[1] == 'all':
-    retrieve_all()
-else:
-    retrieve_year(int(sys.argv[1]), threading.Lock())
+# if sys.argv[1] == 'ndays':
+#     retrieve_last_days(int(sys.argv[2]))
+# elif sys.argv[1] == 'all':
+#     retrieve_all()
+# else:
+#     retrieve_year(int(sys.argv[1]), threading.Lock())
+
+def main(ndays, all_flag):
+    if all_flag:
+        print("Executar para todos os dias")
+        retrieve_all()
+    else:
+        print(f"Executar para {ndays} dias")
+        retrieve_last_days(ndays)
+
+if __name__ == "__main__":
+    p = argparse.ArgumentParser()
+    grp = p.add_mutually_exclusive_group(required=True)
+    grp.add_argument("--ndays", type=int, help="número de dias")
+    grp.add_argument("--all", action="store_true", help="processar todos")
+    args = p.parse_args()
+    main(args.ndays, args.all)
