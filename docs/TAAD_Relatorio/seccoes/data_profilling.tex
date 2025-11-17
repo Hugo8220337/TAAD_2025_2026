@@ -11,6 +11,7 @@ A análise de valores nulos revelou alguns padrões de incompletude de algumas v
 A ausência de valores em quase 30\% nas variáveis de clima fortalece a decisão tomada inicialmente de procurar dados sobre as mesmas no \textit{open-meteo}, assim, estes valores são ignorados do dataset do ICNF, garantindo não só mais variáveis de climatização, como também a garantia que as mesmas irão sempre existir.
 
 As variáveis de classificação (TIPO, CAUSA, TIPOCAUSA) apresentam melhor completude, com taxas de preenchimento superiores a 93\%, indicando robustez no processo de registo operacional destas características fundamentais.
+No Entanto, mesmo tendo percentagens de valores nulos bastante baixos, tanto os registos com as variáveis da família do CAUSA (CAUSA, TIPOCAUSA, CAUSAFAMILIA) como as variáveis FFMC e FWI com valores nulos, irão ser colocados em tabelas de quarentena para posterior validação e possível tratamento, uma vez que são variáveis cruciais para a análise de incêndios florestais.
 
 \begin{table}[h]
 \centering
