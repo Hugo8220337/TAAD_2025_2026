@@ -26,7 +26,7 @@
           <SSIS:Property SSIS:Name="CreatorComputerName">DESKTOP-G01CPCN</SSIS:Property>
           <SSIS:Property SSIS:Name="Description">
           </SSIS:Property>
-          <SSIS:Property SSIS:Name="PasswordVerifier" SSIS:Sensitive="1">AQAAANCMnd8BFdERjHoAwE/Cl+sBAAAAnGLToHQ/QUCfAekZCVZnhwAAAAACAAAAAAAQZgAAAAEAACAAAACOGOXiLZmNqqADAgsVu8ADNbc+47N4Nu2fOxOOG4rBawAAAAAOgAAAAAIAACAAAAB91nyKBcoJlfVrMhI3u5w3p53nakvXHeWQfTgcomXfvJAAAACpNEl0IfpUzDRKDN2SWEmaONCwFHpRaXIIMtlIfP0taibpRcOMECseQAqVyyMsQvfGLn7L7UJEbn22T7qi6HX6kr6W4oLyV2zV4wOA/HXWi9y3HwMhYw6qxdAiHIqNh6Znqu4xPMGYVNxKqFd33Wb4UtbFBf9KwjfwW+hOCqMEytr9bHCHWUUXt69JKDSz9kFAAAAAaFTlszrhMPXeux77hQx9lP+mTnBYa6UM+f5OygSoeLoXTYFoqHz2/G1jSJbFQFqmpfBMAa74f/eSP5U5SZPwCg==</SSIS:Property>
+          <SSIS:Property SSIS:Name="PasswordVerifier" SSIS:Sensitive="1">AQAAANCMnd8BFdERjHoAwE/Cl+sBAAAAnGLToHQ/QUCfAekZCVZnhwAAAAACAAAAAAAQZgAAAAEAACAAAABmpxiykdWtvf84eQeFrsUU/M+wrkAmp7JMn2iqvQMBdAAAAAAOgAAAAAIAACAAAAD1AXZQriE3benyv/JWAhGKPg35mBrGXtaGIS3MCNpjjZAAAACpvy043p4saUJdo0dCG4GYGn4JAXLTfFG51QpbCi5wD1519UlWh6aM1v4glppGndPOwSxPd+Roqy1caL0czTqbeIlEENPzkBW9ESo7wgJ7TQ41Zw2mW83BNRmuSxcCb4S+Uh0cxt0F6JU8dJkw9Wl59hf19NVLDR3yLaDkXRylUXdn0PXNkKV+BnkkpVPt/P5AAAAAEH3LNCys3XAp+3CsWJ+gyjR1fvh6E/3VVxMBb7//0LIyN88BD9u9qIObcilJxl3Qkze7ixoFTS/9ciXd7unK0A==</SSIS:Property>
           <SSIS:Property SSIS:Name="FormatVersion">1</SSIS:Property>
         </SSIS:Properties>
         <SSIS:Packages>
@@ -42,10 +42,10 @@
                 <SSIS:Property SSIS:Name="Name">Package</SSIS:Property>
                 <SSIS:Property SSIS:Name="VersionMajor">1</SSIS:Property>
                 <SSIS:Property SSIS:Name="VersionMinor">0</SSIS:Property>
-                <SSIS:Property SSIS:Name="VersionBuild">17</SSIS:Property>
+                <SSIS:Property SSIS:Name="VersionBuild">48</SSIS:Property>
                 <SSIS:Property SSIS:Name="VersionComments">
                 </SSIS:Property>
-                <SSIS:Property SSIS:Name="VersionGUID">{652259A7-DE42-4540-A486-728023F27228}</SSIS:Property>
+                <SSIS:Property SSIS:Name="VersionGUID">{C5E2BCD7-2077-43BF-9799-BAAC636EDCBB}</SSIS:Property>
                 <SSIS:Property SSIS:Name="PackageFormatVersion">8</SSIS:Property>
                 <SSIS:Property SSIS:Name="Description">
                 </SSIS:Property>
@@ -226,7 +226,7 @@
                     <SSIS:Property SSIS:Name="IncludeInDebugDump">0</SSIS:Property>
                     <SSIS:Property SSIS:Name="Required">0</SSIS:Property>
                     <SSIS:Property SSIS:Name="Sensitive">0</SSIS:Property>
-                    <SSIS:Property SSIS:Name="Value">1252</SSIS:Property>
+                    <SSIS:Property SSIS:Name="Value">65001</SSIS:Property>
                     <SSIS:Property SSIS:Name="DataType">9</SSIS:Property>
                   </SSIS:Properties>
                 </SSIS:Parameter>
@@ -258,21 +258,6 @@
                     <SSIS:Property SSIS:Name="Sensitive">0</SSIS:Property>
                     <SSIS:Property SSIS:Name="Value">false</SSIS:Property>
                     <SSIS:Property SSIS:Name="DataType">3</SSIS:Property>
-                  </SSIS:Properties>
-                </SSIS:Parameter>
-                <SSIS:Parameter SSIS:Name="CM.FF_ICNF_Connection.ConnectionString">
-                  <SSIS:Properties>
-                    <SSIS:Property SSIS:Name="ID">
-                    </SSIS:Property>
-                    <SSIS:Property SSIS:Name="CreationName">
-                    </SSIS:Property>
-                    <SSIS:Property SSIS:Name="Description">
-                    </SSIS:Property>
-                    <SSIS:Property SSIS:Name="IncludeInDebugDump">0</SSIS:Property>
-                    <SSIS:Property SSIS:Name="Required">0</SSIS:Property>
-                    <SSIS:Property SSIS:Name="Sensitive">0</SSIS:Property>
-                    <SSIS:Property SSIS:Name="Value">C:\Users\User\GitHub\TAAD_2025_2026\etl_ssis\icnf\apoio\raw\icnf_data\dummy_for_structure_awareness.csv</SSIS:Property>
-                    <SSIS:Property SSIS:Name="DataType">18</SSIS:Property>
                   </SSIS:Properties>
                 </SSIS:Parameter>
                 <SSIS:Parameter SSIS:Name="CM.FF_ICNF_Connection.DataRowsToSkip">
@@ -362,6 +347,8 @@
                     <SSIS:Property SSIS:Name="IncludeInDebugDump">0</SSIS:Property>
                     <SSIS:Property SSIS:Name="Required">0</SSIS:Property>
                     <SSIS:Property SSIS:Name="Sensitive">0</SSIS:Property>
+                    <SSIS:Property SSIS:Name="Value">
+                    </SSIS:Property>
                     <SSIS:Property SSIS:Name="DataType">18</SSIS:Property>
                   </SSIS:Properties>
                 </SSIS:Parameter>
