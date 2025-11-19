@@ -17,7 +17,6 @@ Table fact_fire {
   location_id int [ref: > dim_location.location_id]
   fire_type_id int [ref: > dim_fire_type.fire_type_id]
   cause_id int [ref: > dim_cause.cause_id]
-  meteo_fact_id int [note: 'Optional link to the meteo fact']
 
   area_total_m2 float
   area_pov_m2 float
@@ -91,22 +90,22 @@ Table dim_cause {
   Note: 'Cause taxonomy for fires (detailed and aggregated levels)'
 }
 
-Table dim_meteorology {
-  meteorology_id int [pk, increment, note: "Surrogate key for meteorology summary (auto-increment)"]
-  fire_id varchar [ref: > fact_fire.fire_id, note: "FK linking to dim_fire (when available)"]
-  mean_temp_max float
-  mean_temp_min float
-  rh_max_mean float
-  rh_min_mean float
-  precip_sum_mean float
-  rain_sum_mean float
-  wind_max_mean float
-  gust_max_mean float
-  radiation_mean float
-  sunshine_mean float
-  et0_mean float
-  dry_day_sum int
-  high_wind_sum int
+// Table dim_meteorology {
+//   meteorology_id int [pk, increment, note: "Surrogate key for meteorology summary (auto-increment)"]
+//   fire_id varchar [ref: > fact_fire.fire_id, note: "FK linking to dim_fire (when available)"]
+//   mean_temp_max float
+//   mean_temp_min float
+//   rh_max_mean float
+//   rh_min_mean float
+//   precip_sum_mean float
+//   rain_sum_mean float
+//   wind_max_mean float
+//   gust_max_mean float
+//   radiation_mean float
+//   sunshine_mean float
+//   et0_mean float
+//   dry_day_sum int
+//   high_wind_sum int
 
-  Note: "Meteorological summary aggregated per fire (validation / summary dataset)"
-}
+//   Note: "Meteorological summary aggregated per fire (validation / summary dataset)"
+// }
