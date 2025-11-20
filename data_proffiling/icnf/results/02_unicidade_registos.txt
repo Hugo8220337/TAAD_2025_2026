@@ -1,0 +1,5 @@
+=== ANÁLISE DE DUPLICADOS — REGISTOS COMPLETOS ===
+
+Total de registos duplicados completos: 0
+
+Nenhum registo completamente duplicado encontrado.

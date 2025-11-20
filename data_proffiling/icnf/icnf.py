@@ -46,6 +46,52 @@ nulos_df = pd.DataFrame({
 nulos_df.to_csv(f"{output_dir}/02_valores_nulos.csv", index=False, encoding='utf-8')
 print("✓ Valores nulos exportados para 02_valores_nulos.csv")
 
+# ====== 2.1 UNICIDADE (IDs e duplicados gerais) ======
+
+unicidade_dir = f"{output_dir}"
+
+# Duplicados baseados apenas no ID
+duplicados_id = df_profile[df_profile['id'].duplicated(keep=False)]
+
+with open(f"{unicidade_dir}/02_unicidade_ids.txt", 'w', encoding='utf-8') as f:
+    f.write("=== ANÁLISE DE UNICIDADE — CAMPO ID ===\n\n")
+    f.write(f"Total de registos: {len(df_profile)}\n")
+    f.write(f"IDs únicos: {df_profile['id'].nunique()}\n")
+    f.write(f"IDs duplicados: {len(df_profile) - df_profile['id'].nunique()}\n\n")
+
+    if len(duplicados_id) > 0:
+        f.write("IDs duplicados encontrados no dataset.\n")
+        f.write("Lista de primeiros 20 duplicados:\n")
+        f.write(duplicados_id.head(20).to_string())
+        f.write("\n")
+    else:
+        f.write("Nenhum ID duplicado encontrado.\n")
+
+# Exportar duplicados completos do ID
+if len(duplicados_id) > 0:
+    duplicados_id.to_csv(f"{unicidade_dir}/02_unicidade_ids_duplicados.csv",
+                         index=False, encoding='utf-8')
+
+# Duplicados considerando todas as colunas
+duplicados_completos = df_profile[df_profile.duplicated(keep=False)]
+
+with open(f"{unicidade_dir}/02_unicidade_registos.txt", 'w', encoding='utf-8') as f:
+    f.write("=== ANÁLISE DE DUPLICADOS — REGISTOS COMPLETOS ===\n\n")
+    f.write(f"Total de registos duplicados completos: {len(duplicados_completos)}\n\n")
+
+    if len(duplicados_completos) > 0:
+        f.write("Primeiros 20 duplicados completos:\n")
+        f.write(duplicados_completos.head(20).to_string())
+        f.write("\n")
+    else:
+        f.write("Nenhum registo completamente duplicado encontrado.\n")
+
+if len(duplicados_completos) > 0:
+    duplicados_completos.to_csv(f"{unicidade_dir}/02_unicidade_registos_completos.csv",
+                                index=False, encoding='utf-8')
+
+print("✓ Unicidade verificada para IDs e registos completos.")
+
 # ====== 3. ANÁLISE CATEGÓRICAS ======
 categoricas = ['DISTRITO', 'CONCELHO', 'FREGUESIA', 'TIPO', 'CAUSA', 'TIPOCAUSA', 'CAUSAFAMILIA']
 
