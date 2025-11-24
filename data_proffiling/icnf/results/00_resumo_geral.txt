@@ -1,6 +1,6 @@
 === RESUMO GERAL DO PROFILING ===
 
-Data de execução: 2025-11-13 21:45:35.861611
+Data de execução: 2025-11-20 11:03:49.932896
 Total de registos: 2451
 Total de colunas analisadas: 25
 

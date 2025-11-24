@@ -1,0 +1,7 @@
+=== ANÁLISE DE UNICIDADE — CAMPO ID ===
+
+Total de registos: 2451
+IDs únicos: 2451
+IDs duplicados: 0
+
+Nenhum ID duplicado encontrado.

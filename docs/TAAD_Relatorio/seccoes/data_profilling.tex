@@ -31,6 +31,11 @@ FWI & 0.2 & 6 & 2451 \\
 \end{tabular}
 \end{table}
 
+\subsection{Unicidade dos dados}
+Algo bastante importante de averiguar no dataset, é se existem registos duplicados, visto que isso poluiria o data warehouse, podendo atrapalhar a análise dos dados, ou, mais importante, se existe algum id repetido.
+
+Após analisar todos os registos, foi possível constar que para além de não existirem ids repetidos, também não existem registos inteiramente iguais entre si, confirmando assim a unicidade do dataset. Isto indica também que a origem dos dados (ICNF) mantém um controlo adequado sobre as entradas dos registos, eliminando assim a necessidade de operações de deduplicaçao dos dados no processo de integração, e reforça a fiabilidade de análises posteriores, dado que não vão existir duplicações que poderão distorcer as estatísticas.
+
 \subsection{Deteção e Caracterização de Outliers}
 
 A Figura \ref{fig:boxplot_individuais} apresenta os boxplots para as oito variáveis numéricas do dataset, revelando padrões de distribuição e outliers característicos dos fenómenos em estudo:
@@ -70,7 +75,7 @@ A desagregação ao nível da freguesia (Figura \ref{fig:20Freguesias}) revela h
     \item Correlação com características locais (tipo de vegetação, densidade populacional, acessibilidades)
 \end{itemize}
 
-Observa-se que as freguesias com maior número de ocorrências não coincidem necessariamente com as de maior área ardida, sugerindo diferenças na efeciência de combate ou em características de propagação.
+Observa-se que as freguesias com maior número de ocorrências não coincidem necessariamente com as de maior área ardida, sugerindo diferenças na eficiência de combate ou em características de propagação.
 
 \begin{figure}
     \centering
@@ -98,7 +103,7 @@ A matriz de correlações (Figura \ref{fig:correlacoes}) revela as interdependê
 
 \begin{figure}
     \centering
-    \includegraphics[width=0.8\linewidth]{imagens/06_correlacoes.png}
+    \includegraphics[width=0.7\linewidth]{imagens/06_correlacoes.png}
     \caption{Matriz de correlações entre variáveis numéricas}
     \label{fig:correlacoes}
 \end{figure}
