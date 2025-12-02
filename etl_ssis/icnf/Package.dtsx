@@ -11,8 +11,8 @@
   DTS:LocaleID="2070"
   DTS:ObjectName="Package"
   DTS:PackageType="5"
-  DTS:VersionBuild="96"
-  DTS:VersionGUID="{077CAF63-60E5-42D0-B058-85CC79003977}">
+  DTS:VersionBuild="99"
+  DTS:VersionGUID="{506933EE-4FC0-4E61-BA38-DF1894845AC4}">
   <DTS:Property
     DTS:Name="PackageFormatVersion">8</DTS:Property>
   <DTS:ConnectionManagers>
@@ -4093,6 +4093,23 @@
       </DTS:ForEachVariableMappings>
     </DTS:Executable>
     <DTS:Executable
+      DTS:refId="Package\Insert Data to Staging Area"
+      DTS:CreationName="Microsoft.ExecuteProcess"
+      DTS:Description="Execute Process Task"
+      DTS:DTSID="{A14216E5-EA05-4A67-A8A6-6E66A381AE2D}"
+      DTS:ExecutableType="Microsoft.ExecuteProcess"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Insert Data to Staging Area"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <ExecuteProcessData
+          Executable="C:\Users\User\GitHub\TAAD_2025_2026\etl_ssis\icnf\apoio\raw\SQLServerInserter.exe"
+          Arguments="--data_dir C:\Users\User\GitHub\TAAD_2025_2026\etl_ssis\icnf\apoio\raw\icnf_filtered_data --sql_dir C:\Users\User\GitHub\TAAD_2025_2026\etl_ssis\icnf\apoio\raw\sql --db_connection Server=DESKTOP-G01CPCN;Database=DSA.TAAD;UID=sa;PWD=risidihu2032003;&quot;"
+          WorkingDirectory="C:\Users\User\GitHub\TAAD_2025_2026\etl_ssis\icnf\apoio\raw" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
       DTS:refId="Package\Run Data Filter"
       DTS:CreationName="Microsoft.ExecuteProcess"
       DTS:Description="Execute Process Task"
@@ -4136,6 +4153,14 @@
       DTS:LogicalAnd="True"
       DTS:ObjectName="Constraint"
       DTS:To="Package\Run Data Filter" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint 1]"
+      DTS:CreationName=""
+      DTS:DTSID="{454AA2CB-527F-4324-AD45-73921611101E}"
+      DTS:From="Package\Run Data Filter"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint 1"
+      DTS:To="Package\Insert Data to Staging Area" />
   </DTS:PrecedenceConstraints>
   <DTS:DesignTimeProperties><![CDATA[<?xml version="1.0"?>
 <!--This CDATA section contains the layout information of the package. The section includes information such as (x,y) coordinates, width, and height.-->
@@ -4159,18 +4184,18 @@
           PanelSize="294.4,190.4"
           Size="294.4,233.6"
           Id="Package\Foreach Loop Container"
-          TopLeft="343.333314574428,328.399997938871" />
+          TopLeft="30.8333316486743,281.599998264313" />
         <NodeLayout
           Size="155.2,41.6"
           Id="Package\Run ICNF scrypt"
-          TopLeft="409.166644310787,119.599999168317" />
+          TopLeft="418.333310476609,119.599999168317" />
         <NodeLayout
           Size="181.6,41.6"
           Id="Package\Run Data Filter"
-          TopLeft="399.166644857163,225.733332164155" />
+          TopLeft="408.333311022985,225.733332164155" />
         <EdgeLayout
           Id="Package.PrecedenceConstraints[Constraint]"
-          TopLeft="488.366644583975,161.199999168317">
+          TopLeft="497.533310749797,161.199999168317">
           <EdgeLayout.Curve>
             <mssgle:Curve
               StartConnector="{assembly:Null}"
@@ -4182,6 +4207,32 @@
                   Capacity="5">
                   <mssgle:LineSegment
                     End="0,57.0333329958381" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <NodeLayout
+          Size="203.2,41.6"
+          Id="Package\Insert Data to Staging Area"
+          TopLeft="396.666644993756,322.733331567513" />
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 1]"
+          TopLeft="498.699978008371,267.333332164155">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,55.3999994033576"
+              Start="0,0"
+              End="0,47.8999994033576">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,47.8999994033576" />
                 </mssgle:SegmentCollection>
               </mssgle:Curve.Segments>
             </mssgle:Curve>
