@@ -11,11 +11,21 @@
   DTS:LocaleID="2070"
   DTS:ObjectName="Package"
   DTS:PackageType="5"
-  DTS:VersionBuild="116"
-  DTS:VersionGUID="{D977EEFC-1F49-4183-892C-2C2555E7A07F}">
+  DTS:VersionBuild="120"
+  DTS:VersionGUID="{DB9CF8C4-1693-4B99-963F-988D337B69F6}">
   <DTS:Property
     DTS:Name="PackageFormatVersion">8</DTS:Property>
   <DTS:ConnectionManagers>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[clean_staging.sql]"
+      DTS:CreationName="FILE"
+      DTS:DTSID="{E5556CF1-F90C-4FFF-9E48-0C5C37E282BD}"
+      DTS:ObjectName="clean_staging.sql">
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectionString="C:\Users\User\GitHub\TAAD_2025_2026\etl_ssis\icnf\apoio\scripts\clean_staging.sql" />
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
     <DTS:ConnectionManager
       DTS:refId="Package.ConnectionManagers[DESKTOP-G01CPCN.DSA.TAAD]"
       DTS:CreationName="OLEDB"
@@ -1428,6 +1438,16 @@
           DTS:ConnectionString="C:\Users\User\GitHub\TAAD_2025_2026\etl_ssis\icnf\apoio\scripts\populate_dim_location.sql" />
       </DTS:ObjectData>
     </DTS:ConnectionManager>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[populate_fact_fire.sql]"
+      DTS:CreationName="FILE"
+      DTS:DTSID="{18A29385-46F8-42ED-BC4F-463038BC0A57}"
+      DTS:ObjectName="populate_fact_fire.sql">
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectionString="C:\Users\User\GitHub\TAAD_2025_2026\etl_ssis\icnf\apoio\scripts\populate_fact_fire.sql" />
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
   </DTS:ConnectionManagers>
   <DTS:PackageParameters>
     <DTS:PackageParameter
@@ -1442,7 +1462,7 @@
         <DTS:Property
           DTS:DataType="8"
           DTS:Name="ParameterValue"
-          Encrypted="1">AQAAANCMnd8BFdERjHoAwE/Cl+sBAAAAnGLToHQ/QUCfAekZCVZnhwAAAAAIAAAARABUAFMAAAAQZgAAAAEAACAAAABpbCBVqui97tq0IGCPGBdA7cMc5uRIrCEre0F4skseGwAAAAAOgAAAAAIAACAAAAA22zq5dsWcZtO+qbZSmR5z2mO1lmXfaP5Q86fjmk9hH6AAAACU1C6NWegr0IoiWU0uQHMd+0bvxOEIzhiuBbsxJypNW4JBPzilC11hi5yajKa315eLoL1Tn/AxeYgCPJZfdZc3GpGKEt6Gpwng697Q+m++D9lei91nSIWLNs+CxGH1awfaaLquCZ0vkfJ0UQd0ukgCZ8ORQ6jwmYPbY2Rgl5BEkIQrrA56jxquTOzG2GD0jOKalfNHs/VrZF9xwCd2Ut9oQAAAAP2737e/ApPuI19HcEP+wJQWWEU8ZXFE5ere3YaCzCqUmMupGCUBByukQnEDZRlEhfpXqMIAEak+m/rmF68zVis</DTS:Property>
+          Encrypted="1">AQAAANCMnd8BFdERjHoAwE/Cl+sBAAAAnGLToHQ/QUCfAekZCVZnhwAAAAAIAAAARABUAFMAAAAQZgAAAAEAACAAAADu/41kgQPUj8D7AohCXi1jjNqTiJmHrtRDZG5fw+GNjgAAAAAOgAAAAAIAACAAAACyulrApJmDcd6z7oadnxbTgD9k2gUrcep2HehWahpHXaAAAACrUat4H/GkHLkobeG6sCsqGva0h3blSv+O59Vgy1ZV6ynZ8I2753Y1D39HqRAoreBy0ZG1E/ZAKUx76KXaSZFwh3Xefc89DmIlyzBoiHTgdzou5Ue17h74jExTdwbELOACr47IEEalbzC1sC76+yA0Fve73bolaZJCoiekbWnpg3QuxDOGWKH4RT22OS5QQlBOuDRf6gcMKgSbQJlk0N6QQAAAACHkJ1f+R42KU5g5qAOrg9aZn3NHf0oQ7WMNawn537DUQJSbPBu0n5LKU4iZxMByKOWfdTlTW0k2/Sx+Fs4cEkc</DTS:Property>
       </DTS:Property>
     </DTS:PackageParameter>
   </DTS:PackageParameters>
@@ -1484,6 +1504,23 @@
           Executable="C:\Users\User\GitHub\TAAD_2025_2026\etl_ssis\icnf\apoio\raw\SQLServerInserter.exe"
           Arguments="--data_dir C:\Users\User\GitHub\TAAD_2025_2026\etl_ssis\icnf\apoio\raw\icnf_filtered_data --sql_dir C:\Users\User\GitHub\TAAD_2025_2026\etl_ssis\icnf\apoio\raw\sql --db_connection Server=DESKTOP-G01CPCN;Database=DSA.TAAD;UID=sa;PWD=risidihu2032003;&quot;"
           WorkingDirectory="C:\Users\User\GitHub\TAAD_2025_2026\etl_ssis\icnf\apoio\raw" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\Limpar Staging Area"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:Description="Execute SQL Task"
+      DTS:DTSID="{158f26f0-28e0-4e16-8742-9d2b2171e023}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Limpar Staging Area"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{628A2FB4-96D3-4818-B7FB-283A52C176AA}"
+          SQLTask:SqlStmtSourceType="FileConnection"
+          SQLTask:SqlStatementSource="clean_staging.sql" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
       </DTS:ObjectData>
     </DTS:Executable>
     <DTS:Executable
@@ -1581,7 +1618,66 @@
               SQLTask:SqlStatementSource="populate_dim_fire_type.sql" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
           </DTS:ObjectData>
         </DTS:Executable>
+        <DTS:Executable
+          DTS:refId="Package\Processar Dados\Povoar Tabela de Factos"
+          DTS:CreationName="Microsoft.ExecuteSQLTask"
+          DTS:Description="Execute SQL Task"
+          DTS:DTSID="{de1a68ff-c437-4b14-8735-2f30be2f9996}"
+          DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+          DTS:LocaleID="-1"
+          DTS:ObjectName="Povoar Tabela de Factos"
+          DTS:ThreadHint="0">
+          <DTS:Variables />
+          <DTS:ObjectData>
+            <SQLTask:SqlTaskData
+              SQLTask:Connection="{628A2FB4-96D3-4818-B7FB-283A52C176AA}"
+              SQLTask:SqlStmtSourceType="FileConnection"
+              SQLTask:SqlStatementSource="populate_fact_fire.sql" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+          </DTS:ObjectData>
+        </DTS:Executable>
       </DTS:Executables>
+      <DTS:PrecedenceConstraints>
+        <DTS:PrecedenceConstraint
+          DTS:refId="Package\Processar Dados.PrecedenceConstraints[Constraint]"
+          DTS:CreationName=""
+          DTS:DTSID="{4123F242-376C-4596-B7C0-A95B844EA76E}"
+          DTS:From="Package\Processar Dados\Povoar Dimensao Localizacao"
+          DTS:LogicalAnd="True"
+          DTS:ObjectName="Constraint"
+          DTS:To="Package\Processar Dados\Povoar Tabela de Factos" />
+        <DTS:PrecedenceConstraint
+          DTS:refId="Package\Processar Dados.PrecedenceConstraints[Constraint 1]"
+          DTS:CreationName=""
+          DTS:DTSID="{68333687-2CE5-452D-A0C7-BFFE81FA1E6A}"
+          DTS:From="Package\Processar Dados\Povoar Dimensao DIa"
+          DTS:LogicalAnd="True"
+          DTS:ObjectName="Constraint 1"
+          DTS:To="Package\Processar Dados\Povoar Tabela de Factos" />
+        <DTS:PrecedenceConstraint
+          DTS:refId="Package\Processar Dados.PrecedenceConstraints[Constraint 2]"
+          DTS:CreationName=""
+          DTS:DTSID="{93A97703-8B2F-4334-9BEA-A37969B06E37}"
+          DTS:From="Package\Processar Dados\Povoar Dimensao Tipo Incendio"
+          DTS:LogicalAnd="True"
+          DTS:ObjectName="Constraint 2"
+          DTS:To="Package\Processar Dados\Povoar Tabela de Factos" />
+        <DTS:PrecedenceConstraint
+          DTS:refId="Package\Processar Dados.PrecedenceConstraints[Constraint 3]"
+          DTS:CreationName=""
+          DTS:DTSID="{292946E2-D77D-4EBA-A55F-2A8277798396}"
+          DTS:From="Package\Processar Dados\Povoar Dimensao Causa"
+          DTS:LogicalAnd="True"
+          DTS:ObjectName="Constraint 3"
+          DTS:To="Package\Processar Dados\Povoar Tabela de Factos" />
+        <DTS:PrecedenceConstraint
+          DTS:refId="Package\Processar Dados.PrecedenceConstraints[Constraint 4]"
+          DTS:CreationName=""
+          DTS:DTSID="{5A2E9AA0-F043-40C3-B81B-0A7CF51C051D}"
+          DTS:From="Package\Processar Dados\Povoar Dimensao Hora"
+          DTS:LogicalAnd="True"
+          DTS:ObjectName="Constraint 4"
+          DTS:To="Package\Processar Dados\Povoar Tabela de Factos" />
+      </DTS:PrecedenceConstraints>
     </DTS:Executable>
     <DTS:Executable
       DTS:refId="Package\Run Data Filter"
@@ -1643,6 +1739,14 @@
       DTS:LogicalAnd="True"
       DTS:ObjectName="Constraint 2"
       DTS:To="Package\Processar Dados" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint 3]"
+      DTS:CreationName=""
+      DTS:DTSID="{E82FE732-4E5E-43AB-A6B3-7B1714C2C30E}"
+      DTS:From="Package\Processar Dados"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint 3"
+      DTS:To="Package\Limpar Staging Area" />
   </DTS:PrecedenceConstraints>
   <DTS:DesignTimeProperties><![CDATA[<?xml version="1.0"?>
 <!--This CDATA section contains the layout information of the package. The section includes information such as (x,y) coordinates, width, and height.-->
@@ -1655,7 +1759,7 @@
     design-time-name="Package">
     <LayoutInfo>
       <GraphLayout
-        Capacity="16" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
+        Capacity="32" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
         <NodeLayout
           Size="203.2,41.6"
           Id="Package\Insert Data to Staging Area"
@@ -1715,44 +1819,244 @@
         <NodeLayout
           Size="186.4,41.6"
           Id="Package\Processar Dados\Povoar Dimensao Hora"
-          TopLeft="379.9666372079,103.933330084946" />
+          TopLeft="194.966647315854,69.2666636593468" />
         <NodeLayout
           Size="180,41.6"
           Id="Package\Processar Dados\Povoar Dimensao DIa"
-          TopLeft="217.466646086508,53.8666644729508" />
+          TopLeft="17.4666570140259,186.466663550867" />
         <NodeLayout
           Size="218.4,41.6"
           Id="Package\Processar Dados\Povoar Dimensao Localizacao"
-          TopLeft="17.1666660292282,102.399997468789" />
+          TopLeft="276.333318535653,14.8666647441516" />
         <NodeLayout
           Size="193.6,41.6"
           Id="Package\Processar Dados\Povoar Dimensao Causa"
-          TopLeft="373.299970905484,9.86666548543513" />
+          TopLeft="401.633302690752,85.2666649611131" />
         <NodeLayout
           Size="226.4,41.6"
           Id="Package\Processar Dados\Povoar Dimensao Tipo Incendio"
-          TopLeft="14.9666571506202,11.5999988067151" />
-        <ContainerLayout
-          HeaderHeight="43"
-          IsExpanded="True"
-          PanelSize="567.2,276"
-          Size="567.2,319.2"
-          Id="Package\Processar Dados"
-          TopLeft="182.49999002864,320.599997848471" />
+          TopLeft="30.7999896188584,10.7333321460751" />
+        <NodeLayout
+          Size="194.4,41.6"
+          Id="Package\Processar Dados\Povoar Tabela de Factos"
+          TopLeft="195.799980603657,266.199996329744" />
         <EdgeLayout
-          Id="Package.PrecedenceConstraints[Constraint 2]"
-          TopLeft="464.683318467356,279.399998824795">
+          Id="Package\Processar Dados.PrecedenceConstraints[Constraint]"
+          TopLeft="385.533318535653,56.4666647441516">
           <EdgeLayout.Curve>
             <mssgle:Curve
               StartConnector="{assembly:Null}"
-              EndConnector="0,41.1999990236752"
+              EndConnector="-61.4666712653301,209.733331585593"
               Start="0,0"
-              End="0,33.6999990236752">
+              End="-61.4666712653301,202.233331585593">
               <mssgle:Curve.Segments>
                 <mssgle:SegmentCollection
                   Capacity="5">
                   <mssgle:LineSegment
-                    End="0,33.6999990236752" />
+                    End="0,120.812733653794" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,120.812733653794"
+                    Point2="0,124.812733653794"
+                    Point3="-4,124.812733653794" />
+                  <mssgle:LineSegment
+                    End="-57.4666712653301,124.812733653794" />
+                  <mssgle:CubicBezierSegment
+                    Point1="-57.4666712653301,124.812733653794"
+                    Point2="-61.4666712653301,124.812733653794"
+                    Point3="-61.4666712653301,128.812733653794" />
+                  <mssgle:LineSegment
+                    End="-61.4666712653301,202.233331585593" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\Processar Dados.PrecedenceConstraints[Constraint 1]"
+          TopLeft="107.466657014026,228.066663550867">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="123.399990256298,38.1333327788772"
+              Start="0,0"
+              End="123.399990256298,30.6333327788772">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,24.023386689316" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,24.023386689316"
+                    Point2="0,28.023386689316"
+                    Point3="4,28.023386689316" />
+                  <mssgle:LineSegment
+                    End="119.399990256298,28.023386689316" />
+                  <mssgle:CubicBezierSegment
+                    Point1="119.399990256298,28.023386689316"
+                    Point2="123.399990256298,28.023386689316"
+                    Point3="123.399990256298,32.023386689316" />
+                  <mssgle:LineSegment
+                    End="123.399990256298,30.6333327788772" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\Processar Dados.PrecedenceConstraints[Constraint 2]"
+          TopLeft="143.999989618858,52.3333321460751">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="117.933324318132,213.866664183669"
+              Start="0,0"
+              End="117.933324318132,206.366664183669">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,123.272488318282" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,123.272488318282"
+                    Point2="0,127.272488318282"
+                    Point3="4,127.272488318282" />
+                  <mssgle:LineSegment
+                    End="113.933324318132,127.272488318282" />
+                  <mssgle:CubicBezierSegment
+                    Point1="113.933324318132,127.272488318282"
+                    Point2="117.933324318132,127.272488318282"
+                    Point3="117.933324318132,131.272488318282" />
+                  <mssgle:LineSegment
+                    End="117.933324318132,206.366664183669" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\Processar Dados.PrecedenceConstraints[Constraint 3]"
+          TopLeft="498.433302690752,126.866664961113">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="-143.299988753762,139.333331368631"
+              Start="0,0"
+              End="-143.299988753762,131.833331368631">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,98.393143717472" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,98.393143717472"
+                    Point2="0,102.393143717472"
+                    Point3="-4,102.393143717472" />
+                  <mssgle:LineSegment
+                    End="-139.299988753762,102.393143717472" />
+                  <mssgle:CubicBezierSegment
+                    Point1="-139.299988753762,102.393143717472"
+                    Point2="-143.299988753762,102.393143717472"
+                    Point3="-143.299988753762,106.393143717472" />
+                  <mssgle:LineSegment
+                    End="-143.299988753762,131.833331368631" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\Processar Dados.PrecedenceConstraints[Constraint 4]"
+          TopLeft="290.583313959755,110.866663659347">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,155.333332670398"
+              Start="0,0"
+              End="0,147.833332670398">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,147.833332670398" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <ContainerLayout
+          HeaderHeight="43"
+          IsExpanded="True"
+          PanelSize="608.8,464"
+          Size="608.8,507.2"
+          Id="Package\Processar Dados"
+          TopLeft="182.49999002864,320.599997848471" />
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 2]"
+          TopLeft="463.266646906072,279.399998824795">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="23.6333431225686,41.1999990236752"
+              Start="0,0"
+              End="23.6333431225686,33.6999990236752">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,16.5999995118376" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,16.5999995118376"
+                    Point2="0,20.5999995118376"
+                    Point3="4,20.5999995118376" />
+                  <mssgle:LineSegment
+                    End="19.6333431225686,20.5999995118376" />
+                  <mssgle:CubicBezierSegment
+                    Point1="19.6333431225686,20.5999995118376"
+                    Point2="23.6333431225686,20.5999995118376"
+                    Point3="23.6333431225686,24.5999995118376" />
+                  <mssgle:LineSegment
+                    End="23.6333431225686,33.6999990236752" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <NodeLayout
+          Size="172.8,41.6"
+          Id="Package\Limpar Staging Area"
+          TopLeft="400.69997937431,907.333328837421" />
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 3]"
+          TopLeft="486.999984701475,827.799997848471">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,79.5333309889504"
+              Start="0,0"
+              End="0,72.0333309889504">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,72.0333309889504" />
                 </mssgle:SegmentCollection>
               </mssgle:Curve.Segments>
             </mssgle:Curve>
