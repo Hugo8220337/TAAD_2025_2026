@@ -11,8 +11,8 @@
   DTS:LocaleID="2070"
   DTS:ObjectName="Package"
   DTS:PackageType="5"
-  DTS:VersionBuild="121"
-  DTS:VersionGUID="{B67A4395-555D-405F-995C-A90B6BC7B8CF}">
+  DTS:VersionBuild="122"
+  DTS:VersionGUID="{88A91FE4-FA3A-4264-A748-DC52F315A9A9}">
   <DTS:Property
     DTS:Name="PackageFormatVersion">8</DTS:Property>
   <DTS:ConnectionManagers>
@@ -1462,7 +1462,7 @@
         <DTS:Property
           DTS:DataType="8"
           DTS:Name="ParameterValue"
-          Encrypted="1">AQAAANCMnd8BFdERjHoAwE/Cl+sBAAAAnGLToHQ/QUCfAekZCVZnhwAAAAAIAAAARABUAFMAAAAQZgAAAAEAACAAAABIPTEWdHv7wRI/awftdhzAU0G5NZq660F+z0fHm99H0AAAAAAOgAAAAAIAACAAAAAC3vnxAgwH+iZtpbXmBS7W6Ic4yP7LL3mhT/GYbLuCuqAAAAAPSLCEqK6hqvLUNu7VKRg0IRlKLnD10LHevAYS7TkMdYmXyzuf2gmI1Ei7hxT9ogWiLQmkYrKj6l/kQvuWNHDF5NVNY2HHq5rDAUYPeVLNrVrNMEO23wOl3JBVKBgWlueAqIuz+9Taz73i3noFBbH2AijtL+R6OJ+MztxKk+30A9OUq8RzS+lLDQuhret4GxIOfG2ytG7GX5JBabeHvuWPQAAAAIBIrJSwDqYbfYS3dLvoewKIkWQ9AAYCBdWXasagJ4opD1AUiOGDc9BegX/8Kuil13WjIkr9VTUarBC6R/XryI8</DTS:Property>
+          Encrypted="1">AQAAANCMnd8BFdERjHoAwE/Cl+sBAAAAnGLToHQ/QUCfAekZCVZnhwAAAAAIAAAARABUAFMAAAAQZgAAAAEAACAAAAC41irYsTHrdOtT5c3e+IgkbWnduti7D1dzFVDv/8Q4jAAAAAAOgAAAAAIAACAAAAA0rovY5O96WJ5yb8pAn9odEYF4V0tBB3u6Jdqi3n5UBqAAAAAv50McnWBOnij/SiWBB4C0T/+uNsrPoJutcf+qFxx6dIe5ufXBtiieIbHi3IhzT+d6NFx6pwVPSUzx/ueCEUDadxYUbM9UnTFjRQAqjYwVKLj427+k01KsxWemdyGS38ncFiwIdbJVZ83jwE0XOZWoOOyfQw2tXEACWJ0pdiMXRayFj4r/75OvMd5JFP8gpwBRkOSnAcLj7fdRAOaPisVJQAAAAATv9cOGjTp9s2jsvhWHxAI+OCS3JKdXkaQuQaVO0tIQP2DZEpaR2Fm+kdyDc4nJVcyD9B+0uvGbmtbuR2oV+Oc</DTS:Property>
       </DTS:Property>
     </DTS:PackageParameter>
   </DTS:PackageParameters>
@@ -1763,18 +1763,18 @@
         <NodeLayout
           Size="203.2,41.6"
           Id="Package\Insert Data to Staging Area"
-          TopLeft="361.666646906072,237.799998824795" />
+          TopLeft="384.583312320627,238.883332150595" />
         <NodeLayout
           Size="181.6,41.6"
           Id="Package\Run Data Filter"
-          TopLeft="373.333312935301,140.799999421437" />
+          TopLeft="396.249978349856,141.883332747237" />
         <NodeLayout
           Size="155.2,41.6"
           Id="Package\Run ICNF scrypt"
-          TopLeft="384.166645676727,42.4666663713592" />
+          TopLeft="407.083311091282,43.549999697159" />
         <EdgeLayout
           Id="Package.PrecedenceConstraints[Constraint]"
-          TopLeft="462.949979306014,84.0666663713592">
+          TopLeft="485.866644720569,85.149999697159">
           <EdgeLayout.Curve>
             <mssgle:Curve
               StartConnector="{assembly:Null}"
@@ -1796,7 +1796,7 @@
         </EdgeLayout>
         <EdgeLayout
           Id="Package.PrecedenceConstraints[Constraint 1]"
-          TopLeft="463.699979920687,182.399999421437">
+          TopLeft="486.616645335243,183.483332747237">
           <EdgeLayout.Curve>
             <mssgle:Curve
               StartConnector="{assembly:Null}"
@@ -2007,30 +2007,18 @@
           TopLeft="182.49999002864,320.599997848471" />
         <EdgeLayout
           Id="Package.PrecedenceConstraints[Constraint 2]"
-          TopLeft="463.266646906072,279.399998824795">
+          TopLeft="486.541651174634,280.483332150595">
           <EdgeLayout.Curve>
             <mssgle:Curve
               StartConnector="{assembly:Null}"
-              EndConnector="23.6333431225686,41.1999990236752"
+              EndConnector="0,40.1166656978754"
               Start="0,0"
-              End="23.6333431225686,33.6999990236752">
+              End="0,32.6166656978754">
               <mssgle:Curve.Segments>
                 <mssgle:SegmentCollection
                   Capacity="5">
                   <mssgle:LineSegment
-                    End="0,16.5999995118376" />
-                  <mssgle:CubicBezierSegment
-                    Point1="0,16.5999995118376"
-                    Point2="0,20.5999995118376"
-                    Point3="4,20.5999995118376" />
-                  <mssgle:LineSegment
-                    End="19.6333431225686,20.5999995118376" />
-                  <mssgle:CubicBezierSegment
-                    Point1="19.6333431225686,20.5999995118376"
-                    Point2="23.6333431225686,20.5999995118376"
-                    Point3="23.6333431225686,24.5999995118376" />
-                  <mssgle:LineSegment
-                    End="23.6333431225686,33.6999990236752" />
+                    End="0,32.6166656978754" />
                 </mssgle:SegmentCollection>
               </mssgle:Curve.Segments>
             </mssgle:Curve>
