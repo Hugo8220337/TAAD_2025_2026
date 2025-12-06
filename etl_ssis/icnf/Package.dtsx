@@ -11,8 +11,8 @@
   DTS:LocaleID="2070"
   DTS:ObjectName="Package"
   DTS:PackageType="5"
-  DTS:VersionBuild="120"
-  DTS:VersionGUID="{DB9CF8C4-1693-4B99-963F-988D337B69F6}">
+  DTS:VersionBuild="121"
+  DTS:VersionGUID="{B67A4395-555D-405F-995C-A90B6BC7B8CF}">
   <DTS:Property
     DTS:Name="PackageFormatVersion">8</DTS:Property>
   <DTS:ConnectionManagers>
@@ -1462,7 +1462,7 @@
         <DTS:Property
           DTS:DataType="8"
           DTS:Name="ParameterValue"
-          Encrypted="1">AQAAANCMnd8BFdERjHoAwE/Cl+sBAAAAnGLToHQ/QUCfAekZCVZnhwAAAAAIAAAARABUAFMAAAAQZgAAAAEAACAAAADu/41kgQPUj8D7AohCXi1jjNqTiJmHrtRDZG5fw+GNjgAAAAAOgAAAAAIAACAAAACyulrApJmDcd6z7oadnxbTgD9k2gUrcep2HehWahpHXaAAAACrUat4H/GkHLkobeG6sCsqGva0h3blSv+O59Vgy1ZV6ynZ8I2753Y1D39HqRAoreBy0ZG1E/ZAKUx76KXaSZFwh3Xefc89DmIlyzBoiHTgdzou5Ue17h74jExTdwbELOACr47IEEalbzC1sC76+yA0Fve73bolaZJCoiekbWnpg3QuxDOGWKH4RT22OS5QQlBOuDRf6gcMKgSbQJlk0N6QQAAAACHkJ1f+R42KU5g5qAOrg9aZn3NHf0oQ7WMNawn537DUQJSbPBu0n5LKU4iZxMByKOWfdTlTW0k2/Sx+Fs4cEkc</DTS:Property>
+          Encrypted="1">AQAAANCMnd8BFdERjHoAwE/Cl+sBAAAAnGLToHQ/QUCfAekZCVZnhwAAAAAIAAAARABUAFMAAAAQZgAAAAEAACAAAABIPTEWdHv7wRI/awftdhzAU0G5NZq660F+z0fHm99H0AAAAAAOgAAAAAIAACAAAAAC3vnxAgwH+iZtpbXmBS7W6Ic4yP7LL3mhT/GYbLuCuqAAAAAPSLCEqK6hqvLUNu7VKRg0IRlKLnD10LHevAYS7TkMdYmXyzuf2gmI1Ei7hxT9ogWiLQmkYrKj6l/kQvuWNHDF5NVNY2HHq5rDAUYPeVLNrVrNMEO23wOl3JBVKBgWlueAqIuz+9Taz73i3noFBbH2AijtL+R6OJ+MztxKk+30A9OUq8RzS+lLDQuhret4GxIOfG2ytG7GX5JBabeHvuWPQAAAAIBIrJSwDqYbfYS3dLvoewKIkWQ9AAYCBdWXasagJ4opD1AUiOGDc9BegX/8Kuil13WjIkr9VTUarBC6R/XryI8</DTS:Property>
       </DTS:Property>
     </DTS:PackageParameter>
   </DTS:PackageParameters>
@@ -2001,8 +2001,8 @@
         <ContainerLayout
           HeaderHeight="43"
           IsExpanded="True"
-          PanelSize="608.8,464"
-          Size="608.8,507.2"
+          PanelSize="608.8,338.4"
+          Size="608.8,381.6"
           Id="Package\Processar Dados"
           TopLeft="182.49999002864,320.599997848471" />
         <EdgeLayout
@@ -2042,21 +2042,21 @@
         <NodeLayout
           Size="172.8,41.6"
           Id="Package\Limpar Staging Area"
-          TopLeft="400.69997937431,907.333328837421" />
+          TopLeft="395.491646325548,753.499996573825" />
         <EdgeLayout
           Id="Package.PrecedenceConstraints[Constraint 3]"
-          TopLeft="486.999984701475,827.799997848471">
+          TopLeft="484.395818177094,702.199997848471">
           <EdgeLayout.Curve>
             <mssgle:Curve
               StartConnector="{assembly:Null}"
-              EndConnector="0,79.5333309889504"
+              EndConnector="0,51.2999987253548"
               Start="0,0"
-              End="0,72.0333309889504">
+              End="0,43.7999987253548">
               <mssgle:Curve.Segments>
                 <mssgle:SegmentCollection
                   Capacity="5">
                   <mssgle:LineSegment
-                    End="0,72.0333309889504" />
+                    End="0,43.7999987253548" />
                 </mssgle:SegmentCollection>
               </mssgle:Curve.Segments>
             </mssgle:Curve>
