@@ -11,8 +11,8 @@
   DTS:LocaleID="2070"
   DTS:ObjectName="Package"
   DTS:PackageType="5"
-  DTS:VersionBuild="114"
-  DTS:VersionGUID="{D6926914-B36E-4497-A699-C1B5285088E1}">
+  DTS:VersionBuild="115"
+  DTS:VersionGUID="{23934F4C-5F4D-4880-B5AD-0F20B964648D}">
   <DTS:Property
     DTS:Name="PackageFormatVersion">8</DTS:Property>
   <DTS:ConnectionManagers>
@@ -1379,6 +1379,16 @@
       </DTS:ObjectData>
     </DTS:ConnectionManager>
     <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[populate_dim_cause.sql]"
+      DTS:CreationName="FILE"
+      DTS:DTSID="{E8A5F504-08CE-41BE-99D8-6AE81E0E59DD}"
+      DTS:ObjectName="populate_dim_cause.sql">
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectionString="C:\Users\User\GitHub\TAAD_2025_2026\etl_ssis\icnf\apoio\scripts\populate_dim_cause.sql" />
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+    <DTS:ConnectionManager
       DTS:refId="Package.ConnectionManagers[populate_dim_day.sql]"
       DTS:CreationName="FILE"
       DTS:DTSID="{D92AF15F-C789-483F-934F-9512F1289E2A}"
@@ -1422,7 +1432,7 @@
         <DTS:Property
           DTS:DataType="8"
           DTS:Name="ParameterValue"
-          Encrypted="1">AQAAANCMnd8BFdERjHoAwE/Cl+sBAAAAnGLToHQ/QUCfAekZCVZnhwAAAAAIAAAARABUAFMAAAAQZgAAAAEAACAAAABEokpXHNTyef7eIrtJqXhFSjeYJzeilKsbjR/kn+V0ugAAAAAOgAAAAAIAACAAAAAnJZgzRZcmY2OfForiZ65XoPPdTaxEHC0zFcvDmZ0SpqAAAAAUDhiRWwKFpzb8++Tcigxq1iifvYb3hPDbhadk8Xpfic4uOe6szY8nrYpfvAFfmeRAbT8fZSvXqW5itnpDOEEU9QOw7l6U2QxYbPuSQ+UQoheJgCbWg0r2K29AGlA0kFlUZ+9szm4r4bEMnXP8s9h0Bw5R/PKYaT4TyyKL2HUA7hjkFLA6lWl5pTUegS5A+GF/O7hqrLymCnw6Dp8RXSrWQAAAAH9V7tVMACk/aqV30gUkdfekhLK3q3d3t+vsxcKAqTmkCLPlibUETIBBx0YNjAHT+6or0umhKxxzHuwLq3wwjSQ</DTS:Property>
+          Encrypted="1">AQAAANCMnd8BFdERjHoAwE/Cl+sBAAAAnGLToHQ/QUCfAekZCVZnhwAAAAAIAAAARABUAFMAAAAQZgAAAAEAACAAAAA3NppnjJ5Bfz2dLmB18latVSmixtMwhoBR3Jd9VPW4qAAAAAAOgAAAAAIAACAAAABiun73UYiqVZiViB/wHe2f8Y0Jav/wyLDOkJrUbLeHo6AAAAD1JYb9Uj885jMfTkBz3BPyMmuIQyaKhVayQyAfYeOG1ICdQzZS/MKpLGT67/bw58NepUW3c5OMM7h0wM4E9YwrxcPa9sK5iUa7pTc+KL8nS9nLnBbjWWH0Msgb5RTtrB7lO46ektaCfip8f/brhejR4zSWyR51CBEu6kPpxGqtaahvC0f9747KJ5JRSd4UDApnv1/x1q7K9zE2l7J987b6QAAAAMH0gsiZO4wwtqa9ZsOt6l28qDp0ZMP0J0tNw3qNKsFB0/XI50ivsCbi53uZM8mBwrL0X+EzGB8jD7uWmIU6zg4</DTS:Property>
       </DTS:Property>
     </DTS:PackageParameter>
   </DTS:PackageParameters>
@@ -1477,6 +1487,23 @@
       <DTS:Variables />
       <DTS:Executables>
         <DTS:Executable
+          DTS:refId="Package\Processar Dados\Povoar Dimensao Causa"
+          DTS:CreationName="Microsoft.ExecuteSQLTask"
+          DTS:Description="Execute SQL Task"
+          DTS:DTSID="{8a805cb4-2bd9-4f30-9ad2-dc4420d184e5}"
+          DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+          DTS:LocaleID="-1"
+          DTS:ObjectName="Povoar Dimensao Causa"
+          DTS:ThreadHint="1">
+          <DTS:Variables />
+          <DTS:ObjectData>
+            <SQLTask:SqlTaskData
+              SQLTask:Connection="{628A2FB4-96D3-4818-B7FB-283A52C176AA}"
+              SQLTask:SqlStmtSourceType="FileConnection"
+              SQLTask:SqlStatementSource="populate_dim_cause.sql" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+          </DTS:ObjectData>
+        </DTS:Executable>
+        <DTS:Executable
           DTS:refId="Package\Processar Dados\Povoar Dimensao DIa"
           DTS:CreationName="Microsoft.ExecuteSQLTask"
           DTS:Description="Execute SQL Task"
@@ -1484,7 +1511,7 @@
           DTS:ExecutableType="Microsoft.ExecuteSQLTask"
           DTS:LocaleID="-1"
           DTS:ObjectName="Povoar Dimensao DIa"
-          DTS:ThreadHint="2">
+          DTS:ThreadHint="3">
           <DTS:Variables />
           <DTS:ObjectData>
             <SQLTask:SqlTaskData
@@ -1501,7 +1528,7 @@
           DTS:ExecutableType="Microsoft.ExecuteSQLTask"
           DTS:LocaleID="-1"
           DTS:ObjectName="Povoar Dimensao Hora"
-          DTS:ThreadHint="1">
+          DTS:ThreadHint="2">
           <DTS:Variables />
           <DTS:ObjectData>
             <SQLTask:SqlTaskData
@@ -1670,11 +1697,15 @@
           Size="218.4,41.6"
           Id="Package\Processar Dados\Povoar Dimensao Localizacao"
           TopLeft="4.1333244091939,78.1333309708702" />
+        <NodeLayout
+          Size="193.6,41.6"
+          Id="Package\Processar Dados\Povoar Dimensao Causa"
+          TopLeft="283.299975822867,75.7333316940732" />
         <ContainerLayout
           HeaderHeight="43"
           IsExpanded="True"
-          PanelSize="567.2,224.8"
-          Size="567.2,268"
+          PanelSize="567.2,276"
+          Size="567.2,319.2"
           Id="Package\Processar Dados"
           TopLeft="2.27373675443232E-13,320.599997848471" />
         <EdgeLayout
@@ -1683,14 +1714,14 @@
           <EdgeLayout.Curve>
             <mssgle:Curve
               StartConnector="{assembly:Null}"
-              EndConnector="0,41.1999990236753"
+              EndConnector="0,41.1999990236752"
               Start="0,0"
-              End="0,33.6999990236753">
+              End="0,33.6999990236752">
               <mssgle:Curve.Segments>
                 <mssgle:SegmentCollection
                   Capacity="5">
                   <mssgle:LineSegment
-                    End="0,33.6999990236753" />
+                    End="0,33.6999990236752" />
                 </mssgle:SegmentCollection>
               </mssgle:Curve.Segments>
             </mssgle:Curve>
