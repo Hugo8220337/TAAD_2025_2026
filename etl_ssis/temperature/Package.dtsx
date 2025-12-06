@@ -1,0 +1,162 @@
+﻿<?xml version="1.0"?>
+<DTS:Executable xmlns:DTS="www.microsoft.com/SqlServer/Dts"
+  DTS:refId="Package"
+  DTS:CreationDate="12/6/2025 5:29:44 PM"
+  DTS:CreationName="Microsoft.Package"
+  DTS:CreatorComputerName="DESKTOP-G01CPCN"
+  DTS:CreatorName="DESKTOP-G01CPCN\User"
+  DTS:DTSID="{DC361C26-9E00-4433-B57D-7DEE84985011}"
+  DTS:ExecutableType="Microsoft.Package"
+  DTS:LastModifiedProductVersion="17.0.1008.3"
+  DTS:LocaleID="2070"
+  DTS:ObjectName="Package"
+  DTS:PackageType="5"
+  DTS:VersionBuild="7"
+  DTS:VersionGUID="{35FC16A2-BFC9-4915-945B-8509A232919E}">
+  <DTS:Property
+    DTS:Name="PackageFormatVersion">8</DTS:Property>
+  <DTS:Variables />
+  <DTS:Executables>
+    <DTS:Executable
+      DTS:refId="Package\Get Temperature Data"
+      DTS:CreationName="Microsoft.ExecuteProcess"
+      DTS:Description="Execute Process Task"
+      DTS:DTSID="{a872acf1-fdd7-497c-a79e-b7bf8b0b5081}"
+      DTS:ExecutableType="Microsoft.ExecuteProcess"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Get Temperature Data"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <ExecuteProcessData
+          Executable="C:\Users\User\GitHub\TAAD_2025_2026\etl_ssis\temperature\apoio\raw\MeteorologyExtractor.exe"
+          Arguments="--data_dir C:\Users\User\GitHub\TAAD_2025_2026\etl_ssis\icnf\apoio\raw\icnf_filtered_data --output_dir C:\Users\User\GitHub\TAAD_2025_2026\etl_ssis\icnf\apoio\raw\temperatures_data"
+          WorkingDirectory="C:\Users\User\GitHub\TAAD_2025_2026\etl_ssis\temperature\apoio\raw" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\Run Data Filter"
+      DTS:CreationName="Microsoft.ExecuteProcess"
+      DTS:Description="Execute Process Task"
+      DTS:DTSID="{bcf0e973-9761-4fe9-866b-30791279031d}"
+      DTS:ExecutableType="Microsoft.ExecuteProcess"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Run Data Filter"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <ExecuteProcessData
+          Executable="C:\Users\User\GitHub\TAAD_2025_2026\etl_ssis\temperature\apoio\raw\FireDataFilter.exe"
+          Arguments="--data_dir C:\Users\User\GitHub\TAAD_2025_2026\etl_ssis\temperature\apoio\raw\icnf_data --output_dir C:\Users\User\GitHub\TAAD_2025_2026\etl_ssis\temperature\apoio\raw\icnf_filtered_data"
+          WorkingDirectory="C:\Users\User\GitHub\TAAD_2025_2026\etl_ssis\temperature\apoio\raw" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\Run ICNF scrypt"
+      DTS:CreationName="Microsoft.ExecuteProcess"
+      DTS:Description="Will run de ICNF script to retrieve the fire csv data"
+      DTS:DTSID="{e1a26ff0-b30c-4874-badf-c60f79f9cac3}"
+      DTS:ExecutableType="Microsoft.ExecuteProcess"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Run ICNF scrypt"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <ExecuteProcessData
+          Executable="C:\Users\User\GitHub\TAAD_2025_2026\etl_ssis\temperature\apoio\raw\retriever.exe"
+          Arguments="--ndays 31"
+          WorkingDirectory="C:\Users\User\GitHub\TAAD_2025_2026\etl_ssis\temperature\apoio\raw" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+  </DTS:Executables>
+  <DTS:PrecedenceConstraints>
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint]"
+      DTS:CreationName=""
+      DTS:DTSID="{833ad8be-8f9d-4a5e-99a3-6597f57a71f1}"
+      DTS:From="Package\Run ICNF scrypt"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint"
+      DTS:To="Package\Run Data Filter" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint 1]"
+      DTS:CreationName=""
+      DTS:DTSID="{124661FA-994A-4DAE-B658-E326C291CA44}"
+      DTS:From="Package\Run Data Filter"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint 1"
+      DTS:To="Package\Get Temperature Data" />
+  </DTS:PrecedenceConstraints>
+  <DTS:DesignTimeProperties><![CDATA[<?xml version="1.0"?>
+<!--This CDATA section contains the layout information of the package. The section includes information such as (x,y) coordinates, width, and height.-->
+<!--If you manually edit this section and make a mistake, you can delete it. -->
+<!--The package will still be able to load normally but the previous layout information will be lost and the designer will automatically re-arrange the elements on the design surface.-->
+<Objects
+  Version="8">
+  <!--Each node below will contain properties that do not affect runtime behavior.-->
+  <Package
+    design-time-name="Package">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="8" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
+        <NodeLayout
+          Size="148,41.6"
+          Id="Package\Run Data Filter"
+          TopLeft="332.499985111257,164.399999674558" />
+        <NodeLayout
+          Size="155.2,41.6"
+          Id="Package\Run ICNF scrypt"
+          TopLeft="335.833318262465,61.7333333212799" />
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint]"
+          TopLeft="409.966651686861,103.33333332128">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,61.0666663532779"
+              Start="0,0"
+              End="0,53.5666663532779">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,53.5666663532779" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <NodeLayout
+          Size="182.4,41.6"
+          Id="Package\Get Temperature Data"
+          TopLeft="314.166652779613,259.933333050078" />
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 1]"
+          TopLeft="405.933318945435,205.999999674558">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,53.9333333755202"
+              Start="0,0"
+              End="0,46.4333333755202">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,46.4333333755202" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+      </GraphLayout>
+    </LayoutInfo>
+  </Package>
+</Objects>]]></DTS:DesignTimeProperties>
+</DTS:Executable>
