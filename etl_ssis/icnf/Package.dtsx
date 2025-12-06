@@ -11,8 +11,8 @@
   DTS:LocaleID="2070"
   DTS:ObjectName="Package"
   DTS:PackageType="5"
-  DTS:VersionBuild="99"
-  DTS:VersionGUID="{506933EE-4FC0-4E61-BA38-DF1894845AC4}">
+  DTS:VersionBuild="101"
+  DTS:VersionGUID="{EE8C11ED-9D34-45C7-9E5F-1EEC5D113E8C}">
   <DTS:Property
     DTS:Name="PackageFormatVersion">8</DTS:Property>
   <DTS:ConnectionManagers>
@@ -1379,6 +1379,23 @@
       </DTS:ObjectData>
     </DTS:ConnectionManager>
   </DTS:ConnectionManagers>
+  <DTS:PackageParameters>
+    <DTS:PackageParameter
+      DTS:CreationName=""
+      DTS:DataType="8"
+      DTS:DTSID="{BF81C0F9-4C32-47CE-985D-A0892A73A42A}"
+      DTS:ObjectName="icnf_executable_path"
+      DTS:Required="True"
+      DTS:Sensitive="True">
+      <DTS:Property
+        DTS:Name="ParameterValue">
+        <DTS:Property
+          DTS:DataType="8"
+          DTS:Name="ParameterValue"
+          Encrypted="1">AQAAANCMnd8BFdERjHoAwE/Cl+sBAAAAnGLToHQ/QUCfAekZCVZnhwAAAAAIAAAARABUAFMAAAAQZgAAAAEAACAAAAAh2lqZSg0t6lgfQ/g40Ykbh/cpp32yd5r0lq8Az9DYuQAAAAAOgAAAAAIAACAAAAC9pBlNIZHw3h9y/fb+T1wJwdrnIdBfqjgvbuD32xsD06AAAABAwd+H83+sFUacVF9x9OrcLh7m0mH0d8iX2L/fetM7qbEqsGtJgjywdwexVvcV+Pgzj6Z5aCju7aKdLwO30qLL/c2L5DAmwHst22zXi89isbPEDQWAZfNwtwOaqFC6Eyb6VgfYy2LubchV6D3O8ssEonpz+eOX7fzhsfA5GjMneB3hl150iWG8j0NAwJkXAxHBK9RVV4k85gE7FAmWLG/aQAAAAIP1CrWWiWTfbp252x93nzP59JY1HcrUuECc/+MQ/i7x2WNAjFcKrp/NBZu3xtpwUXck4LzzKkHO0eym7iHl+3E</DTS:Property>
+      </DTS:Property>
+    </DTS:PackageParameter>
+  </DTS:PackageParameters>
   <DTS:Variables>
     <DTS:Variable
       DTS:CreationName=""
@@ -4110,6 +4127,17 @@
       </DTS:ObjectData>
     </DTS:Executable>
     <DTS:Executable
+      DTS:refId="Package\Processar Dados"
+      DTS:CreationName="STOCK:SEQUENCE"
+      DTS:Description="Sequence Container"
+      DTS:DTSID="{761323DB-7A96-4A52-B514-A8DA335C696A}"
+      DTS:ExecutableType="STOCK:SEQUENCE"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Processar Dados">
+      <DTS:Variables />
+      <DTS:Executables />
+    </DTS:Executable>
+    <DTS:Executable
       DTS:refId="Package\Run Data Filter"
       DTS:CreationName="Microsoft.ExecuteProcess"
       DTS:Description="Execute Process Task"
@@ -4161,6 +4189,14 @@
       DTS:LogicalAnd="True"
       DTS:ObjectName="Constraint 1"
       DTS:To="Package\Insert Data to Staging Area" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint 2]"
+      DTS:CreationName=""
+      DTS:DTSID="{524D008B-80DE-45BB-B813-2DD95453FF00}"
+      DTS:From="Package\Insert Data to Staging Area"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint 2"
+      DTS:To="Package\Processar Dados" />
   </DTS:PrecedenceConstraints>
   <DTS:DesignTimeProperties><![CDATA[<?xml version="1.0"?>
 <!--This CDATA section contains the layout information of the package. The section includes information such as (x,y) coordinates, width, and height.-->
@@ -4173,7 +4209,7 @@
     design-time-name="Package">
     <LayoutInfo>
       <GraphLayout
-        Capacity="8" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
+        Capacity="16" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
         <NodeLayout
           Size="134.4,41.6"
           Id="Package\Foreach Loop Container\Process csv"
@@ -4184,18 +4220,22 @@
           PanelSize="294.4,190.4"
           Size="294.4,233.6"
           Id="Package\Foreach Loop Container"
-          TopLeft="30.8333316486743,281.599998264313" />
+          TopLeft="1.66666657560398,113.466666100158" />
         <NodeLayout
-          Size="155.2,41.6"
-          Id="Package\Run ICNF scrypt"
-          TopLeft="418.333310476609,119.599999168317" />
+          Size="203.2,41.6"
+          Id="Package\Insert Data to Staging Area"
+          TopLeft="454.999975139897,322.733331567513" />
         <NodeLayout
           Size="181.6,41.6"
           Id="Package\Run Data Filter"
-          TopLeft="408.333311022985,225.733332164155" />
+          TopLeft="466.666641169126,225.733332164155" />
+        <NodeLayout
+          Size="155.2,41.6"
+          Id="Package\Run ICNF scrypt"
+          TopLeft="476.66664062275,119.599999168317" />
         <EdgeLayout
           Id="Package.PrecedenceConstraints[Constraint]"
-          TopLeft="497.533310749797,161.199999168317">
+          TopLeft="555.866640895938,161.199999168317">
           <EdgeLayout.Curve>
             <mssgle:Curve
               StartConnector="{assembly:Null}"
@@ -4215,13 +4255,9 @@
             <EdgeLabelCollection />
           </EdgeLayout.Labels>
         </EdgeLayout>
-        <NodeLayout
-          Size="203.2,41.6"
-          Id="Package\Insert Data to Staging Area"
-          TopLeft="396.666644993756,322.733331567513" />
         <EdgeLayout
           Id="Package.PrecedenceConstraints[Constraint 1]"
-          TopLeft="498.699978008371,267.333332164155">
+          TopLeft="557.033308154512,267.333332164155">
           <EdgeLayout.Curve>
             <mssgle:Curve
               StartConnector="{assembly:Null}"
@@ -4241,6 +4277,35 @@
             <EdgeLabelCollection />
           </EdgeLayout.Labels>
         </EdgeLayout>
+        <ContainerLayout
+          HeaderHeight="43"
+          IsExpanded="True"
+          PanelSize="204.8,55.2"
+          Size="204.8,98.4"
+          Id="Package\Processar Dados"
+          TopLeft="454.999975139897,415.733330536948" />
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 2]"
+          TopLeft="556.999975139897,364.333331567513">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,51.3999989694353"
+              Start="0,0"
+              End="0,43.8999989694353">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,43.8999989694353" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
       </GraphLayout>
     </LayoutInfo>
   </Package>
@@ -4248,7 +4313,7 @@
     design-time-name="Package\Foreach Loop Container\Process csv">
     <LayoutInfo>
       <GraphLayout
-        Capacity="8" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:mssgm="clr-namespace:Microsoft.SqlServer.Graph.Model;assembly=Microsoft.SqlServer.Graph">
+        Capacity="8" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
         <NodeLayout
           Size="119.2,41.6"
           Id="Package\Foreach Loop Container\Process csv\Multicast"
@@ -4296,9 +4361,7 @@
             </mssgle:Curve>
           </EdgeLayout.Curve>
           <EdgeLayout.Labels>
-            <mssgm:EdgeLabel
-              BoundingBox="0,0,0,0"
-              RelativePosition="Any" />
+            <EdgeLabelCollection />
           </EdgeLayout.Labels>
         </EdgeLayout>
       </GraphLayout>
