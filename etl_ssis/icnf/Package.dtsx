@@ -11,8 +11,8 @@
   DTS:LocaleID="2070"
   DTS:ObjectName="Package"
   DTS:PackageType="5"
-  DTS:VersionBuild="122"
-  DTS:VersionGUID="{88A91FE4-FA3A-4264-A748-DC52F315A9A9}">
+  DTS:VersionBuild="125"
+  DTS:VersionGUID="{A5692490-E155-45EF-83CE-2E5947112A1B}">
   <DTS:Property
     DTS:Name="PackageFormatVersion">8</DTS:Property>
   <DTS:ConnectionManagers>
@@ -1462,7 +1462,7 @@
         <DTS:Property
           DTS:DataType="8"
           DTS:Name="ParameterValue"
-          Encrypted="1">AQAAANCMnd8BFdERjHoAwE/Cl+sBAAAAnGLToHQ/QUCfAekZCVZnhwAAAAAIAAAARABUAFMAAAAQZgAAAAEAACAAAAC41irYsTHrdOtT5c3e+IgkbWnduti7D1dzFVDv/8Q4jAAAAAAOgAAAAAIAACAAAAA0rovY5O96WJ5yb8pAn9odEYF4V0tBB3u6Jdqi3n5UBqAAAAAv50McnWBOnij/SiWBB4C0T/+uNsrPoJutcf+qFxx6dIe5ufXBtiieIbHi3IhzT+d6NFx6pwVPSUzx/ueCEUDadxYUbM9UnTFjRQAqjYwVKLj427+k01KsxWemdyGS38ncFiwIdbJVZ83jwE0XOZWoOOyfQw2tXEACWJ0pdiMXRayFj4r/75OvMd5JFP8gpwBRkOSnAcLj7fdRAOaPisVJQAAAAATv9cOGjTp9s2jsvhWHxAI+OCS3JKdXkaQuQaVO0tIQP2DZEpaR2Fm+kdyDc4nJVcyD9B+0uvGbmtbuR2oV+Oc</DTS:Property>
+          Encrypted="1">AQAAANCMnd8BFdERjHoAwE/Cl+sBAAAAnGLToHQ/QUCfAekZCVZnhwAAAAAIAAAARABUAFMAAAAQZgAAAAEAACAAAACBSEnhrpvFQgYYWfsPAW7vibGhq81lwkEBEWH5go1dugAAAAAOgAAAAAIAACAAAAD84rSrVUaMMqUZw/Lg5Z3lW796AHV85fsPvQJa7Btc+aAAAADY2xU2hcx/ho4vMSTxNRXPEDwhZTPt/i8C319AyZj6fDmkaqOt59cwu+u7sjubztZvoITHlTRwiOXNfpmUF4V+GYD69mwyef5U+Yh99QzYhrnT+nE4jnq/fLi69p5Qo373DjXyFnRq1TUvZta6uzHvQpA3Lxufp5RueL26mY8NxHGEGH2vfWYkquIy/ooFPK3gLq5eHhMm/29sL35VK9l6QAAAABUPUv0mrX1hijOTwEPu2AvtSBJymdLH6isvimn4SCM8C188a7R38ZeZ/QTPh/a/NdID3iZzf/vhRC/s/PTcv4s</DTS:Property>
       </DTS:Property>
     </DTS:PackageParameter>
   </DTS:PackageParameters>
@@ -2037,14 +2037,14 @@
           <EdgeLayout.Curve>
             <mssgle:Curve
               StartConnector="{assembly:Null}"
-              EndConnector="0,51.2999987253548"
+              EndConnector="0,51.2999987253547"
               Start="0,0"
-              End="0,43.7999987253548">
+              End="0,43.7999987253547">
               <mssgle:Curve.Segments>
                 <mssgle:SegmentCollection
                   Capacity="5">
                   <mssgle:LineSegment
-                    End="0,43.7999987253548" />
+                    End="0,43.7999987253547" />
                 </mssgle:SegmentCollection>
               </mssgle:Curve.Segments>
             </mssgle:Curve>

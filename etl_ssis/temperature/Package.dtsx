@@ -11,10 +11,64 @@
   DTS:LocaleID="2070"
   DTS:ObjectName="Package"
   DTS:PackageType="5"
-  DTS:VersionBuild="7"
-  DTS:VersionGUID="{35FC16A2-BFC9-4915-945B-8509A232919E}">
+  DTS:VersionBuild="16"
+  DTS:VersionGUID="{2E1F327A-ACF1-45DC-9146-84135EAAFAE7}">
   <DTS:Property
     DTS:Name="PackageFormatVersion">8</DTS:Property>
+  <DTS:ConnectionManagers>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[clean_staging.sql]"
+      DTS:CreationName="FILE"
+      DTS:DTSID="{C436DB92-82B1-45C1-903D-E8439DDD44D6}"
+      DTS:ObjectName="clean_staging.sql">
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectionString="C:\Users\User\GitHub\TAAD_2025_2026\etl_ssis\temperature\apoio\scripts\clean_staging.sql" />
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[DESKTOP-G01CPCN.DSA.TAAD]"
+      DTS:CreationName="OLEDB"
+      DTS:DTSID="{628A2FB4-96D3-4818-B7FB-283A52C176AA}"
+      DTS:ObjectName="DESKTOP-G01CPCN.DSA.TAAD">
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectRetryCount="1"
+          DTS:ConnectRetryInterval="5"
+          DTS:ConnectionString="Data Source=DESKTOP-G01CPCN;Initial Catalog=DSA.TAAD;Provider=MSOLEDBSQL.1;Integrated Security=SSPI;Application Name=SSIS-Package-{628A2FB4-96D3-4818-B7FB-283A52C176AA}DESKTOP-G01CPCN.DSA.TAAD;Auto Translate=False;" />
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[populate_dim_day_meteo.sql]"
+      DTS:CreationName="FILE"
+      DTS:DTSID="{5BE7F1CE-6D1B-4DBD-A1BC-C1FB214F1384}"
+      DTS:ObjectName="populate_dim_day_meteo.sql">
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectionString="C:\Users\User\GitHub\TAAD_2025_2026\etl_ssis\temperature\apoio\scripts\populate_dim_day_meteo.sql" />
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[populate_dim_location_meteo.sql]"
+      DTS:CreationName="FILE"
+      DTS:DTSID="{889B6596-16F6-4DC3-B1A5-3277FE98B2D1}"
+      DTS:ObjectName="populate_dim_location_meteo.sql">
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectionString="C:\Users\User\GitHub\TAAD_2025_2026\etl_ssis\temperature\apoio\scripts\populate_dim_location_meteo.sql" />
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[populate_fact_meteorology.sql]"
+      DTS:CreationName="FILE"
+      DTS:DTSID="{F51BFFE5-7183-49DF-B7C6-4F87E002013F}"
+      DTS:ObjectName="populate_fact_meteorology.sql">
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectionString="C:\Users\User\GitHub\TAAD_2025_2026\etl_ssis\temperature\apoio\scripts\populate_fact_meteorology.sql" />
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+  </DTS:ConnectionManagers>
   <DTS:Variables />
   <DTS:Executables>
     <DTS:Executable
@@ -30,9 +84,107 @@
       <DTS:ObjectData>
         <ExecuteProcessData
           Executable="C:\Users\User\GitHub\TAAD_2025_2026\etl_ssis\temperature\apoio\raw\MeteorologyExtractor.exe"
-          Arguments="--data_dir C:\Users\User\GitHub\TAAD_2025_2026\etl_ssis\icnf\apoio\raw\icnf_filtered_data --output_dir C:\Users\User\GitHub\TAAD_2025_2026\etl_ssis\icnf\apoio\raw\temperatures_data"
+          Arguments="--data_dir C:\Users\User\GitHub\TAAD_2025_2026\etl_ssis\temperature\apoio\raw\icnf_filtered_data --output_dir C:\Users\User\GitHub\TAAD_2025_2026\etl_ssis\temperature\apoio\raw\temperature_data"
           WorkingDirectory="C:\Users\User\GitHub\TAAD_2025_2026\etl_ssis\temperature\apoio\raw" />
       </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\Insert Data to Staging Area"
+      DTS:CreationName="Microsoft.ExecuteProcess"
+      DTS:Description="Execute Process Task"
+      DTS:DTSID="{8302c324-4346-4f64-a041-e1bc31d7e819}"
+      DTS:ExecutableType="Microsoft.ExecuteProcess"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Insert Data to Staging Area"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <ExecuteProcessData
+          Executable="C:\Users\User\GitHub\TAAD_2025_2026\etl_ssis\temperature\apoio\raw\SQLServerInserter.exe"
+          Arguments="--data_dir C:\Users\User\GitHub\TAAD_2025_2026\etl_ssis\temperature\apoio\raw\icnf_filtered_data --sql_dir C:\Users\User\GitHub\TAAD_2025_2026\etl_ssis\temperature\apoio\raw\sql --db_connection Server=DESKTOP-G01CPCN;Database=DSA.TAAD;UID=sa;PWD=risidihu2032003;&quot;"
+          WorkingDirectory="C:\Users\User\GitHub\TAAD_2025_2026\etl_ssis\temperature\apoio\raw" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\Processar Dados"
+      DTS:CreationName="STOCK:SEQUENCE"
+      DTS:Description="Sequence Container"
+      DTS:DTSID="{8e5e9e2d-df5a-46e6-89bf-6fcf3bcb8489}"
+      DTS:ExecutableType="STOCK:SEQUENCE"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Processar Dados">
+      <DTS:Variables />
+      <DTS:Executables>
+        <DTS:Executable
+          DTS:refId="Package\Processar Dados\Povoar Dimensao Dia"
+          DTS:CreationName="Microsoft.ExecuteSQLTask"
+          DTS:Description="Execute SQL Task"
+          DTS:DTSID="{ef2a92cf-db32-496b-a846-4e623793ab5f}"
+          DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+          DTS:LocaleID="-1"
+          DTS:ObjectName="Povoar Dimensao Dia"
+          DTS:ThreadHint="1">
+          <DTS:Variables />
+          <DTS:ObjectData>
+            <SQLTask:SqlTaskData
+              SQLTask:Connection="{628A2FB4-96D3-4818-B7FB-283A52C176AA}"
+              SQLTask:SqlStmtSourceType="FileConnection"
+              SQLTask:SqlStatementSource="populate_dim_day_meteo.sql" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+          </DTS:ObjectData>
+        </DTS:Executable>
+        <DTS:Executable
+          DTS:refId="Package\Processar Dados\Povoar Dimensao Localizacao"
+          DTS:CreationName="Microsoft.ExecuteSQLTask"
+          DTS:Description="Execute SQL Task"
+          DTS:DTSID="{322e549f-bc12-43e9-a13b-31c842c8981c}"
+          DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+          DTS:LocaleID="-1"
+          DTS:ObjectName="Povoar Dimensao Localizacao"
+          DTS:ThreadHint="0">
+          <DTS:Variables />
+          <DTS:ObjectData>
+            <SQLTask:SqlTaskData
+              SQLTask:Connection="{628A2FB4-96D3-4818-B7FB-283A52C176AA}"
+              SQLTask:SqlStmtSourceType="FileConnection"
+              SQLTask:SqlStatementSource="populate_dim_location_meteo.sql" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+          </DTS:ObjectData>
+        </DTS:Executable>
+        <DTS:Executable
+          DTS:refId="Package\Processar Dados\Povoar Tabela de Factos"
+          DTS:CreationName="Microsoft.ExecuteSQLTask"
+          DTS:Description="Execute SQL Task"
+          DTS:DTSID="{000ff357-a40f-4a76-a91a-7358fc3999a3}"
+          DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+          DTS:LocaleID="-1"
+          DTS:ObjectName="Povoar Tabela de Factos"
+          DTS:ThreadHint="0">
+          <DTS:Variables />
+          <DTS:ObjectData>
+            <SQLTask:SqlTaskData
+              SQLTask:Connection="{628A2FB4-96D3-4818-B7FB-283A52C176AA}"
+              SQLTask:SqlStmtSourceType="FileConnection"
+              SQLTask:SqlStatementSource="populate_fact_meteorology.sql" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+          </DTS:ObjectData>
+        </DTS:Executable>
+      </DTS:Executables>
+      <DTS:PrecedenceConstraints>
+        <DTS:PrecedenceConstraint
+          DTS:refId="Package\Processar Dados.PrecedenceConstraints[Constraint]"
+          DTS:CreationName=""
+          DTS:DTSID="{F6CC7C35-7501-439F-A1D7-9ABDC41B08CF}"
+          DTS:From="Package\Processar Dados\Povoar Dimensao Dia"
+          DTS:LogicalAnd="True"
+          DTS:ObjectName="Constraint"
+          DTS:To="Package\Processar Dados\Povoar Tabela de Factos" />
+        <DTS:PrecedenceConstraint
+          DTS:refId="Package\Processar Dados.PrecedenceConstraints[Constraint 1]"
+          DTS:CreationName=""
+          DTS:DTSID="{B34F28A4-C3BD-4563-9CD0-C8B45E23064B}"
+          DTS:From="Package\Processar Dados\Povoar Dimensao Localizacao"
+          DTS:LogicalAnd="True"
+          DTS:ObjectName="Constraint 1"
+          DTS:To="Package\Processar Dados\Povoar Tabela de Factos" />
+      </DTS:PrecedenceConstraints>
     </DTS:Executable>
     <DTS:Executable
       DTS:refId="Package\Run Data Filter"
@@ -86,6 +238,22 @@
       DTS:LogicalAnd="True"
       DTS:ObjectName="Constraint 1"
       DTS:To="Package\Get Temperature Data" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint 2]"
+      DTS:CreationName=""
+      DTS:DTSID="{5ED88B73-4DC8-4C62-A829-DB7CD87566C2}"
+      DTS:From="Package\Get Temperature Data"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint 2"
+      DTS:To="Package\Insert Data to Staging Area" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint 3]"
+      DTS:CreationName=""
+      DTS:DTSID="{869E438C-56A8-421C-8B9D-ECC2D1B06A50}"
+      DTS:From="Package\Insert Data to Staging Area"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint 3"
+      DTS:To="Package\Processar Dados" />
   </DTS:PrecedenceConstraints>
   <DTS:DesignTimeProperties><![CDATA[<?xml version="1.0"?>
 <!--This CDATA section contains the layout information of the package. The section includes information such as (x,y) coordinates, width, and height.-->
@@ -98,7 +266,7 @@
     design-time-name="Package">
     <LayoutInfo>
       <GraphLayout
-        Capacity="8" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
+        Capacity="16" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
         <NodeLayout
           Size="148,41.6"
           Id="Package\Run Data Filter"
@@ -147,6 +315,141 @@
                   Capacity="5">
                   <mssgle:LineSegment
                     End="0,46.4333333755202" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <NodeLayout
+          Size="203.2,41.6"
+          Id="Package\Insert Data to Staging Area"
+          TopLeft="299.166653599177,357.199999746878" />
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 2]"
+          TopLeft="403.066653189395,301.533333050078">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,55.6666666968002"
+              Start="0,0"
+              End="0,48.1666666968002">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,48.1666666968002" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <NodeLayout
+          Size="179.2,41.6"
+          Id="Package\Processar Dados\Povoar Dimensao Dia"
+          TopLeft="26.6333231798484,16.9999994756778" />
+        <NodeLayout
+          Size="226.4,41.6"
+          Id="Package\Processar Dados\Povoar Dimensao Localizacao"
+          TopLeft="349.766641305719,20.1333320918349" />
+        <NodeLayout
+          Size="194.4,41.6"
+          Id="Package\Processar Dados\Povoar Tabela de Factos"
+          TopLeft="213.299979647498,121.733332091835" />
+        <EdgeLayout
+          Id="Package\Processar Dados.PrecedenceConstraints[Constraint]"
+          TopLeft="116.233323179848,58.5999994756778">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="163.199989800983,63.1333326161569"
+              Start="0,0"
+              End="163.199989800983,55.6333326161569">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,33.570775083411" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,33.570775083411"
+                    Point2="0,37.570775083411"
+                    Point3="4,37.570775083411" />
+                  <mssgle:LineSegment
+                    End="159.199989800983,37.570775083411" />
+                  <mssgle:CubicBezierSegment
+                    Point1="159.199989800983,37.570775083411"
+                    Point2="163.199989800983,37.570775083411"
+                    Point3="163.199989800983,41.570775083411" />
+                  <mssgle:LineSegment
+                    End="163.199989800983,55.6333326161569" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\Processar Dados.PrecedenceConstraints[Constraint 1]"
+          TopLeft="462.966641305719,61.7333320918349">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="-121.399994991554,59.9999999999998"
+              Start="0,0"
+              End="-121.399994991554,52.4999999999998">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,31.7061224489795" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,31.7061224489795"
+                    Point2="0,35.7061224489795"
+                    Point3="-4,35.7061224489795" />
+                  <mssgle:LineSegment
+                    End="-117.399994991554,35.7061224489795" />
+                  <mssgle:CubicBezierSegment
+                    Point1="-117.399994991554,35.7061224489795"
+                    Point2="-121.399994991554,35.7061224489795"
+                    Point3="-121.399994991554,39.7061224489795" />
+                  <mssgle:LineSegment
+                    End="-121.399994991554,52.4999999999998" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <ContainerLayout
+          HeaderHeight="43"
+          IsExpanded="True"
+          PanelSize="608.8,218.4"
+          Size="608.8,261.6"
+          Id="Package\Processar Dados"
+          TopLeft="89.1666650730704,453.599999783038" />
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 3]"
+          TopLeft="397.166659336124,398.799999746878">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,54.8000000361602"
+              Start="0,0"
+              End="0,47.3000000361602">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,47.3000000361602" />
                 </mssgle:SegmentCollection>
               </mssgle:Curve.Segments>
             </mssgle:Curve>
