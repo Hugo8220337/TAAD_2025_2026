@@ -11,8 +11,8 @@
   DTS:LocaleID="2070"
   DTS:ObjectName="Package"
   DTS:PackageType="5"
-  DTS:VersionBuild="109"
-  DTS:VersionGUID="{38880AB2-24DE-4BC1-AE08-7680A722CEAC}">
+  DTS:VersionBuild="112"
+  DTS:VersionGUID="{2C17D4CD-7183-4C33-8A78-17494F47AB4F}">
   <DTS:Property
     DTS:Name="PackageFormatVersion">8</DTS:Property>
   <DTS:ConnectionManagers>
@@ -1378,6 +1378,26 @@
         </DTS:ConnectionManager>
       </DTS:ObjectData>
     </DTS:ConnectionManager>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[populate_dim_day.sql]"
+      DTS:CreationName="FILE"
+      DTS:DTSID="{D92AF15F-C789-483F-934F-9512F1289E2A}"
+      DTS:ObjectName="populate_dim_day.sql">
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectionString="C:\Users\User\GitHub\TAAD_2025_2026\etl_ssis\icnf\apoio\scripts\populate_dim_day.sql" />
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[populate_dim_hour.sql]"
+      DTS:CreationName="FILE"
+      DTS:DTSID="{9BE15FDE-45A7-4721-9B90-228512CBDBB6}"
+      DTS:ObjectName="populate_dim_hour.sql">
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectionString="C:\Users\User\GitHub\TAAD_2025_2026\etl_ssis\icnf\apoio\scripts\populate_dim_hour.sql" />
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
   </DTS:ConnectionManagers>
   <DTS:PackageParameters>
     <DTS:PackageParameter
@@ -1392,7 +1412,7 @@
         <DTS:Property
           DTS:DataType="8"
           DTS:Name="ParameterValue"
-          Encrypted="1">AQAAANCMnd8BFdERjHoAwE/Cl+sBAAAAnGLToHQ/QUCfAekZCVZnhwAAAAAIAAAARABUAFMAAAAQZgAAAAEAACAAAAD5QWcRcMXqjqK9k3rZ7kmCpIhjjDrmSToWU/0+BzgQ0AAAAAAOgAAAAAIAACAAAABMu0ettUFDlTgeuyJdbNfVVN5m1CPg5hR8f+hV+ZwNeKAAAAA/tD/zPQ/+LNhQZgyjkQyCXRvIWcZWqQTVQ2wJdVIpjf2C1YdiAxs0LoWmVRt7ExkMGLxXvg479d3W/Hhjf5lHaXv31MCjaAhk3FGXqJM2c7nJ2iHiZZBOCr0r/jb8DHDtEwkiuPB9pQpEnYwSB8VKVBqwCkbaG3wSDyvSUfUKowAAib0Ro7fXaQmvWy4Y3nR7R+4fCA9+MWh4zf3reca5QAAAAAjYvK303urZ9sJzx1tSenTAzeDwEUucICJiILFPHW2eh2GhGP35F3yEorYEN1zN5TuenTj2f+vfQy8B7uPlVAk</DTS:Property>
+          Encrypted="1">AQAAANCMnd8BFdERjHoAwE/Cl+sBAAAAnGLToHQ/QUCfAekZCVZnhwAAAAAIAAAARABUAFMAAAAQZgAAAAEAACAAAABrkI6glw0G/CS5UqLxbE9whh9wwFJzazC4UCwV/Pt/QAAAAAAOgAAAAAIAACAAAADAV+11oRhrL+93BWswpPFkjuti1pyJtk7YggxcD5ejLqAAAACPBOgIgSvVRvzek3splPbBeQpduZG6niFrViRIcSlk3+nO+KQsf3WuQA1SEd0yGNw7vvDpc84oLaFUrDQslhaMHBEI1fFx8FLCEyskA80CHj5aT9Xv2EjaGsuNs4bK07mUVXiKWiAOaOk31xy0DkWRZg4WgdiCmBaZT1Y9Ocuy5zJtKT5fCfZoe6CSKs6dBsg35WbBCKUEh1242YBkZdKJQAAAAIS1sXN3lfLGEntCeS8Z6FRay80MALwJf3wwmy2oWwUDZ2Tkic34jtjSN5vjOzX8hP0mihmUvfR5zAwG+FExfEU</DTS:Property>
       </DTS:Property>
     </DTS:PackageParameter>
   </DTS:PackageParameters>
@@ -1447,6 +1467,23 @@
       <DTS:Variables />
       <DTS:Executables>
         <DTS:Executable
+          DTS:refId="Package\Processar Dados\Povoar Dimensao DIa"
+          DTS:CreationName="Microsoft.ExecuteSQLTask"
+          DTS:Description="Execute SQL Task"
+          DTS:DTSID="{8ca3dd83-c1fc-46ce-aa41-415e5c86319e}"
+          DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+          DTS:LocaleID="-1"
+          DTS:ObjectName="Povoar Dimensao DIa"
+          DTS:ThreadHint="1">
+          <DTS:Variables />
+          <DTS:ObjectData>
+            <SQLTask:SqlTaskData
+              SQLTask:Connection="{628A2FB4-96D3-4818-B7FB-283A52C176AA}"
+              SQLTask:SqlStmtSourceType="FileConnection"
+              SQLTask:SqlStatementSource="populate_dim_day.sql" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+          </DTS:ObjectData>
+        </DTS:Executable>
+        <DTS:Executable
           DTS:refId="Package\Processar Dados\Povoar Dimensao Hora"
           DTS:CreationName="Microsoft.ExecuteSQLTask"
           DTS:Description="Execute SQL Task"
@@ -1459,7 +1496,8 @@
           <DTS:ObjectData>
             <SQLTask:SqlTaskData
               SQLTask:Connection="{628A2FB4-96D3-4818-B7FB-283A52C176AA}"
-              SQLTask:SqlStatementSource="DECLARE @h INT = 0;&#xA;DECLARE @time_of_day NVARCHAR(50);&#xA;&#xA;-- Loop das 0 às 23 horas&#xA;WHILE @h &lt; 24&#xA;BEGIN&#xA;    -- Só insere se o ID ainda não existir para evitar duplicados&#xA;    IF NOT EXISTS (SELECT 1 FROM dbo.dim_hour WHERE hour_id = @h)&#xA;    BEGIN&#xA;        -- Define a parte do dia (lógica de negócio)&#xA;        SET @time_of_day = CASE &#xA;            WHEN @h BETWEEN 6 AND 11 THEN 'Manhã'&#xA;            WHEN @h BETWEEN 12 AND 19 THEN 'Tarde'&#xA;            WHEN @h BETWEEN 20 AND 23 THEN 'Noite'&#xA;            ELSE 'Madrugada'&#xA;        END;&#xA;&#xA;        -- Insere a linha (sem precisar de IDENTITY_INSERT)&#xA;        INSERT INTO dbo.dim_hour (hour_id, hour, time_of_day)&#xA;        VALUES (@h, @h, @time_of_day);&#xA;    END&#xA;&#xA;    SET @h = @h + 1;&#xA;END;&#xA;&#xA;-- Inserir valor para hora desconhecida (-1) se não existir&#xA;IF NOT EXISTS (SELECT 1 FROM dbo.dim_hour WHERE hour_id = -1)&#xA;BEGIN&#xA;    INSERT INTO dbo.dim_hour (hour_id, hour, time_of_day)&#xA;    VALUES (-1, NULL, 'Desconhecido');&#xA;END" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+              SQLTask:SqlStmtSourceType="FileConnection"
+              SQLTask:SqlStatementSource="populate_dim_hour.sql" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
           </DTS:ObjectData>
         </DTS:Executable>
       </DTS:Executables>
@@ -1536,7 +1574,7 @@
     design-time-name="Package">
     <LayoutInfo>
       <GraphLayout
-        Capacity="8" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
+        Capacity="16" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
         <NodeLayout
           Size="203.2,41.6"
           Id="Package\Insert Data to Staging Area"
@@ -1597,6 +1635,10 @@
           Size="186.4,41.6"
           Id="Package\Processar Dados\Povoar Dimensao Hora"
           TopLeft="11.633323999412,12.9333307177491" />
+        <NodeLayout
+          Size="180,41.6"
+          Id="Package\Processar Dados\Povoar Dimensao DIa"
+          TopLeft="11.633323999412,114.533330717749" />
         <ContainerLayout
           HeaderHeight="43"
           IsExpanded="True"
