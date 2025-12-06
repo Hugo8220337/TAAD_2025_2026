@@ -26,7 +26,7 @@
           <SSIS:Property SSIS:Name="CreatorComputerName">DESKTOP-G01CPCN</SSIS:Property>
           <SSIS:Property SSIS:Name="Description">
           </SSIS:Property>
-          <SSIS:Property SSIS:Name="PasswordVerifier" SSIS:Sensitive="1">AQAAANCMnd8BFdERjHoAwE/Cl+sBAAAAnGLToHQ/QUCfAekZCVZnhwAAAAACAAAAAAAQZgAAAAEAACAAAACXnCXIQip7lJ8yt3fXN7ntUGaKZN+U27+zO/1e7ey7rwAAAAAOgAAAAAIAACAAAADBe8Reb47emLeJJBXLDnLmiDV65Y5jx/SG66DAhaU5ipAAAAD0MSww+HoVmPRuWg7cdr6zOC3GmzdBFmUD0/XOBXn2sj6vGk0suqjGNQysO3SPBaqgwcNrbmHneqHxxoq9xcpqq+nNfqzvrSXhF8cwcoqlmUILUhz6vI1mm2bT37akIYcrmQkiRsqynmawtb/lyDW+N1GDE9s725ORfUh+0qeLwUwQVDk5IXmN50EC2qIBqldAAAAAiak1QMdclZLiB4TVyOq65iyUPAuFZPSHVf88mv1wDmfbf22/WeB2dPykY7z+953Iscj7IDErMTSZqEZlrPiygQ==</SSIS:Property>
+          <SSIS:Property SSIS:Name="PasswordVerifier" SSIS:Sensitive="1">AQAAANCMnd8BFdERjHoAwE/Cl+sBAAAAnGLToHQ/QUCfAekZCVZnhwAAAAACAAAAAAAQZgAAAAEAACAAAAAURhDtNU0Gu0Gd5tWUuiA4dJIlltyvS8uT9aqLjGGT9QAAAAAOgAAAAAIAACAAAABDfXzz6C8UiaBlNkeAjjVukWGp7AYx7sAGdWEdIF5zjpAAAADI9eMAkzx8uyf57UuOjxrYn9+vCNvQuBpzew9M5ZcgNr2Au1ZRSI28GEsYLQLwSM3T064aAYShPlk7PKtd29I5d0htF909F+HzIGYH2trtPerZSAZ6R4k74OsRG0Z8z9Uv84ZYix87XvMT9mVkv9kkMRofid5GkgUFx5HB/Hy690aVEMxX2ni9PauUEwCMKqFAAAAAqbihf0FZpHd4gJ0dlQrUl8+83wmOSeWALM4W9c4p295XD2LUam67SH++zTiZ4sg/yIRk+fxt+ZRwVDWyKEaLWA==</SSIS:Property>
           <SSIS:Property SSIS:Name="FormatVersion">1</SSIS:Property>
         </SSIS:Properties>
         <SSIS:Packages>
@@ -42,10 +42,10 @@
                 <SSIS:Property SSIS:Name="Name">Package</SSIS:Property>
                 <SSIS:Property SSIS:Name="VersionMajor">1</SSIS:Property>
                 <SSIS:Property SSIS:Name="VersionMinor">0</SSIS:Property>
-                <SSIS:Property SSIS:Name="VersionBuild">112</SSIS:Property>
+                <SSIS:Property SSIS:Name="VersionBuild">114</SSIS:Property>
                 <SSIS:Property SSIS:Name="VersionComments">
                 </SSIS:Property>
-                <SSIS:Property SSIS:Name="VersionGUID">{2C17D4CD-7183-4C33-8A78-17494F47AB4F}</SSIS:Property>
+                <SSIS:Property SSIS:Name="VersionGUID">{D6926914-B36E-4497-A699-C1B5285088E1}</SSIS:Property>
                 <SSIS:Property SSIS:Name="PackageFormatVersion">8</SSIS:Property>
                 <SSIS:Property SSIS:Name="Description">
                 </SSIS:Property>
@@ -62,7 +62,7 @@
                     <SSIS:Property SSIS:Name="IncludeInDebugDump">0</SSIS:Property>
                     <SSIS:Property SSIS:Name="Required">1</SSIS:Property>
                     <SSIS:Property SSIS:Name="Sensitive">1</SSIS:Property>
-                    <SSIS:Property SSIS:Name="Value" SSIS:Sensitive="1">AQAAANCMnd8BFdERjHoAwE/Cl+sBAAAAnGLToHQ/QUCfAekZCVZnhwAAAAACAAAAAAAQZgAAAAEAACAAAADxOrEX/7HKhQswnqQrIGztFtlKmKkGTms7NOdWBR1OXwAAAAAOgAAAAAIAACAAAAAFKRlBp0aj8N5wfXxnUwLoOBG0agh9aSrVI4VLmpcmKsAAAAAcl46wsIq1e0tjne9Z8mgb7bpTHs5rEFlxQiG8N2xmP/4casKDP3zoqyUVzuWOarO0JC8GxVXMX5HLUJVSwb5mwtNtMQe2yZeHWfvohrkkTxCXzrjStL4x7IPfZ7fRd/h4laC7THsQT56uGYQKHN7lRD4E2Bjl9HqupPiFzKnkbXM557VZQZlZy8xOg+guU/0FYQP9Phzt130E/ZfX17p653LMYqFR+vTwbwKonhedGuUoWjnYH/uLddE6laviHbtAAAAAQZs9mcJjZTgBP4sUvsI5jWiupiG12ekTXwtK1IEMGaNF4BEX6mvYB4mTLnnsgK+1dU1DhHe2E8enfF8zDIXf0Q==</SSIS:Property>
+                    <SSIS:Property SSIS:Name="Value" SSIS:Sensitive="1">AQAAANCMnd8BFdERjHoAwE/Cl+sBAAAAnGLToHQ/QUCfAekZCVZnhwAAAAACAAAAAAAQZgAAAAEAACAAAACmuuaIQJHSVEr1aX9orHB7WBLBlsys+0nfaEgWVgA85AAAAAAOgAAAAAIAACAAAADaKb90Oz9sx8PlW3GtZu/bNYNhu5BFXpif8PerXYE0bcAAAABvRyHhhUuXeIIITipYqTVK7Dx3qf2WU9G85DZipS9N217PwRFx/8MNmxk7QVFPEMSMSjjW75UQjnY0pW04HDmzZzIdNJLVX6l7YQItjLiqKZm7XOYt9PTrSi5bBOvpsZG0HtIN8v5C0I3Fe+qJWiMZh00OnbRydahg3+xsxANtDtkFTPbLyl8SK6aUIgy2QmmSupciW67UxpJLvFdWw8VPLan82l+fy3xK8D4ynmGISeopFa2rN7IR7s2HTOHCRVZAAAAACFRPWASZvYk/T02cK3253jblR/DS1zDvmxMrn153mB97CDt60b/dmDzwTghf/s8VF16uYZCHa90nixrMkbsE7w==</SSIS:Property>
                     <SSIS:Property SSIS:Name="DataType">18</SSIS:Property>
                   </SSIS:Properties>
                 </SSIS:Parameter>
@@ -650,6 +650,36 @@
                     <SSIS:Property SSIS:Name="Required">0</SSIS:Property>
                     <SSIS:Property SSIS:Name="Sensitive">0</SSIS:Property>
                     <SSIS:Property SSIS:Name="Value">C:\Users\User\GitHub\TAAD_2025_2026\etl_ssis\icnf\apoio\scripts\populate_dim_hour.sql</SSIS:Property>
+                    <SSIS:Property SSIS:Name="DataType">18</SSIS:Property>
+                  </SSIS:Properties>
+                </SSIS:Parameter>
+                <SSIS:Parameter SSIS:Name="CM.populate_dim_location.sql.ConnectByProxy">
+                  <SSIS:Properties>
+                    <SSIS:Property SSIS:Name="ID">
+                    </SSIS:Property>
+                    <SSIS:Property SSIS:Name="CreationName">
+                    </SSIS:Property>
+                    <SSIS:Property SSIS:Name="Description">
+                    </SSIS:Property>
+                    <SSIS:Property SSIS:Name="IncludeInDebugDump">0</SSIS:Property>
+                    <SSIS:Property SSIS:Name="Required">0</SSIS:Property>
+                    <SSIS:Property SSIS:Name="Sensitive">0</SSIS:Property>
+                    <SSIS:Property SSIS:Name="Value">false</SSIS:Property>
+                    <SSIS:Property SSIS:Name="DataType">3</SSIS:Property>
+                  </SSIS:Properties>
+                </SSIS:Parameter>
+                <SSIS:Parameter SSIS:Name="CM.populate_dim_location.sql.ConnectionString">
+                  <SSIS:Properties>
+                    <SSIS:Property SSIS:Name="ID">
+                    </SSIS:Property>
+                    <SSIS:Property SSIS:Name="CreationName">
+                    </SSIS:Property>
+                    <SSIS:Property SSIS:Name="Description">
+                    </SSIS:Property>
+                    <SSIS:Property SSIS:Name="IncludeInDebugDump">0</SSIS:Property>
+                    <SSIS:Property SSIS:Name="Required">0</SSIS:Property>
+                    <SSIS:Property SSIS:Name="Sensitive">0</SSIS:Property>
+                    <SSIS:Property SSIS:Name="Value">C:\Users\User\GitHub\TAAD_2025_2026\etl_ssis\icnf\apoio\scripts\populate_dim_location.sql</SSIS:Property>
                     <SSIS:Property SSIS:Name="DataType">18</SSIS:Property>
                   </SSIS:Properties>
                 </SSIS:Parameter>

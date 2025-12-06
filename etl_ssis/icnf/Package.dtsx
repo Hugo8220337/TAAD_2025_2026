@@ -11,8 +11,8 @@
   DTS:LocaleID="2070"
   DTS:ObjectName="Package"
   DTS:PackageType="5"
-  DTS:VersionBuild="112"
-  DTS:VersionGUID="{2C17D4CD-7183-4C33-8A78-17494F47AB4F}">
+  DTS:VersionBuild="114"
+  DTS:VersionGUID="{D6926914-B36E-4497-A699-C1B5285088E1}">
   <DTS:Property
     DTS:Name="PackageFormatVersion">8</DTS:Property>
   <DTS:ConnectionManagers>
@@ -1398,6 +1398,16 @@
           DTS:ConnectionString="C:\Users\User\GitHub\TAAD_2025_2026\etl_ssis\icnf\apoio\scripts\populate_dim_hour.sql" />
       </DTS:ObjectData>
     </DTS:ConnectionManager>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[populate_dim_location.sql]"
+      DTS:CreationName="FILE"
+      DTS:DTSID="{7ECE7D33-5B92-40BB-8E80-260EB27970C0}"
+      DTS:ObjectName="populate_dim_location.sql">
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectionString="C:\Users\User\GitHub\TAAD_2025_2026\etl_ssis\icnf\apoio\scripts\populate_dim_location.sql" />
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
   </DTS:ConnectionManagers>
   <DTS:PackageParameters>
     <DTS:PackageParameter
@@ -1412,7 +1422,7 @@
         <DTS:Property
           DTS:DataType="8"
           DTS:Name="ParameterValue"
-          Encrypted="1">AQAAANCMnd8BFdERjHoAwE/Cl+sBAAAAnGLToHQ/QUCfAekZCVZnhwAAAAAIAAAARABUAFMAAAAQZgAAAAEAACAAAABrkI6glw0G/CS5UqLxbE9whh9wwFJzazC4UCwV/Pt/QAAAAAAOgAAAAAIAACAAAADAV+11oRhrL+93BWswpPFkjuti1pyJtk7YggxcD5ejLqAAAACPBOgIgSvVRvzek3splPbBeQpduZG6niFrViRIcSlk3+nO+KQsf3WuQA1SEd0yGNw7vvDpc84oLaFUrDQslhaMHBEI1fFx8FLCEyskA80CHj5aT9Xv2EjaGsuNs4bK07mUVXiKWiAOaOk31xy0DkWRZg4WgdiCmBaZT1Y9Ocuy5zJtKT5fCfZoe6CSKs6dBsg35WbBCKUEh1242YBkZdKJQAAAAIS1sXN3lfLGEntCeS8Z6FRay80MALwJf3wwmy2oWwUDZ2Tkic34jtjSN5vjOzX8hP0mihmUvfR5zAwG+FExfEU</DTS:Property>
+          Encrypted="1">AQAAANCMnd8BFdERjHoAwE/Cl+sBAAAAnGLToHQ/QUCfAekZCVZnhwAAAAAIAAAARABUAFMAAAAQZgAAAAEAACAAAABEokpXHNTyef7eIrtJqXhFSjeYJzeilKsbjR/kn+V0ugAAAAAOgAAAAAIAACAAAAAnJZgzRZcmY2OfForiZ65XoPPdTaxEHC0zFcvDmZ0SpqAAAAAUDhiRWwKFpzb8++Tcigxq1iifvYb3hPDbhadk8Xpfic4uOe6szY8nrYpfvAFfmeRAbT8fZSvXqW5itnpDOEEU9QOw7l6U2QxYbPuSQ+UQoheJgCbWg0r2K29AGlA0kFlUZ+9szm4r4bEMnXP8s9h0Bw5R/PKYaT4TyyKL2HUA7hjkFLA6lWl5pTUegS5A+GF/O7hqrLymCnw6Dp8RXSrWQAAAAH9V7tVMACk/aqV30gUkdfekhLK3q3d3t+vsxcKAqTmkCLPlibUETIBBx0YNjAHT+6or0umhKxxzHuwLq3wwjSQ</DTS:Property>
       </DTS:Property>
     </DTS:PackageParameter>
   </DTS:PackageParameters>
@@ -1474,7 +1484,7 @@
           DTS:ExecutableType="Microsoft.ExecuteSQLTask"
           DTS:LocaleID="-1"
           DTS:ObjectName="Povoar Dimensao DIa"
-          DTS:ThreadHint="1">
+          DTS:ThreadHint="2">
           <DTS:Variables />
           <DTS:ObjectData>
             <SQLTask:SqlTaskData
@@ -1491,13 +1501,30 @@
           DTS:ExecutableType="Microsoft.ExecuteSQLTask"
           DTS:LocaleID="-1"
           DTS:ObjectName="Povoar Dimensao Hora"
-          DTS:ThreadHint="0">
+          DTS:ThreadHint="1">
           <DTS:Variables />
           <DTS:ObjectData>
             <SQLTask:SqlTaskData
               SQLTask:Connection="{628A2FB4-96D3-4818-B7FB-283A52C176AA}"
               SQLTask:SqlStmtSourceType="FileConnection"
               SQLTask:SqlStatementSource="populate_dim_hour.sql" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+          </DTS:ObjectData>
+        </DTS:Executable>
+        <DTS:Executable
+          DTS:refId="Package\Processar Dados\Povoar Dimensao Localizacao"
+          DTS:CreationName="Microsoft.ExecuteSQLTask"
+          DTS:Description="Execute SQL Task"
+          DTS:DTSID="{54ea1f4c-a8d6-4d5b-a7c3-319af4554d39}"
+          DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+          DTS:LocaleID="-1"
+          DTS:ObjectName="Povoar Dimensao Localizacao"
+          DTS:ThreadHint="0">
+          <DTS:Variables />
+          <DTS:ObjectData>
+            <SQLTask:SqlTaskData
+              SQLTask:Connection="{628A2FB4-96D3-4818-B7FB-283A52C176AA}"
+              SQLTask:SqlStmtSourceType="FileConnection"
+              SQLTask:SqlStatementSource="populate_dim_location.sql" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
           </DTS:ObjectData>
         </DTS:Executable>
       </DTS:Executables>
@@ -1578,18 +1605,18 @@
         <NodeLayout
           Size="203.2,41.6"
           Id="Package\Insert Data to Staging Area"
-          TopLeft="164.166657696995,237.799998824795" />
+          TopLeft="179.166656877432,237.799998824795" />
         <NodeLayout
           Size="181.6,41.6"
           Id="Package\Run Data Filter"
-          TopLeft="175.833323726225,140.799999421437" />
+          TopLeft="190.833322906661,140.799999421437" />
         <NodeLayout
           Size="155.2,41.6"
           Id="Package\Run ICNF scrypt"
-          TopLeft="186.666656467651,42.4666663713592" />
+          TopLeft="201.666655648087,42.4666663713592" />
         <EdgeLayout
           Id="Package.PrecedenceConstraints[Constraint]"
-          TopLeft="265.449990096938,84.0666663713592">
+          TopLeft="280.449989277374,84.0666663713592">
           <EdgeLayout.Curve>
             <mssgle:Curve
               StartConnector="{assembly:Null}"
@@ -1611,7 +1638,7 @@
         </EdgeLayout>
         <EdgeLayout
           Id="Package.PrecedenceConstraints[Constraint 1]"
-          TopLeft="266.199990711611,182.399999421437">
+          TopLeft="281.199989892047,182.399999421437">
           <EdgeLayout.Curve>
             <mssgle:Curve
               StartConnector="{assembly:Null}"
@@ -1638,28 +1665,32 @@
         <NodeLayout
           Size="180,41.6"
           Id="Package\Processar Dados\Povoar Dimensao DIa"
-          TopLeft="11.633323999412,114.533330717749" />
+          TopLeft="274.133309657045,12.266664762232" />
+        <NodeLayout
+          Size="218.4,41.6"
+          Id="Package\Processar Dados\Povoar Dimensao Localizacao"
+          TopLeft="4.1333244091939,78.1333309708702" />
         <ContainerLayout
           HeaderHeight="43"
           IsExpanded="True"
-          PanelSize="217.6,224.8"
-          Size="217.6,268"
+          PanelSize="567.2,224.8"
+          Size="567.2,268"
           Id="Package\Processar Dados"
-          TopLeft="159.166657970184,320.399997866551" />
+          TopLeft="2.27373675443232E-13,320.599997848471" />
         <EdgeLayout
           Id="Package.PrecedenceConstraints[Constraint 2]"
-          TopLeft="266.86665783359,279.399998824795">
+          TopLeft="282.183328438716,279.399998824795">
           <EdgeLayout.Curve>
             <mssgle:Curve
               StartConnector="{assembly:Null}"
-              EndConnector="0,40.9999990417556"
+              EndConnector="0,41.1999990236753"
               Start="0,0"
-              End="0,33.4999990417556">
+              End="0,33.6999990236753">
               <mssgle:Curve.Segments>
                 <mssgle:SegmentCollection
                   Capacity="5">
                   <mssgle:LineSegment
-                    End="0,33.4999990417556" />
+                    End="0,33.6999990236753" />
                 </mssgle:SegmentCollection>
               </mssgle:Curve.Segments>
             </mssgle:Curve>
