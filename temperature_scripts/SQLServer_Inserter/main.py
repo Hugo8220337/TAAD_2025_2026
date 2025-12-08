@@ -160,7 +160,7 @@ def run(
             if file.endswith('.csv'):
                 csv_file = os.path.join(root, file)
                 table_name = os.path.splitext(file)[0]
-                # Map year filenames (e.g. "2025.csv") to the main table
+                # Map year filenames to the main table
                 if table_name.isdigit():
                     table_name = "dsa_meteorology"
                 logging.info(f"Inserting data from {csv_file} into table {table_name}")
