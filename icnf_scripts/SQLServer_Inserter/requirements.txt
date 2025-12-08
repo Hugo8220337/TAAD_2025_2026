@@ -1,4 +1,0 @@
-pypyodbc
-pandas
-# Optional: add PyInstaller for building the standalone executable
-pyinstaller

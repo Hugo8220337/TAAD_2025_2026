@@ -61,9 +61,9 @@ def _get_table_columns(cnxn, table_name):
     cur.close()
     return cols
 
-def _insert_csv_to_table(cnxn, csv_file, table_name):
+def _insert_csv_to_table(cnxn, csv_file, table_name, sep=','):
     # read all columns as string to avoid cast issues
-    df = pd.read_csv(csv_file, dtype=str, sep="|").fillna('')
+    df = pd.read_csv(csv_file, dtype=str, sep=sep).fillna('')
     if df.empty:
         logging.info(f"No rows in {csv_file}, skipping")
         return
@@ -121,7 +121,9 @@ def _insert_csv_to_table(cnxn, csv_file, table_name):
 def run(
         data_dir,
         sql_dir,
-        db_connection_string
+        db_connection_string,
+        table_name,
+        sep=','
 ):
     """Run the SQL Server Inserter process"""
     driver = get_best_odbc_driver()
@@ -159,13 +161,11 @@ def run(
         for file in files:
             if file.endswith('.csv'):
                 csv_file = os.path.join(root, file)
-                table_name = os.path.splitext(file)[0]
-                # Map year filenames to the main table
-                if table_name.isdigit():
-                    table_name = "dsa_meteorology"
-                logging.info(f"Inserting data from {csv_file} into table {table_name}")
+                target_table = table_name  # e.g., dsa_meteorology
+
+                logging.info(f"Inserting data from {csv_file} into table {target_table}")
                 try:
-                    _insert_csv_to_table(cnxn, csv_file, table_name)
+                    _insert_csv_to_table(cnxn, csv_file, target_table, sep=sep)
                 except Exception as e:
                     logging.error(f"Error inserting {csv_file} -> {e}")
 
@@ -202,7 +202,22 @@ def main():
         default="Server=localhost,1433;Database=TAAD_DB;UID=sa;PWD=#password123sdJwnwlk;",
         help='Database connection string'
     )
-    
+
+    parser.add_argument(
+        '--sep', '-p',
+        type=str,
+        required=False,
+        default=',',
+        help='CSV delimiter (default: ,)'
+    )
+
+    parser.add_argument(
+        '--table_name', '-t',
+        type=str,
+        required=False,
+        default='dsa_meteorology',
+        help='Default table name for year-named CSV files (default: dsa_meteorology)'
+    )
     
     args = parser.parse_args()
     
@@ -217,6 +232,8 @@ def main():
         data_dir=args.data_dir,
         sql_dir=args.sql_dir,
         db_connection_string=args.db_connection,
+        table_name=args.table_name,
+        sep=args.sep
     )    
 
 if __name__ == "__main__":
