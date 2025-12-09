@@ -4,9 +4,9 @@
 */
 
 -- 1. Limpar dados antigos (opcional: depende se queres carga total ou incremental)
--- TRUNCATE TABLE dbo.fact_fire; 
+-- TRUNCATE TABLE [DW.TAAD].[dbo].[fact_fire]; 
 
-INSERT INTO dbo.fact_fire (
+INSERT INTO [DW.TAAD].[dbo].[fact_fire] (
     fire_id,
     
     -- Chaves Temporais
@@ -108,19 +108,19 @@ SELECT
 FROM dbo.dsa_icnf_fire src
 
 -- JOIN LOCALIZAÇÃO
-LEFT JOIN dbo.dim_location loc ON 
+LEFT JOIN [DW.TAAD].[dbo].[dim_location] loc ON 
     loc.district     = TRIM(UPPER(COALESCE(src.DISTRITO, N'Desconhecido'))) AND
     loc.municipality = TRIM(UPPER(COALESCE(src.CONCELHO, N'Desconhecido'))) AND
     loc.parish       = TRIM(UPPER(COALESCE(src.FREGUESIA, N'Desconhecido')))
 
 -- JOIN CAUSA
-LEFT JOIN dbo.dim_cause cau ON 
+LEFT JOIN [DW.TAAD].[dbo].[dim_cause] cau ON 
     cau.cause_name     = TRIM(UPPER(COALESCE(src.CAUSA, N'Desconhecido'))) AND
     cau.cause_category = TRIM(UPPER(COALESCE(src.TIPOCAUSA, N'Desconhecido'))) AND
     cau.cause_family   = TRIM(UPPER(COALESCE(src.CAUSAFAMILIA, N'Desconhecido')))
 
 -- JOIN TIPO DE FOGO (Atenção aos bits/flags)
-LEFT JOIN dbo.dim_fire_type ft ON 
+LEFT JOIN [DW.TAAD].[dbo].[dim_fire_type] ft ON 
     ft.type_name = TRIM(UPPER(COALESCE(src.TIPO, N'Desconhecido'))) AND
     ft.is_control_burn = (CASE WHEN TRIM(src.QUEIMADA) IN ('1', 'Sim', 'S', 'True', 'Yes') THEN 1 ELSE 0 END) AND
     ft.is_false_alarm  = (CASE WHEN TRIM(src.FALSOALARME) IN ('1', 'Sim', 'S', 'True', 'Yes') THEN 1 ELSE 0 END) AND
@@ -128,4 +128,4 @@ LEFT JOIN dbo.dim_fire_type ft ON
 
 WHERE 
     -- Evitar duplicar dados se correr o script duas vezes
-    NOT EXISTS (SELECT 1 FROM dbo.fact_fire f WHERE f.fire_id = src.id);
+    NOT EXISTS (SELECT 1 FROM [DW.TAAD].[dbo].[fact_fire] f WHERE f.fire_id = src.id);

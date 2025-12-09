@@ -1,1 +1,1 @@
-TRUNCATE TABLE dbo.dsa_icnf_fire;
+TRUNCATE TABLE [dbo].[dsa_icnf_fire];

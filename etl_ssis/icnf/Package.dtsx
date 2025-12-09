@@ -11,11 +11,31 @@
   DTS:LocaleID="2070"
   DTS:ObjectName="Package"
   DTS:PackageType="5"
-  DTS:VersionBuild="134"
-  DTS:VersionGUID="{5EE00D24-DF00-4A6B-9130-8E38DA63E574}">
+  DTS:VersionBuild="142"
+  DTS:VersionGUID="{65DD526A-DA80-43E1-8AE8-8079824EE839}">
   <DTS:Property
     DTS:Name="PackageFormatVersion">8</DTS:Property>
   <DTS:ConnectionManagers>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[3_create_dimensions.sql]"
+      DTS:CreationName="FILE"
+      DTS:DTSID="{06F4F2F3-5C36-43B3-8F8F-39EDE424829C}"
+      DTS:ObjectName="3_create_dimensions.sql">
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectionString="C:\Users\User\GitHub\TAAD_2025_2026\etl_ssis\icnf\apoio\scripts\tables\3_create_dimensions.sql" />
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[4_create_fact_fire.sql]"
+      DTS:CreationName="FILE"
+      DTS:DTSID="{7E64E213-AF1B-43BF-B3FF-45926AEC5B52}"
+      DTS:ObjectName="4_create_fact_fire.sql">
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectionString="C:\Users\User\GitHub\TAAD_2025_2026\etl_ssis\icnf\apoio\scripts\tables\4_create_fact_fire.sql" />
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
     <DTS:ConnectionManager
       DTS:refId="Package.ConnectionManagers[clean_staging.sql]"
       DTS:CreationName="FILE"
@@ -36,6 +56,18 @@
           DTS:ConnectRetryCount="1"
           DTS:ConnectRetryInterval="5"
           DTS:ConnectionString="Data Source=DESKTOP-G01CPCN;Initial Catalog=DSA.TAAD;Provider=MSOLEDBSQL.1;Integrated Security=SSPI;Application Name=SSIS-Package-{628A2FB4-96D3-4818-B7FB-283A52C176AA}DESKTOP-G01CPCN.DSA.TAAD;Auto Translate=False;" />
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[DESKTOP-G01CPCN.DW.TAAD]"
+      DTS:CreationName="OLEDB"
+      DTS:DTSID="{2C058BD7-FE12-4373-BFC4-B5FBA7E31E82}"
+      DTS:ObjectName="DESKTOP-G01CPCN.DW.TAAD">
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectRetryCount="1"
+          DTS:ConnectRetryInterval="5"
+          DTS:ConnectionString="Data Source=DESKTOP-G01CPCN;Initial Catalog=DW.TAAD;Provider=MSOLEDBSQL.1;Integrated Security=SSPI;Application Name=SSIS-Package-{2C058BD7-FE12-4373-BFC4-B5FBA7E31E82}DESKTOP-G01CPCN.DW.TAAD;Auto Translate=False;" />
       </DTS:ObjectData>
     </DTS:ConnectionManager>
     <DTS:ConnectionManager
@@ -1492,7 +1524,7 @@
         <DTS:Property
           DTS:DataType="8"
           DTS:Name="ParameterValue"
-          Encrypted="1">AQAAANCMnd8BFdERjHoAwE/Cl+sBAAAAnGLToHQ/QUCfAekZCVZnhwAAAAAIAAAARABUAFMAAAAQZgAAAAEAACAAAACgUyBC1V8c6p7hsI1ndgK24LT7lN5KHTGuPJisRqE2owAAAAAOgAAAAAIAACAAAAAYkFYl0yCrylKU0/xccVh8r5zvQVSn5yLx+wA92dJBfKAAAABLocj7tIN0IF3XaQ8OunEFnVv6tbIBnOqSmACSJ2iOStZ3RU3xLZSlBHbx1lmXnYjhK0v1l7G9S8dzl+4w7weBf5NlJZDlRvxViu209PTysOITvGbbwBJwtMUBHzQV3Joam8JabayTWRUr/PSbfaj1hyglnz+xCXjY1Tkg4ZOyiWwpaPcWK0eblf2iEPAIy56G2O17v/5XR0AlY4dlpd+hQAAAAGbyXEd2YNoUIwT5TgHMjs/S/JojntTRBqAsqcuQ0/qOaU3N4ofPqjypdKPhdO71i3fpnpnIcPKt9hY7vTh8Yug</DTS:Property>
+          Encrypted="1">AQAAANCMnd8BFdERjHoAwE/Cl+sBAAAAnGLToHQ/QUCfAekZCVZnhwAAAAAIAAAARABUAFMAAAAQZgAAAAEAACAAAAB5N7M2wBxpzc4EFpx5As8k67nIIzNjdh8+1bgHZ7L6egAAAAAOgAAAAAIAACAAAACxAx78Jo4c4kRLlQSWAoDq5F+HqUVKHceWtoOmEnOI+aAAAAC3kMxxvmZqY8Ypx9QvjIKbUKpAj7jiieBNVXWEqdyUASczOsKwRJUZJBaBV1gaaX1jelnoiHH4lBtHFAWBYt5Dc3pdlL2/9BwDdA7OXbIx9vNxPXjZANHaal3DMNkK4NbFE5V11Hn530dOoD6Mg28v3kKB0zgh3Hvq1bG62lZ/kfjS310EgpodwbPn3C1EYs6qtYHmkO4vUlhi5wUDdwE7QAAAABd17tTLeKERN9a7e6Chxk3akxgti5KxcjuLeRjnigb7LZYseNU4RNTNZFaaYa6uhCAWLoYU41GQvLO+YcgHeks</DTS:Property>
       </DTS:Property>
     </DTS:PackageParameter>
   </DTS:PackageParameters>
@@ -1520,6 +1552,62 @@
   </DTS:Variables>
   <DTS:Executables>
     <DTS:Executable
+      DTS:refId="Package\Criar Tabelas"
+      DTS:CreationName="STOCK:SEQUENCE"
+      DTS:Description="Sequence Container"
+      DTS:DTSID="{AF678E33-7D4F-4A0D-AF32-8E1C73AB77AA}"
+      DTS:ExecutableType="STOCK:SEQUENCE"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Criar Tabelas">
+      <DTS:Variables />
+      <DTS:Executables>
+        <DTS:Executable
+          DTS:refId="Package\Criar Tabelas\Criar Dimensoes no DW"
+          DTS:CreationName="Microsoft.ExecuteSQLTask"
+          DTS:Description="Execute SQL Task"
+          DTS:DTSID="{e5a43045-9673-471a-9f25-87e6082bf4a9}"
+          DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+          DTS:LocaleID="-1"
+          DTS:ObjectName="Criar Dimensoes no DW"
+          DTS:ThreadHint="0">
+          <DTS:Variables />
+          <DTS:ObjectData>
+            <SQLTask:SqlTaskData
+              SQLTask:Connection="{2C058BD7-FE12-4373-BFC4-B5FBA7E31E82}"
+              SQLTask:SqlStmtSourceType="FileConnection"
+              SQLTask:SqlStatementSource="3_create_dimensions.sql" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+          </DTS:ObjectData>
+        </DTS:Executable>
+        <DTS:Executable
+          DTS:refId="Package\Criar Tabelas\Criar Tabela de Factos"
+          DTS:CreationName="Microsoft.ExecuteSQLTask"
+          DTS:Description="Execute SQL Task"
+          DTS:DTSID="{ed7c1197-67d7-45a3-96fc-cf73eb345706}"
+          DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+          DTS:LocaleID="-1"
+          DTS:ObjectName="Criar Tabela de Factos"
+          DTS:ThreadHint="0">
+          <DTS:Variables />
+          <DTS:ObjectData>
+            <SQLTask:SqlTaskData
+              SQLTask:Connection="{2C058BD7-FE12-4373-BFC4-B5FBA7E31E82}"
+              SQLTask:SqlStmtSourceType="FileConnection"
+              SQLTask:SqlStatementSource="4_create_fact_fire.sql" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+          </DTS:ObjectData>
+        </DTS:Executable>
+      </DTS:Executables>
+      <DTS:PrecedenceConstraints>
+        <DTS:PrecedenceConstraint
+          DTS:refId="Package\Criar Tabelas.PrecedenceConstraints[Constraint]"
+          DTS:CreationName=""
+          DTS:DTSID="{FFA01B0F-34AA-4BBC-86D8-62B24F600A84}"
+          DTS:From="Package\Criar Tabelas\Criar Dimensoes no DW"
+          DTS:LogicalAnd="True"
+          DTS:ObjectName="Constraint"
+          DTS:To="Package\Criar Tabelas\Criar Tabela de Factos" />
+      </DTS:PrecedenceConstraints>
+    </DTS:Executable>
+    <DTS:Executable
       DTS:refId="Package\Filtrar Dados"
       DTS:CreationName="STOCK:SEQUENCE"
       DTS:Description="Sequence Container"
@@ -1530,13 +1618,13 @@
       <DTS:Variables />
       <DTS:Executables>
         <DTS:Executable
-          DTS:refId="Package\Filtrar Dados\Remover hectares menores que 0,5"
+          DTS:refId="Package\Filtrar Dados\Remover hectares menores que 01"
           DTS:CreationName="Microsoft.ExecuteSQLTask"
           DTS:Description="Execute SQL Task"
           DTS:DTSID="{fb494c6e-50c8-421d-9a40-30908ec4afbe}"
           DTS:ExecutableType="Microsoft.ExecuteSQLTask"
           DTS:LocaleID="-1"
-          DTS:ObjectName="Remover hectares menores que 0,5"
+          DTS:ObjectName="Remover hectares menores que 01"
           DTS:ThreadHint="0">
           <DTS:Variables />
           <DTS:ObjectData>
@@ -1583,7 +1671,7 @@
           DTS:ExecutableType="Microsoft.ExecuteSQLTask"
           DTS:LocaleID="-1"
           DTS:ObjectName="Povoar Dimensao Causa"
-          DTS:ThreadHint="3">
+          DTS:ThreadHint="0">
           <DTS:Variables />
           <DTS:ObjectData>
             <SQLTask:SqlTaskData
@@ -1600,7 +1688,7 @@
           DTS:ExecutableType="Microsoft.ExecuteSQLTask"
           DTS:LocaleID="-1"
           DTS:ObjectName="Povoar Dimensao DIa"
-          DTS:ThreadHint="4">
+          DTS:ThreadHint="2">
           <DTS:Variables />
           <DTS:ObjectData>
             <SQLTask:SqlTaskData
@@ -1617,7 +1705,7 @@
           DTS:ExecutableType="Microsoft.ExecuteSQLTask"
           DTS:LocaleID="-1"
           DTS:ObjectName="Povoar Dimensao Hora"
-          DTS:ThreadHint="2">
+          DTS:ThreadHint="3">
           <DTS:Variables />
           <DTS:ObjectData>
             <SQLTask:SqlTaskData
@@ -1651,7 +1739,7 @@
           DTS:ExecutableType="Microsoft.ExecuteSQLTask"
           DTS:LocaleID="-1"
           DTS:ObjectName="Povoar Dimensao Tipo Incendio"
-          DTS:ThreadHint="0">
+          DTS:ThreadHint="4">
           <DTS:Variables />
           <DTS:ObjectData>
             <SQLTask:SqlTaskData
@@ -1768,7 +1856,7 @@
       <DTS:ObjectData>
         <ExecuteProcessData
           Executable="C:\Users\User\GitHub\TAAD_2025_2026\etl_ssis\icnf\apoio\raw\retriever.exe"
-          Arguments="--ndays 31"
+          Arguments="--ndays 1825"
           WorkingDirectory="C:\Users\User\GitHub\TAAD_2025_2026\etl_ssis\icnf\apoio\raw" />
       </DTS:ObjectData>
     </DTS:Executable>
@@ -1783,10 +1871,18 @@
       DTS:ObjectName="Constraint"
       DTS:To="Package\Insert Data to Staging Area" />
     <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint 1]"
+      DTS:CreationName=""
+      DTS:DTSID="{480409DE-904F-436A-82FF-F034D1ABA039}"
+      DTS:From="Package\Filtrar Dados"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint 1"
+      DTS:To="Package\Criar Tabelas" />
+    <DTS:PrecedenceConstraint
       DTS:refId="Package.PrecedenceConstraints[Constraint 2]"
       DTS:CreationName=""
-      DTS:DTSID="{BF001DBE-6737-42DA-BF88-557F8B950EE5}"
-      DTS:From="Package\Filtrar Dados"
+      DTS:DTSID="{BF82A2FD-63D4-4070-BAF9-59C746915EE2}"
+      DTS:From="Package\Criar Tabelas"
       DTS:LogicalAnd="True"
       DTS:ObjectName="Constraint 2"
       DTS:To="Package\Inserir Dados" />
@@ -1820,13 +1916,57 @@
       <GraphLayout
         Capacity="32" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
         <NodeLayout
-          Size="203.2,41.6"
-          Id="Package\Insert Data to Staging Area"
-          TopLeft="374.583312867003,133.149999552518" />
+          Size="180,41.6"
+          Id="Package\Criar Tabelas\Criar Dimensoes no DW"
+          TopLeft="11.1777934709074,19.7407393740205" />
         <NodeLayout
-          Size="172.8,41.6"
-          Id="Package\Limpar Staging Area"
-          TopLeft="380.862017495246,982.396291278406" />
+          Size="180,41.6"
+          Id="Package\Criar Tabelas\Criar Tabela de Factos"
+          TopLeft="13.9555710969141,96.3037025110879" />
+        <EdgeLayout
+          Id="Package\Criar Tabelas.PrecedenceConstraints[Constraint]"
+          TopLeft="102.566682283911,61.3407393740205">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,34.9629631370674"
+              Start="0,0"
+              End="0,27.4629631370674">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,27.4629631370674" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <ContainerLayout
+          HeaderHeight="43"
+          IsExpanded="True"
+          PanelSize="204.8,192.8"
+          Size="204.8,236"
+          Id="Package\Criar Tabelas"
+          TopLeft="371.412016743979,430.175923911169" />
+        <NodeLayout
+          Size="240.8,41.6"
+          Id="Package\Filtrar Dados\Remover hectares menores que 01"
+          TopLeft="6.88331901373181,23.3833335879603" />
+        <NodeLayout
+          Size="178.4,41.6"
+          Id="Package\Filtrar Dados\Remover null lat e lon"
+          TopLeft="273.549971110375,20.9833343111634" />
+        <ContainerLayout
+          HeaderHeight="43"
+          IsExpanded="True"
+          PanelSize="456.8,120"
+          Size="456.8,163.2"
+          Id="Package\Filtrar Dados"
+          TopLeft="245.208319935741,226.785184838985" />
         <NodeLayout
           Size="193.6,41.6"
           Id="Package\Inserir Dados\Povoar Dimensao Causa"
@@ -2024,95 +2164,22 @@
         <ContainerLayout
           HeaderHeight="43"
           IsExpanded="True"
-          PanelSize="608.8,355.2"
-          Size="608.8,398.4"
+          PanelSize="608.8,338.4"
+          Size="608.8,381.6"
           Id="Package\Inserir Dados"
-          TopLeft="160.347213461237,481.783330387788" />
+          TopLeft="757.966228427819,339.55714090062" />
+        <NodeLayout
+          Size="203.2,41.6"
+          Id="Package\Insert Data to Staging Area"
+          TopLeft="374.583312867003,133.149999552518" />
+        <NodeLayout
+          Size="172.8,41.6"
+          Id="Package\Limpar Staging Area"
+          TopLeft="980.861984712692,789.562959286012" />
         <NodeLayout
           Size="155.2,41.6"
           Id="Package\Run ICNF scrypt"
           TopLeft="392.916645198648,33.1499997694793" />
-        <EdgeLayout
-          Id="Package.PrecedenceConstraints[Constraint 3]"
-          TopLeft="466.004615478241,880.183330387788">
-          <EdgeLayout.Curve>
-            <mssgle:Curve
-              StartConnector="{assembly:Null}"
-              EndConnector="0,102.212960890618"
-              Start="0,0"
-              End="0,94.7129608906182">
-              <mssgle:Curve.Segments>
-                <mssgle:SegmentCollection
-                  Capacity="5">
-                  <mssgle:LineSegment
-                    End="0,94.7129608906182" />
-                </mssgle:SegmentCollection>
-              </mssgle:Curve.Segments>
-            </mssgle:Curve>
-          </EdgeLayout.Curve>
-          <EdgeLayout.Labels>
-            <EdgeLabelCollection />
-          </EdgeLayout.Labels>
-        </EdgeLayout>
-        <NodeLayout
-          Size="244,41.6"
-          Id="Package\Filtrar Dados\Remover hectares menores que 0,5"
-          TopLeft="6.88331901373181,23.3833335879603" />
-        <NodeLayout
-          Size="178.4,41.6"
-          Id="Package\Filtrar Dados\Remover null lat e lon"
-          TopLeft="273.549971110375,20.9833343111634" />
-        <ContainerLayout
-          HeaderHeight="43"
-          IsExpanded="True"
-          PanelSize="456.8,104.8"
-          Size="456.8,148"
-          Id="Package\Filtrar Dados"
-          TopLeft="244.166653325989,246.285184703385" />
-        <EdgeLayout
-          Id="Package.PrecedenceConstraints[Constraint 2]"
-          TopLeft="468.656933393613,394.285184703385">
-          <EdgeLayout.Curve>
-            <mssgle:Curve
-              StartConnector="{assembly:Null}"
-              EndConnector="0,87.4981456844035"
-              Start="0,0"
-              End="0,79.9981456844035">
-              <mssgle:Curve.Segments>
-                <mssgle:SegmentCollection
-                  Capacity="5">
-                  <mssgle:LineSegment
-                    End="0,79.9981456844035" />
-                </mssgle:SegmentCollection>
-              </mssgle:Curve.Segments>
-            </mssgle:Curve>
-          </EdgeLayout.Curve>
-          <EdgeLayout.Labels>
-            <EdgeLabelCollection />
-          </EdgeLayout.Labels>
-        </EdgeLayout>
-        <EdgeLayout
-          Id="Package.PrecedenceConstraints[Constraint 4]"
-          TopLeft="474.374983096496,174.749999552518">
-          <EdgeLayout.Curve>
-            <mssgle:Curve
-              StartConnector="{assembly:Null}"
-              EndConnector="0,71.5351851508667"
-              Start="0,0"
-              End="0,64.0351851508667">
-              <mssgle:Curve.Segments>
-                <mssgle:SegmentCollection
-                  Capacity="5">
-                  <mssgle:LineSegment
-                    End="0,64.0351851508667" />
-                </mssgle:SegmentCollection>
-              </mssgle:Curve.Segments>
-            </mssgle:Curve>
-          </EdgeLayout.Curve>
-          <EdgeLayout.Labels>
-            <EdgeLabelCollection />
-          </EdgeLayout.Labels>
-        </EdgeLayout>
         <EdgeLayout
           Id="Package.PrecedenceConstraints[Constraint]"
           TopLeft="473.349979032825,74.7499997694793">
@@ -2127,6 +2194,106 @@
                   Capacity="5">
                   <mssgle:LineSegment
                     End="0,50.8999997830387" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 1]"
+          TopLeft="473.71016833986,389.985184838985">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,40.1907390721841"
+              Start="0,0"
+              End="0,32.6907390721841">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,32.6907390721841" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 2]"
+          TopLeft="576.212016743979,548.175923911169">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="181.75421168384,-17.8187830105489"
+              Start="0,0"
+              End="174.25421168384,-17.8187830105489">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="86.8771058419201,0" />
+                  <mssgle:CubicBezierSegment
+                    Point1="86.8771058419201,0"
+                    Point2="90.8771058419201,0"
+                    Point3="90.8771058419201,-4" />
+                  <mssgle:LineSegment
+                    End="90.8771058419201,-13.8187830105489" />
+                  <mssgle:CubicBezierSegment
+                    Point1="90.8771058419201,-13.8187830105489"
+                    Point2="90.8771058419201,-17.8187830105489"
+                    Point3="94.8771058419201,-17.8187830105489" />
+                  <mssgle:LineSegment
+                    End="174.25421168384,-17.8187830105489" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 3]"
+          TopLeft="1064.81410657026,721.15714090062">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,68.4058183853915"
+              Start="0,0"
+              End="0,60.9058183853915">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,60.9058183853915" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 4]"
+          TopLeft="474.895816401372,174.749999552518">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,52.0351852864673"
+              Start="0,0"
+              End="0,44.5351852864673">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,44.5351852864673" />
                 </mssgle:SegmentCollection>
               </mssgle:Curve.Segments>
             </mssgle:Curve>
