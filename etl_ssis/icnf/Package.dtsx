@@ -11,8 +11,8 @@
   DTS:LocaleID="2070"
   DTS:ObjectName="Package"
   DTS:PackageType="5"
-  DTS:VersionBuild="127"
-  DTS:VersionGUID="{A0C63125-09F8-410C-8338-E35869F00263}">
+  DTS:VersionBuild="134"
+  DTS:VersionGUID="{5EE00D24-DF00-4A6B-9130-8E38DA63E574}">
   <DTS:Property
     DTS:Name="PackageFormatVersion">8</DTS:Property>
   <DTS:ConnectionManagers>
@@ -753,6 +753,26 @@
       </DTS:ObjectData>
     </DTS:ConnectionManager>
     <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[filter_area_less_than_01.sql]"
+      DTS:CreationName="FILE"
+      DTS:DTSID="{D7FC4B74-8789-482B-A55F-41911749590B}"
+      DTS:ObjectName="filter_area_less_than_01.sql">
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectionString="C:\Users\User\GitHub\TAAD_2025_2026\etl_ssis\icnf\apoio\scripts\filtros\filter_area_less_than_01.sql" />
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[filter_null_coordinates.sql]"
+      DTS:CreationName="FILE"
+      DTS:DTSID="{93D97BC7-03EF-4F24-9744-42A6DFCB8E55}"
+      DTS:ObjectName="filter_null_coordinates.sql">
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectionString="C:\Users\User\GitHub\TAAD_2025_2026\etl_ssis\icnf\apoio\scripts\filtros\filter_null_coordinates.sql" />
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+    <DTS:ConnectionManager
       DTS:refId="Package.ConnectionManagers[Flat File Connection Manager]"
       DTS:CreationName="FLATFILE"
       DTS:DTSID="{046AF26B-5CAB-4276-8585-9F8A0E9345E4}"
@@ -1448,6 +1468,16 @@
           DTS:ConnectionString="C:\Users\User\GitHub\TAAD_2025_2026\etl_ssis\icnf\apoio\scripts\populate_fact_fire.sql" />
       </DTS:ObjectData>
     </DTS:ConnectionManager>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[remove_lesser_hectares.sql]"
+      DTS:CreationName="FILE"
+      DTS:DTSID="{FFA448B8-F88E-4D48-B288-C668B31FC8CC}"
+      DTS:ObjectName="remove_lesser_hectares.sql">
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectionString="C:\Users\User\GitHub\TAAD_2025_2026\etl_ssis\icnf\apoio\scripts\filtros\remove_lesser_hectares.sql" />
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
   </DTS:ConnectionManagers>
   <DTS:PackageParameters>
     <DTS:PackageParameter
@@ -1462,7 +1492,7 @@
         <DTS:Property
           DTS:DataType="8"
           DTS:Name="ParameterValue"
-          Encrypted="1">AQAAANCMnd8BFdERjHoAwE/Cl+sBAAAAnGLToHQ/QUCfAekZCVZnhwAAAAAIAAAARABUAFMAAAAQZgAAAAEAACAAAADf1rDndtGf+/ujT/9VFYJbdZztFRPhFR4LUPfjlCWlLQAAAAAOgAAAAAIAACAAAAC0h7ghTtzmAPl6oMl2Tu6R1kfd/ganNAVkJEIYQRhDoqAAAADulI8e3/647BQpm/wuURLUMBmT2CxHA3Zy5PRh104fgZMozEBWknls0Ll5aOFK8RA5RDZMlk0xDfNpY6+OrYLMHBB3K9SIM3EI+N06E9xhjcfyMFFV20TUpVmCyT+ZTqf5GBYWhTwut7MfY5ojX8ptbm2kA0fVqaTSICgS8wUfY8ZW60LWoV8uN5+9c4LNYaWbXJK520ULOxFBjdZrgvueQAAAABPtszDX5YrLvcE8FkggUr9JdoawoyXOT+ZzErdb5BVujiidCZTqRXEli/mJf3u2smSm9DeWWIfR4erF0egNqP0</DTS:Property>
+          Encrypted="1">AQAAANCMnd8BFdERjHoAwE/Cl+sBAAAAnGLToHQ/QUCfAekZCVZnhwAAAAAIAAAARABUAFMAAAAQZgAAAAEAACAAAACgUyBC1V8c6p7hsI1ndgK24LT7lN5KHTGuPJisRqE2owAAAAAOgAAAAAIAACAAAAAYkFYl0yCrylKU0/xccVh8r5zvQVSn5yLx+wA92dJBfKAAAABLocj7tIN0IF3XaQ8OunEFnVv6tbIBnOqSmACSJ2iOStZ3RU3xLZSlBHbx1lmXnYjhK0v1l7G9S8dzl+4w7weBf5NlJZDlRvxViu209PTysOITvGbbwBJwtMUBHzQV3Joam8JabayTWRUr/PSbfaj1hyglnz+xCXjY1Tkg4ZOyiWwpaPcWK0eblf2iEPAIy56G2O17v/5XR0AlY4dlpd+hQAAAAGbyXEd2YNoUIwT5TgHMjs/S/JojntTRBqAsqcuQ0/qOaU3N4ofPqjypdKPhdO71i3fpnpnIcPKt9hY7vTh8Yug</DTS:Property>
       </DTS:Property>
     </DTS:PackageParameter>
   </DTS:PackageParameters>
@@ -1490,58 +1520,70 @@
   </DTS:Variables>
   <DTS:Executables>
     <DTS:Executable
-      DTS:refId="Package\Insert Data to Staging Area"
-      DTS:CreationName="Microsoft.ExecuteProcess"
-      DTS:Description="Execute Process Task"
-      DTS:DTSID="{A14216E5-EA05-4A67-A8A6-6E66A381AE2D}"
-      DTS:ExecutableType="Microsoft.ExecuteProcess"
+      DTS:refId="Package\Filtrar Dados"
+      DTS:CreationName="STOCK:SEQUENCE"
+      DTS:Description="Sequence Container"
+      DTS:DTSID="{DFED449E-BB70-4035-8B07-0C6A9D367AE0}"
+      DTS:ExecutableType="STOCK:SEQUENCE"
       DTS:LocaleID="-1"
-      DTS:ObjectName="Insert Data to Staging Area"
-      DTS:ThreadHint="0">
+      DTS:ObjectName="Filtrar Dados">
       <DTS:Variables />
-      <DTS:ObjectData>
-        <ExecuteProcessData
-          Executable="C:\Users\User\GitHub\TAAD_2025_2026\etl_ssis\icnf\apoio\raw\SQLServerInserter.exe"
-          Arguments="--sep &quot;|&quot; --table_name dsa_icnf_fire --data_dir C:\Users\User\GitHub\TAAD_2025_2026\etl_ssis\icnf\apoio\raw\icnf_filtered_data --sql_dir C:\Users\User\GitHub\TAAD_2025_2026\etl_ssis\icnf\apoio\raw\sql --db_connection Server=DESKTOP-G01CPCN;Database=DSA.TAAD;UID=sa;PWD=risidihu2032003;&quot;"
-          WorkingDirectory="C:\Users\User\GitHub\TAAD_2025_2026\etl_ssis\icnf\apoio\raw" />
-      </DTS:ObjectData>
+      <DTS:Executables>
+        <DTS:Executable
+          DTS:refId="Package\Filtrar Dados\Remover hectares menores que 0,5"
+          DTS:CreationName="Microsoft.ExecuteSQLTask"
+          DTS:Description="Execute SQL Task"
+          DTS:DTSID="{fb494c6e-50c8-421d-9a40-30908ec4afbe}"
+          DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+          DTS:LocaleID="-1"
+          DTS:ObjectName="Remover hectares menores que 0,5"
+          DTS:ThreadHint="0">
+          <DTS:Variables />
+          <DTS:ObjectData>
+            <SQLTask:SqlTaskData
+              SQLTask:Connection="{628A2FB4-96D3-4818-B7FB-283A52C176AA}"
+              SQLTask:SqlStmtSourceType="FileConnection"
+              SQLTask:SqlStatementSource="filter_area_less_than_01.sql" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+          </DTS:ObjectData>
+        </DTS:Executable>
+        <DTS:Executable
+          DTS:refId="Package\Filtrar Dados\Remover null lat e lon"
+          DTS:CreationName="Microsoft.ExecuteSQLTask"
+          DTS:Description="Execute SQL Task"
+          DTS:DTSID="{a5a332b3-d899-4b11-bb08-940c9fb224ec}"
+          DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+          DTS:LocaleID="-1"
+          DTS:ObjectName="Remover null lat e lon"
+          DTS:ThreadHint="1">
+          <DTS:Variables />
+          <DTS:ObjectData>
+            <SQLTask:SqlTaskData
+              SQLTask:Connection="{628A2FB4-96D3-4818-B7FB-283A52C176AA}"
+              SQLTask:SqlStmtSourceType="FileConnection"
+              SQLTask:SqlStatementSource="filter_null_coordinates.sql" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+          </DTS:ObjectData>
+        </DTS:Executable>
+      </DTS:Executables>
     </DTS:Executable>
     <DTS:Executable
-      DTS:refId="Package\Limpar Staging Area"
-      DTS:CreationName="Microsoft.ExecuteSQLTask"
-      DTS:Description="Execute SQL Task"
-      DTS:DTSID="{158f26f0-28e0-4e16-8742-9d2b2171e023}"
-      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
-      DTS:LocaleID="-1"
-      DTS:ObjectName="Limpar Staging Area"
-      DTS:ThreadHint="0">
-      <DTS:Variables />
-      <DTS:ObjectData>
-        <SQLTask:SqlTaskData
-          SQLTask:Connection="{628A2FB4-96D3-4818-B7FB-283A52C176AA}"
-          SQLTask:SqlStmtSourceType="FileConnection"
-          SQLTask:SqlStatementSource="clean_staging.sql" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
-      </DTS:ObjectData>
-    </DTS:Executable>
-    <DTS:Executable
-      DTS:refId="Package\Processar Dados"
+      DTS:refId="Package\Inserir Dados"
       DTS:CreationName="STOCK:SEQUENCE"
       DTS:Description="Sequence Container"
       DTS:DTSID="{761323DB-7A96-4A52-B514-A8DA335C696A}"
       DTS:ExecutableType="STOCK:SEQUENCE"
       DTS:LocaleID="-1"
-      DTS:ObjectName="Processar Dados">
+      DTS:ObjectName="Inserir Dados">
       <DTS:Variables />
       <DTS:Executables>
         <DTS:Executable
-          DTS:refId="Package\Processar Dados\Povoar Dimensao Causa"
+          DTS:refId="Package\Inserir Dados\Povoar Dimensao Causa"
           DTS:CreationName="Microsoft.ExecuteSQLTask"
           DTS:Description="Execute SQL Task"
           DTS:DTSID="{8a805cb4-2bd9-4f30-9ad2-dc4420d184e5}"
           DTS:ExecutableType="Microsoft.ExecuteSQLTask"
           DTS:LocaleID="-1"
           DTS:ObjectName="Povoar Dimensao Causa"
-          DTS:ThreadHint="4">
+          DTS:ThreadHint="3">
           <DTS:Variables />
           <DTS:ObjectData>
             <SQLTask:SqlTaskData
@@ -1551,14 +1593,14 @@
           </DTS:ObjectData>
         </DTS:Executable>
         <DTS:Executable
-          DTS:refId="Package\Processar Dados\Povoar Dimensao DIa"
+          DTS:refId="Package\Inserir Dados\Povoar Dimensao DIa"
           DTS:CreationName="Microsoft.ExecuteSQLTask"
           DTS:Description="Execute SQL Task"
           DTS:DTSID="{8ca3dd83-c1fc-46ce-aa41-415e5c86319e}"
           DTS:ExecutableType="Microsoft.ExecuteSQLTask"
           DTS:LocaleID="-1"
           DTS:ObjectName="Povoar Dimensao DIa"
-          DTS:ThreadHint="0">
+          DTS:ThreadHint="4">
           <DTS:Variables />
           <DTS:ObjectData>
             <SQLTask:SqlTaskData
@@ -1568,14 +1610,14 @@
           </DTS:ObjectData>
         </DTS:Executable>
         <DTS:Executable
-          DTS:refId="Package\Processar Dados\Povoar Dimensao Hora"
+          DTS:refId="Package\Inserir Dados\Povoar Dimensao Hora"
           DTS:CreationName="Microsoft.ExecuteSQLTask"
           DTS:Description="Execute SQL Task"
           DTS:DTSID="{B8DC605A-4481-4C4B-B7F5-B67E373131B8}"
           DTS:ExecutableType="Microsoft.ExecuteSQLTask"
           DTS:LocaleID="-1"
           DTS:ObjectName="Povoar Dimensao Hora"
-          DTS:ThreadHint="1">
+          DTS:ThreadHint="2">
           <DTS:Variables />
           <DTS:ObjectData>
             <SQLTask:SqlTaskData
@@ -1585,14 +1627,14 @@
           </DTS:ObjectData>
         </DTS:Executable>
         <DTS:Executable
-          DTS:refId="Package\Processar Dados\Povoar Dimensao Localizacao"
+          DTS:refId="Package\Inserir Dados\Povoar Dimensao Localizacao"
           DTS:CreationName="Microsoft.ExecuteSQLTask"
           DTS:Description="Execute SQL Task"
           DTS:DTSID="{54ea1f4c-a8d6-4d5b-a7c3-319af4554d39}"
           DTS:ExecutableType="Microsoft.ExecuteSQLTask"
           DTS:LocaleID="-1"
           DTS:ObjectName="Povoar Dimensao Localizacao"
-          DTS:ThreadHint="2">
+          DTS:ThreadHint="1">
           <DTS:Variables />
           <DTS:ObjectData>
             <SQLTask:SqlTaskData
@@ -1602,14 +1644,14 @@
           </DTS:ObjectData>
         </DTS:Executable>
         <DTS:Executable
-          DTS:refId="Package\Processar Dados\Povoar Dimensao Tipo Incendio"
+          DTS:refId="Package\Inserir Dados\Povoar Dimensao Tipo Incendio"
           DTS:CreationName="Microsoft.ExecuteSQLTask"
           DTS:Description="Execute SQL Task"
           DTS:DTSID="{b4688d64-15fc-499a-b5b0-fa472e9653a1}"
           DTS:ExecutableType="Microsoft.ExecuteSQLTask"
           DTS:LocaleID="-1"
           DTS:ObjectName="Povoar Dimensao Tipo Incendio"
-          DTS:ThreadHint="3">
+          DTS:ThreadHint="0">
           <DTS:Variables />
           <DTS:ObjectData>
             <SQLTask:SqlTaskData
@@ -1619,7 +1661,7 @@
           </DTS:ObjectData>
         </DTS:Executable>
         <DTS:Executable
-          DTS:refId="Package\Processar Dados\Povoar Tabela de Factos"
+          DTS:refId="Package\Inserir Dados\Povoar Tabela de Factos"
           DTS:CreationName="Microsoft.ExecuteSQLTask"
           DTS:Description="Execute SQL Task"
           DTS:DTSID="{de1a68ff-c437-4b14-8735-2f30be2f9996}"
@@ -1638,62 +1680,79 @@
       </DTS:Executables>
       <DTS:PrecedenceConstraints>
         <DTS:PrecedenceConstraint
-          DTS:refId="Package\Processar Dados.PrecedenceConstraints[Constraint]"
+          DTS:refId="Package\Inserir Dados.PrecedenceConstraints[Constraint]"
           DTS:CreationName=""
           DTS:DTSID="{4123F242-376C-4596-B7C0-A95B844EA76E}"
-          DTS:From="Package\Processar Dados\Povoar Dimensao Localizacao"
+          DTS:From="Package\Inserir Dados\Povoar Dimensao Localizacao"
           DTS:LogicalAnd="True"
           DTS:ObjectName="Constraint"
-          DTS:To="Package\Processar Dados\Povoar Tabela de Factos" />
+          DTS:To="Package\Inserir Dados\Povoar Tabela de Factos" />
         <DTS:PrecedenceConstraint
-          DTS:refId="Package\Processar Dados.PrecedenceConstraints[Constraint 1]"
+          DTS:refId="Package\Inserir Dados.PrecedenceConstraints[Constraint 1]"
           DTS:CreationName=""
           DTS:DTSID="{68333687-2CE5-452D-A0C7-BFFE81FA1E6A}"
-          DTS:From="Package\Processar Dados\Povoar Dimensao DIa"
+          DTS:From="Package\Inserir Dados\Povoar Dimensao DIa"
           DTS:LogicalAnd="True"
           DTS:ObjectName="Constraint 1"
-          DTS:To="Package\Processar Dados\Povoar Tabela de Factos" />
+          DTS:To="Package\Inserir Dados\Povoar Tabela de Factos" />
         <DTS:PrecedenceConstraint
-          DTS:refId="Package\Processar Dados.PrecedenceConstraints[Constraint 2]"
+          DTS:refId="Package\Inserir Dados.PrecedenceConstraints[Constraint 2]"
           DTS:CreationName=""
           DTS:DTSID="{93A97703-8B2F-4334-9BEA-A37969B06E37}"
-          DTS:From="Package\Processar Dados\Povoar Dimensao Tipo Incendio"
+          DTS:From="Package\Inserir Dados\Povoar Dimensao Tipo Incendio"
           DTS:LogicalAnd="True"
           DTS:ObjectName="Constraint 2"
-          DTS:To="Package\Processar Dados\Povoar Tabela de Factos" />
+          DTS:To="Package\Inserir Dados\Povoar Tabela de Factos" />
         <DTS:PrecedenceConstraint
-          DTS:refId="Package\Processar Dados.PrecedenceConstraints[Constraint 3]"
+          DTS:refId="Package\Inserir Dados.PrecedenceConstraints[Constraint 3]"
           DTS:CreationName=""
           DTS:DTSID="{292946E2-D77D-4EBA-A55F-2A8277798396}"
-          DTS:From="Package\Processar Dados\Povoar Dimensao Causa"
+          DTS:From="Package\Inserir Dados\Povoar Dimensao Causa"
           DTS:LogicalAnd="True"
           DTS:ObjectName="Constraint 3"
-          DTS:To="Package\Processar Dados\Povoar Tabela de Factos" />
+          DTS:To="Package\Inserir Dados\Povoar Tabela de Factos" />
         <DTS:PrecedenceConstraint
-          DTS:refId="Package\Processar Dados.PrecedenceConstraints[Constraint 4]"
+          DTS:refId="Package\Inserir Dados.PrecedenceConstraints[Constraint 4]"
           DTS:CreationName=""
           DTS:DTSID="{5A2E9AA0-F043-40C3-B81B-0A7CF51C051D}"
-          DTS:From="Package\Processar Dados\Povoar Dimensao Hora"
+          DTS:From="Package\Inserir Dados\Povoar Dimensao Hora"
           DTS:LogicalAnd="True"
           DTS:ObjectName="Constraint 4"
-          DTS:To="Package\Processar Dados\Povoar Tabela de Factos" />
+          DTS:To="Package\Inserir Dados\Povoar Tabela de Factos" />
       </DTS:PrecedenceConstraints>
     </DTS:Executable>
     <DTS:Executable
-      DTS:refId="Package\Run Data Filter"
+      DTS:refId="Package\Insert Data to Staging Area"
       DTS:CreationName="Microsoft.ExecuteProcess"
       DTS:Description="Execute Process Task"
-      DTS:DTSID="{91D09B19-B8EF-46FD-93D0-2A5511D8486F}"
+      DTS:DTSID="{A14216E5-EA05-4A67-A8A6-6E66A381AE2D}"
       DTS:ExecutableType="Microsoft.ExecuteProcess"
       DTS:LocaleID="-1"
-      DTS:ObjectName="Run Data Filter"
+      DTS:ObjectName="Insert Data to Staging Area"
       DTS:ThreadHint="0">
       <DTS:Variables />
       <DTS:ObjectData>
         <ExecuteProcessData
-          Executable="C:\Users\User\GitHub\TAAD_2025_2026\etl_ssis\icnf\apoio\raw\FireDataFilter.exe"
-          Arguments="--data_dir C:\Users\User\GitHub\TAAD_2025_2026\etl_ssis\icnf\apoio\raw\icnf_data --output_dir C:\Users\User\GitHub\TAAD_2025_2026\etl_ssis\icnf\apoio\raw\icnf_filtered_data"
+          Executable="C:\Users\User\GitHub\TAAD_2025_2026\etl_ssis\icnf\apoio\raw\SQLServerInserter.exe"
+          Arguments="--sep &quot;|&quot; --table_name dsa_icnf_fire --data_dir C:\Users\User\GitHub\TAAD_2025_2026\etl_ssis\icnf\apoio\raw\icnf_data --sql_dir C:\Users\User\GitHub\TAAD_2025_2026\etl_ssis\icnf\apoio\raw\sql --db_connection Server=DESKTOP-G01CPCN;Database=DSA.TAAD;UID=sa;PWD=risidihu2032003;&quot;"
           WorkingDirectory="C:\Users\User\GitHub\TAAD_2025_2026\etl_ssis\icnf\apoio\raw" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\Limpar Staging Area"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:Description="Execute SQL Task"
+      DTS:DTSID="{158f26f0-28e0-4e16-8742-9d2b2171e023}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Limpar Staging Area"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{628A2FB4-96D3-4818-B7FB-283A52C176AA}"
+          SQLTask:SqlStmtSourceType="FileConnection"
+          SQLTask:SqlStatementSource="clean_staging.sql" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
       </DTS:ObjectData>
     </DTS:Executable>
     <DTS:Executable
@@ -1718,35 +1777,35 @@
     <DTS:PrecedenceConstraint
       DTS:refId="Package.PrecedenceConstraints[Constraint]"
       DTS:CreationName=""
-      DTS:DTSID="{9A81084B-EE65-47BB-B85D-341ECC9A4B7D}"
+      DTS:DTSID="{1513C424-F93A-46E3-A4ED-F1FEE80F5A85}"
       DTS:From="Package\Run ICNF scrypt"
       DTS:LogicalAnd="True"
       DTS:ObjectName="Constraint"
-      DTS:To="Package\Run Data Filter" />
-    <DTS:PrecedenceConstraint
-      DTS:refId="Package.PrecedenceConstraints[Constraint 1]"
-      DTS:CreationName=""
-      DTS:DTSID="{454AA2CB-527F-4324-AD45-73921611101E}"
-      DTS:From="Package\Run Data Filter"
-      DTS:LogicalAnd="True"
-      DTS:ObjectName="Constraint 1"
       DTS:To="Package\Insert Data to Staging Area" />
     <DTS:PrecedenceConstraint
       DTS:refId="Package.PrecedenceConstraints[Constraint 2]"
       DTS:CreationName=""
-      DTS:DTSID="{524D008B-80DE-45BB-B813-2DD95453FF00}"
-      DTS:From="Package\Insert Data to Staging Area"
+      DTS:DTSID="{BF001DBE-6737-42DA-BF88-557F8B950EE5}"
+      DTS:From="Package\Filtrar Dados"
       DTS:LogicalAnd="True"
       DTS:ObjectName="Constraint 2"
-      DTS:To="Package\Processar Dados" />
+      DTS:To="Package\Inserir Dados" />
     <DTS:PrecedenceConstraint
       DTS:refId="Package.PrecedenceConstraints[Constraint 3]"
       DTS:CreationName=""
       DTS:DTSID="{E82FE732-4E5E-43AB-A6B3-7B1714C2C30E}"
-      DTS:From="Package\Processar Dados"
+      DTS:From="Package\Inserir Dados"
       DTS:LogicalAnd="True"
       DTS:ObjectName="Constraint 3"
       DTS:To="Package\Limpar Staging Area" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint 4]"
+      DTS:CreationName=""
+      DTS:DTSID="{8A68E703-9E9A-4086-8235-4796A3AF6EA2}"
+      DTS:From="Package\Insert Data to Staging Area"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint 4"
+      DTS:To="Package\Filtrar Dados" />
   </DTS:PrecedenceConstraints>
   <DTS:DesignTimeProperties><![CDATA[<?xml version="1.0"?>
 <!--This CDATA section contains the layout information of the package. The section includes information such as (x,y) coordinates, width, and height.-->
@@ -1763,37 +1822,37 @@
         <NodeLayout
           Size="203.2,41.6"
           Id="Package\Insert Data to Staging Area"
-          TopLeft="384.583312320627,238.883332150595" />
+          TopLeft="374.583312867003,133.149999552518" />
         <NodeLayout
           Size="172.8,41.6"
           Id="Package\Limpar Staging Area"
-          TopLeft="395.491646325548,753.499996573825" />
+          TopLeft="380.862017495246,982.396291278406" />
         <NodeLayout
           Size="193.6,41.6"
-          Id="Package\Processar Dados\Povoar Dimensao Causa"
+          Id="Package\Inserir Dados\Povoar Dimensao Causa"
           TopLeft="401.633302690752,85.2666649611131" />
         <NodeLayout
           Size="180,41.6"
-          Id="Package\Processar Dados\Povoar Dimensao DIa"
+          Id="Package\Inserir Dados\Povoar Dimensao DIa"
           TopLeft="17.4666570140259,186.466663550867" />
         <NodeLayout
           Size="186.4,41.6"
-          Id="Package\Processar Dados\Povoar Dimensao Hora"
-          TopLeft="194.966647315854,69.2666636593468" />
+          Id="Package\Inserir Dados\Povoar Dimensao Hora"
+          TopLeft="190.799980876844,76.7111082745477" />
         <NodeLayout
           Size="218.4,41.6"
-          Id="Package\Processar Dados\Povoar Dimensao Localizacao"
+          Id="Package\Inserir Dados\Povoar Dimensao Localizacao"
           TopLeft="276.333318535653,14.8666647441516" />
         <NodeLayout
           Size="226.4,41.6"
-          Id="Package\Processar Dados\Povoar Dimensao Tipo Incendio"
+          Id="Package\Inserir Dados\Povoar Dimensao Tipo Incendio"
           TopLeft="30.7999896188584,10.7333321460751" />
         <NodeLayout
           Size="194.4,41.6"
-          Id="Package\Processar Dados\Povoar Tabela de Factos"
+          Id="Package\Inserir Dados\Povoar Tabela de Factos"
           TopLeft="195.799980603657,266.199996329744" />
         <EdgeLayout
-          Id="Package\Processar Dados.PrecedenceConstraints[Constraint]"
+          Id="Package\Inserir Dados.PrecedenceConstraints[Constraint]"
           TopLeft="385.533318535653,56.4666647441516">
           <EdgeLayout.Curve>
             <mssgle:Curve
@@ -1827,7 +1886,7 @@
           </EdgeLayout.Labels>
         </EdgeLayout>
         <EdgeLayout
-          Id="Package\Processar Dados.PrecedenceConstraints[Constraint 1]"
+          Id="Package\Inserir Dados.PrecedenceConstraints[Constraint 1]"
           TopLeft="107.466657014026,228.066663550867">
           <EdgeLayout.Curve>
             <mssgle:Curve
@@ -1861,7 +1920,7 @@
           </EdgeLayout.Labels>
         </EdgeLayout>
         <EdgeLayout
-          Id="Package\Processar Dados.PrecedenceConstraints[Constraint 2]"
+          Id="Package\Inserir Dados.PrecedenceConstraints[Constraint 2]"
           TopLeft="143.999989618858,52.3333321460751">
           <EdgeLayout.Curve>
             <mssgle:Curve
@@ -1895,7 +1954,7 @@
           </EdgeLayout.Labels>
         </EdgeLayout>
         <EdgeLayout
-          Id="Package\Processar Dados.PrecedenceConstraints[Constraint 3]"
+          Id="Package\Inserir Dados.PrecedenceConstraints[Constraint 3]"
           TopLeft="498.433302690752,126.866664961113">
           <EdgeLayout.Curve>
             <mssgle:Curve
@@ -1929,19 +1988,31 @@
           </EdgeLayout.Labels>
         </EdgeLayout>
         <EdgeLayout
-          Id="Package\Processar Dados.PrecedenceConstraints[Constraint 4]"
-          TopLeft="290.583313959755,110.866663659347">
+          Id="Package\Inserir Dados.PrecedenceConstraints[Constraint 4]"
+          TopLeft="283.999980876844,118.311108274548">
           <EdgeLayout.Curve>
             <mssgle:Curve
               StartConnector="{assembly:Null}"
-              EndConnector="0,155.333332670398"
+              EndConnector="8.99999972681303,147.888888055196"
               Start="0,0"
-              End="0,147.833332670398">
+              End="8.99999972681303,140.388888055196">
               <mssgle:Curve.Segments>
                 <mssgle:SegmentCollection
                   Capacity="5">
                   <mssgle:LineSegment
-                    End="0,147.833332670398" />
+                    End="0,69.9444440275982" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,69.9444440275982"
+                    Point2="0,73.9444440275982"
+                    Point3="4,73.9444440275982" />
+                  <mssgle:LineSegment
+                    End="4.99999972681303,73.9444440275982" />
+                  <mssgle:CubicBezierSegment
+                    Point1="4.99999972681303,73.9444440275982"
+                    Point2="8.99999972681303,73.9444440275982"
+                    Point3="8.99999972681303,77.9444440275982" />
+                  <mssgle:LineSegment
+                    End="8.99999972681303,140.388888055196" />
                 </mssgle:SegmentCollection>
               </mssgle:Curve.Segments>
             </mssgle:Curve>
@@ -1953,98 +2024,109 @@
         <ContainerLayout
           HeaderHeight="43"
           IsExpanded="True"
-          PanelSize="608.8,338.4"
-          Size="608.8,381.6"
-          Id="Package\Processar Dados"
-          TopLeft="182.49999002864,320.599997848471" />
-        <NodeLayout
-          Size="181.6,41.6"
-          Id="Package\Run Data Filter"
-          TopLeft="396.249978349856,141.883332747237" />
+          PanelSize="608.8,355.2"
+          Size="608.8,398.4"
+          Id="Package\Inserir Dados"
+          TopLeft="160.347213461237,481.783330387788" />
         <NodeLayout
           Size="155.2,41.6"
           Id="Package\Run ICNF scrypt"
-          TopLeft="407.083311091282,43.549999697159" />
-        <EdgeLayout
-          Id="Package.PrecedenceConstraints[Constraint]"
-          TopLeft="485.866644720569,85.149999697159">
-          <EdgeLayout.Curve>
-            <mssgle:Curve
-              StartConnector="{assembly:Null}"
-              EndConnector="0,56.733333050078"
-              Start="0,0"
-              End="0,49.233333050078">
-              <mssgle:Curve.Segments>
-                <mssgle:SegmentCollection
-                  Capacity="5">
-                  <mssgle:LineSegment
-                    End="0,49.233333050078" />
-                </mssgle:SegmentCollection>
-              </mssgle:Curve.Segments>
-            </mssgle:Curve>
-          </EdgeLayout.Curve>
-          <EdgeLayout.Labels>
-            <EdgeLabelCollection />
-          </EdgeLayout.Labels>
-        </EdgeLayout>
-        <EdgeLayout
-          Id="Package.PrecedenceConstraints[Constraint 1]"
-          TopLeft="486.616645335243,183.483332747237">
-          <EdgeLayout.Curve>
-            <mssgle:Curve
-              StartConnector="{assembly:Null}"
-              EndConnector="0,55.3999994033576"
-              Start="0,0"
-              End="0,47.8999994033576">
-              <mssgle:Curve.Segments>
-                <mssgle:SegmentCollection
-                  Capacity="5">
-                  <mssgle:LineSegment
-                    End="0,47.8999994033576" />
-                </mssgle:SegmentCollection>
-              </mssgle:Curve.Segments>
-            </mssgle:Curve>
-          </EdgeLayout.Curve>
-          <EdgeLayout.Labels>
-            <EdgeLabelCollection />
-          </EdgeLayout.Labels>
-        </EdgeLayout>
-        <EdgeLayout
-          Id="Package.PrecedenceConstraints[Constraint 2]"
-          TopLeft="486.541651174634,280.483332150595">
-          <EdgeLayout.Curve>
-            <mssgle:Curve
-              StartConnector="{assembly:Null}"
-              EndConnector="0,40.1166656978754"
-              Start="0,0"
-              End="0,32.6166656978754">
-              <mssgle:Curve.Segments>
-                <mssgle:SegmentCollection
-                  Capacity="5">
-                  <mssgle:LineSegment
-                    End="0,32.6166656978754" />
-                </mssgle:SegmentCollection>
-              </mssgle:Curve.Segments>
-            </mssgle:Curve>
-          </EdgeLayout.Curve>
-          <EdgeLayout.Labels>
-            <EdgeLabelCollection />
-          </EdgeLayout.Labels>
-        </EdgeLayout>
+          TopLeft="392.916645198648,33.1499997694793" />
         <EdgeLayout
           Id="Package.PrecedenceConstraints[Constraint 3]"
-          TopLeft="484.395818177094,702.199997848471">
+          TopLeft="466.004615478241,880.183330387788">
           <EdgeLayout.Curve>
             <mssgle:Curve
               StartConnector="{assembly:Null}"
-              EndConnector="0,51.2999987253547"
+              EndConnector="0,102.212960890618"
               Start="0,0"
-              End="0,43.7999987253547">
+              End="0,94.7129608906182">
               <mssgle:Curve.Segments>
                 <mssgle:SegmentCollection
                   Capacity="5">
                   <mssgle:LineSegment
-                    End="0,43.7999987253547" />
+                    End="0,94.7129608906182" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <NodeLayout
+          Size="244,41.6"
+          Id="Package\Filtrar Dados\Remover hectares menores que 0,5"
+          TopLeft="6.88331901373181,23.3833335879603" />
+        <NodeLayout
+          Size="178.4,41.6"
+          Id="Package\Filtrar Dados\Remover null lat e lon"
+          TopLeft="273.549971110375,20.9833343111634" />
+        <ContainerLayout
+          HeaderHeight="43"
+          IsExpanded="True"
+          PanelSize="456.8,104.8"
+          Size="456.8,148"
+          Id="Package\Filtrar Dados"
+          TopLeft="244.166653325989,246.285184703385" />
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 2]"
+          TopLeft="468.656933393613,394.285184703385">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,87.4981456844035"
+              Start="0,0"
+              End="0,79.9981456844035">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,79.9981456844035" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 4]"
+          TopLeft="474.374983096496,174.749999552518">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,71.5351851508667"
+              Start="0,0"
+              End="0,64.0351851508667">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,64.0351851508667" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint]"
+          TopLeft="473.349979032825,74.7499997694793">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,58.3999997830387"
+              Start="0,0"
+              End="0,50.8999997830387">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,50.8999997830387" />
                 </mssgle:SegmentCollection>
               </mssgle:Curve.Segments>
             </mssgle:Curve>

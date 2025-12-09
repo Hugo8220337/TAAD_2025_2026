@@ -26,7 +26,7 @@
           <SSIS:Property SSIS:Name="CreatorComputerName">DESKTOP-G01CPCN</SSIS:Property>
           <SSIS:Property SSIS:Name="Description">
           </SSIS:Property>
-          <SSIS:Property SSIS:Name="PasswordVerifier" SSIS:Sensitive="1">AQAAANCMnd8BFdERjHoAwE/Cl+sBAAAAnGLToHQ/QUCfAekZCVZnhwAAAAACAAAAAAAQZgAAAAEAACAAAAA7nDvQ67//F4yWTgTcj7rM/Y5NCdML9Bu1ABnvoMOwBQAAAAAOgAAAAAIAACAAAAC4OdbAkI6lPVuNkl12SAfZZQF83V6qkyDv5juoPbUIw5AAAAB1qrZzC+f1y0ainDWjqMS59ktLu8Rqv2TG4PdlaFO3QZXX5KGegHA5Iydcg68mPCGcp5xSFlVsKWhqJUtVO9Ck0Irf9nEpUC67Ko8ADOASX8RIVaW+gcJZbduaKcdkcP2sWmF+o8L/YrKFX7hxjci+uBjgp/HGaYbj1ozu39X9A3MzpHXRVdeusAQd4Q/4eJBAAAAAD0Rspfeh62mz0CmXgxhB1lZhe25DsziNGSGTnKTnlt0gkUh5GSF/MNul8lRdFvJ5w/PHKSTSx7eXA+0P+DBynw==</SSIS:Property>
+          <SSIS:Property SSIS:Name="PasswordVerifier" SSIS:Sensitive="1">AQAAANCMnd8BFdERjHoAwE/Cl+sBAAAAnGLToHQ/QUCfAekZCVZnhwAAAAACAAAAAAAQZgAAAAEAACAAAAAvUTDKAhwLEwT7XdovuexLbdSiPAYYcq9WGpTxFQxZ+QAAAAAOgAAAAAIAACAAAAAAyYw5Wjh8FrT06xrDa42UztYLby/5to82cMDwW5wGQZAAAAAPB9y7aS2b017PU7R3NeIXDW5aD18zPgWWK+ionN73/KA+ZQi+UNs7B/lVEPWK505FCEoFiJIXfsOmomrOVzX2tSQXeRb4SFDWz3kpLsoJUh8kngAdCnrbZih74hGfDWUZjtUSyd3NG4JqbBjfF9zxD/hRqAQXfiPsRN+YmGnyVWcYjKy/+hrpCn31OSDVVlRAAAAAx188JbZ0BsrtKv7odtf10Q1neXg6xR8o4iEGMT543t7kN9/OJAbnvC56tIkCZlaF7Oqbp9EU7WyE/S8IVdDUxA==</SSIS:Property>
           <SSIS:Property SSIS:Name="FormatVersion">1</SSIS:Property>
         </SSIS:Properties>
         <SSIS:Packages>
@@ -42,10 +42,10 @@
                 <SSIS:Property SSIS:Name="Name">Package</SSIS:Property>
                 <SSIS:Property SSIS:Name="VersionMajor">1</SSIS:Property>
                 <SSIS:Property SSIS:Name="VersionMinor">0</SSIS:Property>
-                <SSIS:Property SSIS:Name="VersionBuild">120</SSIS:Property>
+                <SSIS:Property SSIS:Name="VersionBuild">134</SSIS:Property>
                 <SSIS:Property SSIS:Name="VersionComments">
                 </SSIS:Property>
-                <SSIS:Property SSIS:Name="VersionGUID">{DB9CF8C4-1693-4B99-963F-988D337B69F6}</SSIS:Property>
+                <SSIS:Property SSIS:Name="VersionGUID">{5EE00D24-DF00-4A6B-9130-8E38DA63E574}</SSIS:Property>
                 <SSIS:Property SSIS:Name="PackageFormatVersion">8</SSIS:Property>
                 <SSIS:Property SSIS:Name="Description">
                 </SSIS:Property>
@@ -62,7 +62,7 @@
                     <SSIS:Property SSIS:Name="IncludeInDebugDump">0</SSIS:Property>
                     <SSIS:Property SSIS:Name="Required">1</SSIS:Property>
                     <SSIS:Property SSIS:Name="Sensitive">1</SSIS:Property>
-                    <SSIS:Property SSIS:Name="Value" SSIS:Sensitive="1">AQAAANCMnd8BFdERjHoAwE/Cl+sBAAAAnGLToHQ/QUCfAekZCVZnhwAAAAACAAAAAAAQZgAAAAEAACAAAADwRe696q0QHPBwA7LDhd4nqDx0XQll6lbs2THB2laVSAAAAAAOgAAAAAIAACAAAACnF+EuVGtJRgUuPM9uiXz7S5uivdTPXRw45w9RyQzoWcAAAADZbJAgieMkdJu+6+cIQpYavGrxerK/NU6+s0LmY0jJyQ5+p7hjLCsitjF6jBlrj5YIXnn/Booo7Kf8QrggiBWWQB9zEzOKjGiPxA5DE4F0tUzXDU/CEALKkxeZuFILb+SHuxMZqsuwk8ma7IpnShv2YI+vqh8m3hNcRcU5FUm7RM+FyLjTO09UphKByqqCMEeguPlwHEdBH16NnNnoAyGDPfiebW2HQuJLpUnpDMj3n+ugR9fC7qQVbWsRaT1qfyZAAAAACuPTd5lkdF9Fw5EmxXXMrlgIGX5vKUBHXM+ijsO7TBKgNBuFMN13cdQG7h9HLkRIjCu0WUVOGXX/KUgrYsFElQ==</SSIS:Property>
+                    <SSIS:Property SSIS:Name="Value" SSIS:Sensitive="1">AQAAANCMnd8BFdERjHoAwE/Cl+sBAAAAnGLToHQ/QUCfAekZCVZnhwAAAAACAAAAAAAQZgAAAAEAACAAAABTU/VYGc4dlSyXsJ78Z2hq6RwGQjFus+yfaV38VUouUwAAAAAOgAAAAAIAACAAAABLwqQCN6t1vZWefevBw72euoOpp/tSe9sMPSUcnuGvJMAAAAB4qOakTWVNpYFBP09et/W/aOijwihJt6oZjRedB6LkO560OIlYO76EkiykG8m+NNuXP5zdWPNKYRa7YJcsAbUGds/OIFl27tm6X8PunPSc6bcO0KXyaqyF9fEPgixziPNYiHgwFBAq+fX/w1gKNc0TcgVppuqVZyX8sSSc45MqFCijFFkMhGFuw/J4HjtVp/lleyFo/DfVztnhEdabNhDEcECCdE7hTOxj075uNEAvxeXaiqh/iS0EkQSaAaKI9axAAAAA+P3I9Q157myyMB1U1f+Nz71H8V76/1C9KhmJ/8BmPnSjcEVlBcA7UZL1H8d6Dzpt4khMDAZEKcGSW7vZhLlIeQ==</SSIS:Property>
                     <SSIS:Property SSIS:Name="DataType">18</SSIS:Property>
                   </SSIS:Properties>
                 </SSIS:Parameter>
@@ -424,6 +424,66 @@
                     <SSIS:Property SSIS:Name="Sensitive">0</SSIS:Property>
                     <SSIS:Property SSIS:Name="Value">false</SSIS:Property>
                     <SSIS:Property SSIS:Name="DataType">3</SSIS:Property>
+                  </SSIS:Properties>
+                </SSIS:Parameter>
+                <SSIS:Parameter SSIS:Name="CM.filter_area_less_than_01.sql.ConnectByProxy">
+                  <SSIS:Properties>
+                    <SSIS:Property SSIS:Name="ID">
+                    </SSIS:Property>
+                    <SSIS:Property SSIS:Name="CreationName">
+                    </SSIS:Property>
+                    <SSIS:Property SSIS:Name="Description">
+                    </SSIS:Property>
+                    <SSIS:Property SSIS:Name="IncludeInDebugDump">0</SSIS:Property>
+                    <SSIS:Property SSIS:Name="Required">0</SSIS:Property>
+                    <SSIS:Property SSIS:Name="Sensitive">0</SSIS:Property>
+                    <SSIS:Property SSIS:Name="Value">false</SSIS:Property>
+                    <SSIS:Property SSIS:Name="DataType">3</SSIS:Property>
+                  </SSIS:Properties>
+                </SSIS:Parameter>
+                <SSIS:Parameter SSIS:Name="CM.filter_area_less_than_01.sql.ConnectionString">
+                  <SSIS:Properties>
+                    <SSIS:Property SSIS:Name="ID">
+                    </SSIS:Property>
+                    <SSIS:Property SSIS:Name="CreationName">
+                    </SSIS:Property>
+                    <SSIS:Property SSIS:Name="Description">
+                    </SSIS:Property>
+                    <SSIS:Property SSIS:Name="IncludeInDebugDump">0</SSIS:Property>
+                    <SSIS:Property SSIS:Name="Required">0</SSIS:Property>
+                    <SSIS:Property SSIS:Name="Sensitive">0</SSIS:Property>
+                    <SSIS:Property SSIS:Name="Value">C:\Users\User\GitHub\TAAD_2025_2026\etl_ssis\icnf\apoio\scripts\filtros\filter_area_less_than_01.sql</SSIS:Property>
+                    <SSIS:Property SSIS:Name="DataType">18</SSIS:Property>
+                  </SSIS:Properties>
+                </SSIS:Parameter>
+                <SSIS:Parameter SSIS:Name="CM.filter_null_coordinates.sql.ConnectByProxy">
+                  <SSIS:Properties>
+                    <SSIS:Property SSIS:Name="ID">
+                    </SSIS:Property>
+                    <SSIS:Property SSIS:Name="CreationName">
+                    </SSIS:Property>
+                    <SSIS:Property SSIS:Name="Description">
+                    </SSIS:Property>
+                    <SSIS:Property SSIS:Name="IncludeInDebugDump">0</SSIS:Property>
+                    <SSIS:Property SSIS:Name="Required">0</SSIS:Property>
+                    <SSIS:Property SSIS:Name="Sensitive">0</SSIS:Property>
+                    <SSIS:Property SSIS:Name="Value">false</SSIS:Property>
+                    <SSIS:Property SSIS:Name="DataType">3</SSIS:Property>
+                  </SSIS:Properties>
+                </SSIS:Parameter>
+                <SSIS:Parameter SSIS:Name="CM.filter_null_coordinates.sql.ConnectionString">
+                  <SSIS:Properties>
+                    <SSIS:Property SSIS:Name="ID">
+                    </SSIS:Property>
+                    <SSIS:Property SSIS:Name="CreationName">
+                    </SSIS:Property>
+                    <SSIS:Property SSIS:Name="Description">
+                    </SSIS:Property>
+                    <SSIS:Property SSIS:Name="IncludeInDebugDump">0</SSIS:Property>
+                    <SSIS:Property SSIS:Name="Required">0</SSIS:Property>
+                    <SSIS:Property SSIS:Name="Sensitive">0</SSIS:Property>
+                    <SSIS:Property SSIS:Name="Value">C:\Users\User\GitHub\TAAD_2025_2026\etl_ssis\icnf\apoio\scripts\filtros\filter_null_coordinates.sql</SSIS:Property>
+                    <SSIS:Property SSIS:Name="DataType">18</SSIS:Property>
                   </SSIS:Properties>
                 </SSIS:Parameter>
                 <SSIS:Parameter SSIS:Name="CM.Flat File Connection Manager.AlwaysCheckForRowDelimiters">
@@ -800,6 +860,36 @@
                     <SSIS:Property SSIS:Name="Required">0</SSIS:Property>
                     <SSIS:Property SSIS:Name="Sensitive">0</SSIS:Property>
                     <SSIS:Property SSIS:Name="Value">C:\Users\User\GitHub\TAAD_2025_2026\etl_ssis\icnf\apoio\scripts\populate_fact_fire.sql</SSIS:Property>
+                    <SSIS:Property SSIS:Name="DataType">18</SSIS:Property>
+                  </SSIS:Properties>
+                </SSIS:Parameter>
+                <SSIS:Parameter SSIS:Name="CM.remove_lesser_hectares.sql.ConnectByProxy">
+                  <SSIS:Properties>
+                    <SSIS:Property SSIS:Name="ID">
+                    </SSIS:Property>
+                    <SSIS:Property SSIS:Name="CreationName">
+                    </SSIS:Property>
+                    <SSIS:Property SSIS:Name="Description">
+                    </SSIS:Property>
+                    <SSIS:Property SSIS:Name="IncludeInDebugDump">0</SSIS:Property>
+                    <SSIS:Property SSIS:Name="Required">0</SSIS:Property>
+                    <SSIS:Property SSIS:Name="Sensitive">0</SSIS:Property>
+                    <SSIS:Property SSIS:Name="Value">false</SSIS:Property>
+                    <SSIS:Property SSIS:Name="DataType">3</SSIS:Property>
+                  </SSIS:Properties>
+                </SSIS:Parameter>
+                <SSIS:Parameter SSIS:Name="CM.remove_lesser_hectares.sql.ConnectionString">
+                  <SSIS:Properties>
+                    <SSIS:Property SSIS:Name="ID">
+                    </SSIS:Property>
+                    <SSIS:Property SSIS:Name="CreationName">
+                    </SSIS:Property>
+                    <SSIS:Property SSIS:Name="Description">
+                    </SSIS:Property>
+                    <SSIS:Property SSIS:Name="IncludeInDebugDump">0</SSIS:Property>
+                    <SSIS:Property SSIS:Name="Required">0</SSIS:Property>
+                    <SSIS:Property SSIS:Name="Sensitive">0</SSIS:Property>
+                    <SSIS:Property SSIS:Name="Value">C:\Users\User\GitHub\TAAD_2025_2026\etl_ssis\icnf\apoio\scripts\filtros\remove_lesser_hectares.sql</SSIS:Property>
                     <SSIS:Property SSIS:Name="DataType">18</SSIS:Property>
                   </SSIS:Properties>
                 </SSIS:Parameter>
