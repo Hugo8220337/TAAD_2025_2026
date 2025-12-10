@@ -11,8 +11,8 @@
   DTS:LocaleID="2070"
   DTS:ObjectName="Package"
   DTS:PackageType="5"
-  DTS:VersionBuild="24"
-  DTS:VersionGUID="{E7B049DB-BF22-4CAF-97FF-D2372A24068A}">
+  DTS:VersionBuild="26"
+  DTS:VersionGUID="{ACAC8BB9-C896-4798-84AF-614460BC2913}">
   <DTS:Property
     DTS:Name="PackageFormatVersion">8</DTS:Property>
   <DTS:ConnectionManagers>
@@ -27,6 +27,26 @@
       </DTS:ObjectData>
     </DTS:ConnectionManager>
     <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[create_fact_meteorology.sql]"
+      DTS:CreationName="FILE"
+      DTS:DTSID="{4B5A7A45-94C7-4C56-A332-B6A2C09F3A26}"
+      DTS:ObjectName="create_fact_meteorology.sql">
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectionString="C:\Users\User\GitHub\TAAD_2025_2026\etl_ssis\temperature\apoio\scripts\tables\create_fact_meteorology.sql" />
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[create_meteorology_dimensions.sql]"
+      DTS:CreationName="FILE"
+      DTS:DTSID="{64729691-68A3-4614-9CF5-BD93452DA527}"
+      DTS:ObjectName="create_meteorology_dimensions.sql">
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectionString="C:\Users\User\GitHub\TAAD_2025_2026\etl_ssis\temperature\apoio\scripts\tables\create_meteorology_dimensions.sql" />
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+    <DTS:ConnectionManager
       DTS:refId="Package.ConnectionManagers[DESKTOP-G01CPCN.DSA.TAAD]"
       DTS:CreationName="OLEDB"
       DTS:DTSID="{628A2FB4-96D3-4818-B7FB-283A52C176AA}"
@@ -36,6 +56,18 @@
           DTS:ConnectRetryCount="1"
           DTS:ConnectRetryInterval="5"
           DTS:ConnectionString="Data Source=DESKTOP-G01CPCN;Initial Catalog=DSA.TAAD;Provider=MSOLEDBSQL.1;Integrated Security=SSPI;Application Name=SSIS-Package-{628A2FB4-96D3-4818-B7FB-283A52C176AA}DESKTOP-G01CPCN.DSA.TAAD;Auto Translate=False;" />
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[DESKTOP-G01CPCN.DW.TAAD]"
+      DTS:CreationName="OLEDB"
+      DTS:DTSID="{8ECFB4BE-E8A7-4D28-AA63-3C4C93647185}"
+      DTS:ObjectName="DESKTOP-G01CPCN.DW.TAAD">
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectRetryCount="1"
+          DTS:ConnectRetryInterval="5"
+          DTS:ConnectionString="Data Source=DESKTOP-G01CPCN;Initial Catalog=DW.TAAD;Provider=MSOLEDBSQL.1;Integrated Security=SSPI;Application Name=SSIS-Package-{8ECFB4BE-E8A7-4D28-AA63-3C4C93647185}DESKTOP-G01CPCN.DW.TAAD;Auto Translate=False;" />
       </DTS:ObjectData>
     </DTS:ConnectionManager>
     <DTS:ConnectionManager
@@ -71,6 +103,62 @@
   </DTS:ConnectionManagers>
   <DTS:Variables />
   <DTS:Executables>
+    <DTS:Executable
+      DTS:refId="Package\Criar Tabelas"
+      DTS:CreationName="STOCK:SEQUENCE"
+      DTS:Description="Sequence Container"
+      DTS:DTSID="{4713de1d-e358-428c-9794-9284c67fb139}"
+      DTS:ExecutableType="STOCK:SEQUENCE"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Criar Tabelas">
+      <DTS:Variables />
+      <DTS:Executables>
+        <DTS:Executable
+          DTS:refId="Package\Criar Tabelas\Criar Dimensoes no DW"
+          DTS:CreationName="Microsoft.ExecuteSQLTask"
+          DTS:Description="Execute SQL Task"
+          DTS:DTSID="{39953071-6fea-404a-8863-0a22eb31670f}"
+          DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+          DTS:LocaleID="-1"
+          DTS:ObjectName="Criar Dimensoes no DW"
+          DTS:ThreadHint="0">
+          <DTS:Variables />
+          <DTS:ObjectData>
+            <SQLTask:SqlTaskData
+              SQLTask:Connection="{8ECFB4BE-E8A7-4D28-AA63-3C4C93647185}"
+              SQLTask:SqlStmtSourceType="FileConnection"
+              SQLTask:SqlStatementSource="create_meteorology_dimensions.sql" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+          </DTS:ObjectData>
+        </DTS:Executable>
+        <DTS:Executable
+          DTS:refId="Package\Criar Tabelas\Criar Tabela de Factos"
+          DTS:CreationName="Microsoft.ExecuteSQLTask"
+          DTS:Description="Execute SQL Task"
+          DTS:DTSID="{ef21e3f4-cc59-4fdb-a1b1-28442ceff788}"
+          DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+          DTS:LocaleID="-1"
+          DTS:ObjectName="Criar Tabela de Factos"
+          DTS:ThreadHint="0">
+          <DTS:Variables />
+          <DTS:ObjectData>
+            <SQLTask:SqlTaskData
+              SQLTask:Connection="{8ECFB4BE-E8A7-4D28-AA63-3C4C93647185}"
+              SQLTask:SqlStmtSourceType="FileConnection"
+              SQLTask:SqlStatementSource="create_fact_meteorology.sql" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+          </DTS:ObjectData>
+        </DTS:Executable>
+      </DTS:Executables>
+      <DTS:PrecedenceConstraints>
+        <DTS:PrecedenceConstraint
+          DTS:refId="Package\Criar Tabelas.PrecedenceConstraints[Constraint]"
+          DTS:CreationName=""
+          DTS:DTSID="{87355fdf-cbc1-4aa4-a471-93bda7190595}"
+          DTS:From="Package\Criar Tabelas\Criar Dimensoes no DW"
+          DTS:LogicalAnd="True"
+          DTS:ObjectName="Constraint"
+          DTS:To="Package\Criar Tabelas\Criar Tabela de Factos" />
+      </DTS:PrecedenceConstraints>
+    </DTS:Executable>
     <DTS:Executable
       DTS:refId="Package\Get Temperature Data"
       DTS:CreationName="Microsoft.ExecuteProcess"
@@ -266,11 +354,11 @@
     <DTS:PrecedenceConstraint
       DTS:refId="Package.PrecedenceConstraints[Constraint 3]"
       DTS:CreationName=""
-      DTS:DTSID="{869E438C-56A8-421C-8B9D-ECC2D1B06A50}"
+      DTS:DTSID="{714D03D6-E26E-41EF-859F-DAF62FD38C92}"
       DTS:From="Package\Insert Data to Staging Area"
       DTS:LogicalAnd="True"
       DTS:ObjectName="Constraint 3"
-      DTS:To="Package\Processar Dados" />
+      DTS:To="Package\Criar Tabelas" />
     <DTS:PrecedenceConstraint
       DTS:refId="Package.PrecedenceConstraints[Constraint 4]"
       DTS:CreationName=""
@@ -279,6 +367,14 @@
       DTS:LogicalAnd="True"
       DTS:ObjectName="Constraint 4"
       DTS:To="Package\Limpar Staging Area" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint 5]"
+      DTS:CreationName=""
+      DTS:DTSID="{C164E19D-7A32-417C-B96B-86C27840F44F}"
+      DTS:From="Package\Criar Tabelas"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint 5"
+      DTS:To="Package\Processar Dados" />
   </DTS:PrecedenceConstraints>
   <DTS:DesignTimeProperties><![CDATA[<?xml version="1.0"?>
 <!--This CDATA section contains the layout information of the package. The section includes information such as (x,y) coordinates, width, and height.-->
@@ -291,7 +387,7 @@
     design-time-name="Package">
     <LayoutInfo>
       <GraphLayout
-        Capacity="16" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
+        Capacity="32" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
         <NodeLayout
           Size="182.4,41.6"
           Id="Package\Get Temperature Data"
@@ -300,6 +396,10 @@
           Size="203.2,41.6"
           Id="Package\Insert Data to Staging Area"
           TopLeft="299.166653599177,357.199999746878" />
+        <NodeLayout
+          Size="172.8,48"
+          Id="Package\Limpar Staging Area"
+          TopLeft="874.880907857822,826.828570852591" />
         <NodeLayout
           Size="179.2,41.6"
           Id="Package\Processar Dados\Povoar Dimensao Dia"
@@ -386,7 +486,7 @@
           PanelSize="608.8,218.4"
           Size="608.8,261.6"
           Id="Package\Processar Dados"
-          TopLeft="89.1666650730704,453.599999783038" />
+          TopLeft="655.833302339511,510.552380339379" />
         <NodeLayout
           Size="148,41.6"
           Id="Package\Run Data Filter"
@@ -462,19 +562,19 @@
           </EdgeLayout.Labels>
         </EdgeLayout>
         <EdgeLayout
-          Id="Package.PrecedenceConstraints[Constraint 3]"
-          TopLeft="397.166659336124,398.799999746878">
+          Id="Package.PrecedenceConstraints[Constraint 4]"
+          TopLeft="960.757105098667,772.152380339379">
           <EdgeLayout.Curve>
             <mssgle:Curve
               StartConnector="{assembly:Null}"
-              EndConnector="0,54.80000003616"
+              EndConnector="0,54.676190513212"
               Start="0,0"
-              End="0,47.30000003616">
+              End="0,47.176190513212">
               <mssgle:Curve.Segments>
                 <mssgle:SegmentCollection
                   Capacity="5">
                   <mssgle:LineSegment
-                    End="0,47.30000003616" />
+                    End="0,47.176190513212" />
                 </mssgle:SegmentCollection>
               </mssgle:Curve.Segments>
             </mssgle:Curve>
@@ -484,23 +584,78 @@
           </EdgeLayout.Labels>
         </EdgeLayout>
         <NodeLayout
-          Size="172.8,41.6"
-          Id="Package\Limpar Staging Area"
-          TopLeft="305.833319901593,784.733333050078" />
+          Size="180,41.6"
+          Id="Package\Criar Tabelas\Criar Dimensoes no DW"
+          TopLeft="11.1777934709074,19.7407393740205" />
+        <NodeLayout
+          Size="180,41.6"
+          Id="Package\Criar Tabelas\Criar Tabela de Factos"
+          TopLeft="13.9555710969141,96.3037025110879" />
         <EdgeLayout
-          Id="Package.PrecedenceConstraints[Constraint 4]"
-          TopLeft="392.899992487332,715.199999783038">
+          Id="Package\Criar Tabelas.PrecedenceConstraints[Constraint]"
+          TopLeft="102.566682283911,61.3407393740205">
           <EdgeLayout.Curve>
             <mssgle:Curve
               StartConnector="{assembly:Null}"
-              EndConnector="0,69.5333332670397"
+              EndConnector="0,34.9629631370674"
               Start="0,0"
-              End="0,62.0333332670397">
+              End="0,27.4629631370674">
               <mssgle:Curve.Segments>
                 <mssgle:SegmentCollection
                   Capacity="5">
                   <mssgle:LineSegment
-                    End="0,62.0333332670397" />
+                    End="0,27.4629631370674" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <ContainerLayout
+          HeaderHeight="43"
+          IsExpanded="True"
+          PanelSize="204.8,192.8"
+          Size="204.8,236"
+          Id="Package\Criar Tabelas"
+          TopLeft="301.014308837694,516.399996905724" />
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 3]"
+          TopLeft="402.090481218435,398.799999746878">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,117.599997158846"
+              Start="0,0"
+              End="0,110.099997158846">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,110.099997158846" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 5]"
+          TopLeft="505.814308837694,637.876188622552">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="150.018993501817,0"
+              Start="0,0"
+              End="142.518993501817,0">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="142.518993501817,0" />
                 </mssgle:SegmentCollection>
               </mssgle:Curve.Segments>
             </mssgle:Curve>

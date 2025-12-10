@@ -1,1 +1,1 @@
-TRUNCATE TABLE dbo.dsa_meteorology;
+TRUNCATE TABLE [DSA.TAAD].[dbo].[dsa_meteorology];

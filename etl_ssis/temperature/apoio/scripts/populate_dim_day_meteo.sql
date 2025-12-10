@@ -1,13 +1,14 @@
-/*
-    Script: populate_dim_day_meteo.sql
-    Objetivo: Ler datas da Staging de Meteorologia e povoar a dimensão dia.
+/* 
+   Script: populate_dim_day_meteo.sql
+   Executar na conexão: [DSA.TAAD]
+   Objetivo: Ler datas da Staging de Meteorologia e povoar a dimensão dia na DW.
 */
 
 -- 1. CTE para buscar todas as datas únicas da meteorologia (convertendo texto para data)
 WITH MeteoDates AS (
     SELECT DISTINCT 
         TRY_CAST([date] AS DATE) as CleanDate
-    FROM dbo.dsa_meteorology
+    FROM [dbo].[dsa_meteorology] -- Tabela Local (Staging)
     WHERE [date] IS NOT NULL AND TRY_CAST([date] AS DATE) IS NOT NULL
 ),
 
@@ -23,6 +24,7 @@ CalculatedDays AS (
         DATEPART(WEEK, CleanDate) AS [week],
         DATENAME(WEEKDAY, CleanDate) AS [weekday],
         
+        -- Detalhe: Uso de N'' para garantir acentos corretos no NVARCHAR
         CASE 
             WHEN MONTH(CleanDate) IN (3, 4, 5) THEN N'Primavera'
             WHEN MONTH(CleanDate) IN (6, 7, 8) THEN N'Verão'
@@ -32,11 +34,12 @@ CalculatedDays AS (
     FROM MeteoDates
 )
 
--- 3. Inserir na Dimensão APENAS o que ainda não existe
-INSERT INTO dbo.dim_day (day_id, day, month, year, week, season, weekday)
+-- 3. Inserir na Dimensão (DW) APENAS o que ainda não existe
+INSERT INTO [DW.TAAD].[dbo].[dim_day] (day_id, day, month, year, week, season, weekday)
 SELECT 
     day_id, [day], [month], [year], [week], season, [weekday]
 FROM CalculatedDays src
 WHERE NOT EXISTS (
-    SELECT 1 FROM dbo.dim_day tgt WHERE tgt.day_id = src.day_id
+    SELECT 1 FROM [DW.TAAD].[dbo].[dim_day] tgt 
+    WHERE tgt.day_id = src.day_id
 );
