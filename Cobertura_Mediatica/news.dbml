@@ -1,0 +1,37 @@
+//////////////////////////////////////////////////
+// Star Schema 
+//////////////////////////////////////////////////
+
+Table dim_date {
+  date_id int [pk]
+  date date
+  year int
+  month int
+  month_name text
+  day int
+  weekday text
+}
+
+Table dim_source {
+  source_id int [pk, increment]
+  source_name text
+  country text
+}
+
+Table dim_sentiment {
+  sentiment_id int [pk, increment]
+  sentiment text
+  polarity int
+}
+
+Table fact_news {
+  news_id int [pk, increment]
+  title text
+  link text
+  date_id int [ref: > dim_date.date_id]
+  source_id int [ref: > dim_source.source_id]
+  sentiment_id int [ref: > dim_sentiment.sentiment_id]
+  risk_score int
+  keywords text[] 
+  entities text[] 
+}
