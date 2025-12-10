@@ -11,8 +11,8 @@
   DTS:LocaleID="2070"
   DTS:ObjectName="Package"
   DTS:PackageType="5"
-  DTS:VersionBuild="142"
-  DTS:VersionGUID="{65DD526A-DA80-43E1-8AE8-8079824EE839}">
+  DTS:VersionBuild="143"
+  DTS:VersionGUID="{036FA107-FB03-497F-AA61-FFF3812EDAA0}">
   <DTS:Property
     DTS:Name="PackageFormatVersion">8</DTS:Property>
   <DTS:ConnectionManagers>
@@ -1524,7 +1524,7 @@
         <DTS:Property
           DTS:DataType="8"
           DTS:Name="ParameterValue"
-          Encrypted="1">AQAAANCMnd8BFdERjHoAwE/Cl+sBAAAAnGLToHQ/QUCfAekZCVZnhwAAAAAIAAAARABUAFMAAAAQZgAAAAEAACAAAAB5N7M2wBxpzc4EFpx5As8k67nIIzNjdh8+1bgHZ7L6egAAAAAOgAAAAAIAACAAAACxAx78Jo4c4kRLlQSWAoDq5F+HqUVKHceWtoOmEnOI+aAAAAC3kMxxvmZqY8Ypx9QvjIKbUKpAj7jiieBNVXWEqdyUASczOsKwRJUZJBaBV1gaaX1jelnoiHH4lBtHFAWBYt5Dc3pdlL2/9BwDdA7OXbIx9vNxPXjZANHaal3DMNkK4NbFE5V11Hn530dOoD6Mg28v3kKB0zgh3Hvq1bG62lZ/kfjS310EgpodwbPn3C1EYs6qtYHmkO4vUlhi5wUDdwE7QAAAABd17tTLeKERN9a7e6Chxk3akxgti5KxcjuLeRjnigb7LZYseNU4RNTNZFaaYa6uhCAWLoYU41GQvLO+YcgHeks</DTS:Property>
+          Encrypted="1">AQAAANCMnd8BFdERjHoAwE/Cl+sBAAAAnGLToHQ/QUCfAekZCVZnhwAAAAAIAAAARABUAFMAAAAQZgAAAAEAACAAAADyiHK2/1uwicwQKbWi72L7S8iPV/ByfAmx8/2PopZy6AAAAAAOgAAAAAIAACAAAACpVV/T4pUZL0U1PW3gAUcoYTfaWOwaegszE5e0lyoOcaAAAACaZeiu88IP/A/MmP++C5WPl36rtF1CiEeIwAEgDBwyX8uOc/U+UdqWlo2CPZAAe3q/WYeGU8tVl5z4+XEitH3RmCZxlgmdMl//R01p8VamOOjCX1TjfXdFyKwOqdT45FjKin2Kz0K1wYNDn3cdHeDkJHRF18GsRsvZI29pvpqASHupn01sOk9QYATGo3hTGsgWPcRWDdzMgrIXkrC+1neGQAAAAJZDg42yM9pxdpgtH3+FIJSZ9J5Ei7oaElWV79bZ5NUNWY+AXTPMkRLd/LstlARk+C3BVWde/X4HueDnGhX95D4</DTS:Property>
       </DTS:Property>
     </DTS:PackageParameter>
   </DTS:PackageParameters>
@@ -1688,7 +1688,7 @@
           DTS:ExecutableType="Microsoft.ExecuteSQLTask"
           DTS:LocaleID="-1"
           DTS:ObjectName="Povoar Dimensao DIa"
-          DTS:ThreadHint="2">
+          DTS:ThreadHint="1">
           <DTS:Variables />
           <DTS:ObjectData>
             <SQLTask:SqlTaskData
@@ -1705,7 +1705,7 @@
           DTS:ExecutableType="Microsoft.ExecuteSQLTask"
           DTS:LocaleID="-1"
           DTS:ObjectName="Povoar Dimensao Hora"
-          DTS:ThreadHint="3">
+          DTS:ThreadHint="2">
           <DTS:Variables />
           <DTS:ObjectData>
             <SQLTask:SqlTaskData
@@ -1722,7 +1722,7 @@
           DTS:ExecutableType="Microsoft.ExecuteSQLTask"
           DTS:LocaleID="-1"
           DTS:ObjectName="Povoar Dimensao Localizacao"
-          DTS:ThreadHint="1">
+          DTS:ThreadHint="3">
           <DTS:Variables />
           <DTS:ObjectData>
             <SQLTask:SqlTaskData
@@ -1856,7 +1856,7 @@
       <DTS:ObjectData>
         <ExecuteProcessData
           Executable="C:\Users\User\GitHub\TAAD_2025_2026\etl_ssis\icnf\apoio\raw\retriever.exe"
-          Arguments="--ndays 1825"
+          Arguments="--ndays 31"
           WorkingDirectory="C:\Users\User\GitHub\TAAD_2025_2026\etl_ssis\icnf\apoio\raw" />
       </DTS:ObjectData>
     </DTS:Executable>

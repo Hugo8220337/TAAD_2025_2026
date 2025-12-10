@@ -1,15 +1,15 @@
 import datetime
 import time
 import logging
-import argparse  # <--- Adicionado
+import argparse
 from pathlib import Path
-from typing import Optional, Tuple
 import pandas as pd
-import os
+import pyodbc
+import pypyodbc
 
-from utils.file_utils import get_data_files
+# Mantendo as importações das suas APIs existentes
 from apis.open_meteo_api import get_temperature
-from apis.geo_api import get_lat_lon
+# from utils.file_utils import get_data_files # Não é mais necessário
 
 # Configuração de Logs
 logging.basicConfig(level=logging.INFO, format="%(asctime)s %(levelname)s %(message)s",
@@ -18,106 +18,139 @@ logging.basicConfig(level=logging.INFO, format="%(asctime)s %(levelname)s %(mess
                        logging.StreamHandler()
                    ])
 
-def _first_nonempty(row: pd.Series, keys):
+def get_best_odbc_driver(prefer=("ODBC Driver 18 for SQL Server", "ODBC Driver 17 for SQL Server", "SQL Server Native Client 11.0", "SQL Server")):
     """
-    Return the first non-empty value from the row for the given keys (in order).
+    Deteta o melhor driver ODBC instalado (Lógica trazida do main.py)
     """
-    for k in keys:
-        v = row.get(k)
-        if v is not None and str(v).strip() != "":
-            return v
-    return None
-
-
-def get_date_range(row: pd.Series) -> Optional[Tuple[str, str]]:
-    """
-    Extract start and end dates from a row, returning as ISO format strings (YYYY-MM-DD).
-    Prefer DHINICIO/DHFIM. Otherwise DATAALERTA + HORAALERTA or DATAALERTA alone.
-    """
-    start_raw = _first_nonempty(row, ("DHINICIO", "DhInicio", "dhinicio"))
-    end_raw = _first_nonempty(row, ("DHFIM", "DhFim", "dhfim"))
-    
-    if start_raw:
-        start = pd.to_datetime(start_raw, dayfirst=True, errors="coerce")
-    else:
-        da = _first_nonempty(row, ("DATAALERTA", "DataAlerta", "dataalerta"))
-        ha = _first_nonempty(row, ("HORAALERTA", "HoraAlerta", "horaalerta"))
-        start = pd.to_datetime(f"{da} {ha}" if ha else da, dayfirst=True, errors="coerce") if da else pd.NaT
-
-    if end_raw:
-        end = pd.to_datetime(end_raw, dayfirst=True, errors="coerce")
-    else:
-        de = _first_nonempty(row, ("DATAEXTINCAO", "DataExtincao", "dataextincao"))
-        he = _first_nonempty(row, ("HORAEXTINCAO", "HoraExtincao", "horaextincao"))
-        end = pd.to_datetime(f"{de} {he}" if he else de, dayfirst=True, errors="coerce") if de else pd.NaT
-
-    if pd.isna(start):
+    try:
+        available = [d for d in pyodbc.drivers()]
+    except Exception:
+        # Fallback se pyodbc não listar, tenta pypyodbc ou retorna vazio
         return None
-    if pd.isna(end):
-        end = start
-    return start.date().isoformat(), end.date().isoformat()
+        
+    for pref in prefer:
+        for a in available:
+            if pref.lower() in a.lower():
+                return a
+    return available[0] if available else None
 
+def get_db_connection(connection_string):
+    """
+    Estabelece conexão com a BD
+    """
+    driver = get_best_odbc_driver()
+    if driver:
+        # Garante que o driver está na string se ainda não estiver
+        if "Driver={" not in connection_string:
+            connection_string = "Driver={" + driver + "};" + connection_string
+        logging.info(f"Using ODBC Driver: {driver}")
+    else:
+        logging.warning("No ODBC Driver found or pyodbc generic lookup failed. Trying string as provided.")
 
-def process_file(path: Path, out_dir: Path, incident_col: str = "id"):
+    try:
+        # Tenta conectar via pypyodbc (conforme o seu main.py)
+        cnxn = pypyodbc.connect(connection_string, timeout=10)
+        return cnxn
+    except Exception as e:
+        logging.error(f"Failed to connect to DB: {e}")
+        raise
+
+def date_id_to_iso(date_id):
     """
-    Process a single CSV file to extract meteorological data for each incident.
+    Converte int YYYYMMDD (ex: 20250211) para string 'YYYY-MM-DD'.
+    Retorna None se inválido.
     """
-    start_time = time.time()
-    path_obj = Path(path) # Garante que é um objeto Path
-    logging.info(f"Processing {path_obj.name}")
+    if pd.isna(date_id) or date_id == 0:
+        return None
+    try:
+        s = str(int(date_id))
+        if len(s) != 8:
+            return None
+        return f"{s[:4]}-{s[4:6]}-{s[6:]}"
+    except:
+        return None
+
+def fetch_fire_data(connection_string, table_name="fact_fire"):
+    """
+    Lê os dados necessários da tabela de factos.
+    """
+    query = f"""
+    SELECT 
+        fire_id,
+        latitude,
+        longitude,
+        start_day_id,
+        end_day_id
+    FROM {table_name}
+    WHERE latitude IS NOT NULL 
+      AND longitude IS NOT NULL
+      AND start_day_id IS NOT NULL
+    """
+    
+    logging.info("Connecting to Database to fetch fire incidents...")
+    cnxn = get_db_connection(connection_string)
     
     try:
-        df = pd.read_csv(path_obj, sep="|", dtype=str, low_memory=False)
-        logging.info(f"Loaded {path_obj.name} with {len(df)} rows and {len(df.columns)} columns")
-    except Exception as e:
-        logging.warning(f"Failed reading {path_obj}: {e}")
-        return
+        # Pandas read_sql é mais eficiente para trazer dados para DataFrame
+        df = pd.read_sql(query, cnxn)
+        logging.info(f"Fetched {len(df)} rows from {table_name}")
+        return df
+    finally:
+        cnxn.close()
 
-    df.columns = [c.strip() for c in df.columns]
+def process_incidents(df: pd.DataFrame, out_dir: Path):
+    """
+    Processa o DataFrame carregado do SQL e chama a API.
+    """
+    start_time = time.time()
     records = []
+    
     success_count = 0
-    failed_coords = 0
     failed_date = 0
     failed_api = 0
-
+    
+    # Checkpoint: Se houver muitos dados, guardamos em chunks ou no final.
+    # Aqui vamos guardar num único ficheiro, mas fazer appends periódicos seria melhor para volumes gigantes.
+    output_file = out_dir / "meteorology_from_db.csv"
+    
+    total_rows = len(df)
     progress_interval = 10
 
     for idx, row in df.iterrows():
         if idx > 0 and idx % progress_interval == 0:
             elapsed_so_far = time.time() - start_time
-            avg_time_per_record = elapsed_so_far / idx if idx > 0 else 0
-            estimated_remaining = avg_time_per_record * (len(df) - idx)
-            logging.info(f"Progress: {idx}/{len(df)} rows ({idx/len(df)*100:.1f}%) - Est. remaining: {estimated_remaining/60:.1f} min")
-       
-        incident_id = _first_nonempty(row, (incident_col, incident_col.upper(), incident_col.lower()))
-        if not incident_id:
-            logging.warning(f"Missing incident ID in row {idx} of {path_obj.name}")
-            continue
+            avg_time_per_record = elapsed_so_far / idx
+            estimated_remaining = avg_time_per_record * (total_rows - idx)
+            logging.info(f"Progress: {idx}/{total_rows} ({idx/total_rows*100:.1f}%) - Est. remaining: {estimated_remaining/60:.1f} min")
 
-        lat = row.get("LAT") or row.get("Lat") or row.get("lat")
-        lon = row.get("LON") or row.get("Lon") or row.get("lon")
-        if not lat or not lon:
-            logging.debug(f"No coords for incident {incident_id} in {path_obj.name}")
-            failed_coords += 1
-            continue
+        incident_id = row['fire_id']
+        lat = row['latitude']
+        lon = row['longitude']
+        
+        # Conversão das datas (Inteiro YYYYMMDD -> YYYY-MM-DD)
+        start_date = date_id_to_iso(row['start_day_id'])
+        end_date = date_id_to_iso(row['end_day_id'])
 
-        date_range = get_date_range(row)
-        if not date_range:
-            logging.debug(f"No valid date for incident {incident_id} in {path_obj.name}")
+        # Lógica de fallback se não houver data de fim
+        if not start_date:
             failed_date += 1
+            logging.debug(f"Invalid start date for {incident_id}")
             continue
-        start_date, end_date = date_range
+            
+        if not end_date:
+            end_date = start_date # Assume duração de 1 dia se null
 
         try:
             api_start = time.time()
+            # Chama a API (mantida do seu código original)
             daily = get_temperature(float(lat), float(lon), start_date, end_date)
-            api_time = time.time() - api_start
-            logging.debug(f"API call for {incident_id} took {api_time:.2f}s")
+            logging.debug(f"API call for {incident_id} took {time.time() - api_start:.2f}s")
         except Exception as e:
             logging.warning(f"API error for {incident_id} ({lat},{lon}) : {e}")
             failed_api += 1
             continue
 
+        # Processamento da resposta da API (mantido do original)
         times = daily.get("time", [])
         tmax = daily.get("temperature_2m_max", [])
         tmin = daily.get("temperature_2m_min", [])
@@ -137,7 +170,6 @@ def process_file(path: Path, out_dir: Path, incident_col: str = "id"):
         for i, d in enumerate(times):
             records.append({
                 "incident_id": incident_id,
-                "source_file": path_obj.name,
                 "date": d,
                 "lat": lat,
                 "lon": lon,
@@ -156,83 +188,76 @@ def process_file(path: Path, out_dir: Path, incident_col: str = "id"):
                 "et0": et0[i] if i < len(et0) else None,
             })
             day_count += 1
-
-        logging.debug(f"Added {day_count} days of data for incident {incident_id}")
-        success_count += 1
-        time.sleep(0.4) 
-
-    elapsed = time.time() - start_time
-    logging.info(f"Completed {path_obj.name} in {elapsed:.2f}s - Successful: {success_count}, Failed coords: {failed_coords}, Failed dates: {failed_date}, API errors: {failed_api}")
-    
-    write_output_csvs(records, out_dir, path_obj.stem)
-
-
-def write_output_csvs(records, out_dir: Path, stem: str):
-    """
-    Write detailed time-series CSV and per-incident summary CSV.
-    """
-    out_base = Path(out_dir)
-    out_base.mkdir(parents=True, exist_ok=True)
-    detailed_path = out_base / f"meteorology_{stem}.csv"
-
-    if records:
-        detailed = pd.DataFrame(records)
-        detailed.to_csv(detailed_path, index=False)
-        logging.info(f"Wrote {detailed_path.name}")
-    else:
-        cols_det = ["incident_id", "source_file", "date", "lat", "lon", 
-                  "temp_max", "temp_min", "rh_max", "rh_min", 
-                  "precip_sum", "rain_sum", "precip_hours", 
-                  "wind_max", "gust_max", "wind_dir", 
-                  "radiation", "sunshine", "et0"]
-        pd.DataFrame(columns=cols_det).to_csv(detailed_path, index=False)
-        logging.info(f"No records for {stem} — wrote empty detailed file {detailed_path.name}")
-
-
-def run(data_dir: str = "data", out_dir: str = "output/meteorology"):
-    logging.info(f"Starting meteorological data extraction from {data_dir} to {out_dir}")
-    start_time = time.time()
-    
-    files = get_data_files(data_dir, pattern="*.csv", recursive=False)
-    if not files:
-        logging.error(f"No CSV files found in {data_dir}")
-        return
         
-    logging.info(f"Found {len(files)} CSV files to process")
-    out_base = Path(out_dir)
-    
-    for i, f in enumerate(files):
-        logging.info(f"Processing file {i+1}/{len(files)}: {f}")
-        process_file(Path(f), out_base)
+        success_count += 1
+        time.sleep(0.4) # Rate limiting
+
+    # Guardar resultados
+    write_output_csv(records, output_file)
     
     elapsed = time.time() - start_time
-    logging.info(f"Extraction complete! Processed {len(files)} files in {elapsed:.2f}s")
+    logging.info(f"Completed processing in {elapsed:.2f}s - Successful: {success_count}, Failed dates: {failed_date}, API errors: {failed_api}")
 
+def write_output_csv(records, output_path: Path):
+    """
+    Escreve o CSV final
+    """
+    output_path.parent.mkdir(parents=True, exist_ok=True)
+    
+    if records:
+        df_out = pd.DataFrame(records)
+        df_out.to_csv(output_path, index=False)
+        logging.info(f"Wrote {len(df_out)} weather records to {output_path}")
+    else:
+        logging.warning("No records were extracted.")
+
+def run(db_connection: str, out_dir: str, table_name: str):
+    # 1. Obter dados do SQL Server
+    try:
+        df_incidents = fetch_fire_data(db_connection, table_name)
+    except Exception as e:
+        logging.error("Stopping execution due to DB error.")
+        return
+
+    if df_incidents.empty:
+        logging.warning("No incidents found in database with valid coordinates.")
+        return
+
+    # 2. Processar meteorologia
+    process_incidents(df_incidents, Path(out_dir))
 
 if __name__ == "__main__":
-    parser = argparse.ArgumentParser(description='Extract meteorological data for fire incidents')
+    parser = argparse.ArgumentParser(description='Extract meteorological data based on DB Fact Table')
 
     parser.add_argument(
-        '--data_dir', '-i',
+        '--db_connection', '-d',
         type=str,
-        default='./data',
-        help='Input directory containing CSV files (default: ./data)'
+        required=True,
+        # Exemplo padrão, ajustar conforme necessário
+        default="Server=localhost,1433;Database=TAAD_DB;UID=sa;PWD=yourpassword",
+        help='Database connection string'
+    )
+
+    parser.add_argument(
+        '--table_name', '-t',
+        type=str,
+        default='fact_fire',
+        help='Name of the fact table (default: fact_fire)'
     )
 
     parser.add_argument(
         '--output_dir', '-o',
         type=str,
         default='output/meteorology',
-        help='Output directory for meteorological files (default: output/meteorology)'
+        help='Output directory for results'
     )
 
     args = parser.parse_args()
 
-    logging.info(f"Extract Meteorology Script started at {datetime.datetime.now()}")
-    logging.info(f"Arguments: data_dir={args.data_dir}, output_dir={args.output_dir}")
+    logging.info(f"Extract Meteorology (DB Mode) started at {datetime.datetime.now()}")
     
     try:
-        run(data_dir=args.data_dir, out_dir=args.output_dir)
-        logging.info(f"Script completed successfully at {datetime.datetime.now()}")
+        run(db_connection=args.db_connection, out_dir=args.output_dir, table_name=args.table_name)
+        logging.info("Script completed successfully.")
     except Exception as e:
         logging.exception(f"Script failed with error: {e}")
