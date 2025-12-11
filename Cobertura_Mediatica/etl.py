@@ -2,8 +2,8 @@ import json
 import pandas as pd
 import sqlalchemy as sa
 from sqlalchemy.exc import SQLAlchemyError
+from datetime import datetime
 import urllib.parse
-import sys
 
 # -------------------------------------------------------------------------
 # Configuration
@@ -22,189 +22,182 @@ def extract_data(file_path):
     try:
         with open(file_path, 'r', encoding='utf-8') as f:
             data = json.load(f)
-        df = pd.json_normalize(data)
-        print(f"Loaded {len(df)} records.")
-        return df
-    except FileNotFoundError:
-        print(f"Error: File '{file_path}' not found.")
-        sys.exit(1)
+        print(f"Loaded {len(data)} raw records.")
+        return data
+    except Exception as e:
+        print(f"Error reading file: {e}")
+        return []
 
 # -------------------------------------------------------------------------
-# 2. TRANSFORM (Prepare Data & Identify Issues)
+# 2. VALIDATE AND SEGREGATE
 # -------------------------------------------------------------------------
-def transform_data(df):
-    print("--- Transforming Data ---")
+def process_data(data):
+    """
+    Validates data against the schema.
+    Rows failing validation (types, length limits) are sent to Quarantine.
+    """
+    print("--- Validating Data ---")
+    valid_records = []
+    quarantine_records = []
     
-    # 2.1 Parse Dates (Coerce errors to NaT to identify them later)
-    df['data_publicacao'] = pd.to_datetime(df['data_publicacao'], format='%a, %d %b %Y %H:%M:%S GMT', errors='coerce')
-    
-    # 2.2 Parse Risk Score (Coerce errors to NaN)
-    df['risk_score'] = pd.to_numeric(df['risk_score'], errors='coerce')
-
-    # 2.3 Prepare Keywords (List -> JSON String)
-    df['keywords_str'] = df['keywords'].apply(lambda x: json.dumps(x, ensure_ascii=False) if isinstance(x, list) else '[]')
-
-    # 2.4 Normalize Sentiment (for Staging)
-    # Note: We are NOT truncating here, we keep original to check length later
-    sentiment_map = {
-        'positivo': 1, 'negativo': -1, 'neutro': 0,
-        'neutral': 0, 'positive': 1, 'negative': -1
-    }
-    df['sentiment_norm'] = df['sentiment'].astype(str).str.lower().str.strip()
-    df['polarity'] = df['sentiment_norm'].map(sentiment_map).fillna(0)
-
-    # 2.5 Enrich with Time Dimensions (Derived from Date)
-    df['year'] = df['data_publicacao'].dt.year
-    df['month'] = df['data_publicacao'].dt.month
-    df['day'] = df['data_publicacao'].dt.day
-    df['weekday'] = df['data_publicacao'].dt.day_name()
-    
-    meses_pt = {
-        1: "Janeiro", 2: "Fevereiro", 3: "Março", 4: "Abril", 5: "Maio", 6: "Junho",
-        7: "Julho", 8: "Agosto", 9: "Setembro", 10: "Outubro", 11: "Novembro", 12: "Dezembro"
-    }
-    df['month_name'] = df['month'].map(meses_pt)
-    
-    # 2.6 Source Country Default
-    df['source_country'] = 'Portugal'
-    df['fonte'] = df['fonte'].fillna('Desconhecido')
-
-    return df
-
-# -------------------------------------------------------------------------
-# 3. LOAD (Split & Send to Staging or Quarantine)
-# -------------------------------------------------------------------------
-def load_to_sql_server(df, conn_str):
-    print("--- Loading Data ---")
-    
-    # ---------------------------------------------------------
-    # A. Define Validation Logic
-    # ---------------------------------------------------------
-    # Rule 1: Date must exist
-    mask_date = df['data_publicacao'].notna()
-    # Rule 2: Risk Score must be numeric
-    mask_score = df['risk_score'].notna()
-    # Rule 3: Sentiment text length <= 50 chars (Database constraint)
-    mask_sentiment = df['sentiment'].astype(str).str.len() <= 50
-
-    # Combine rules: Valid if ALL are true
-    is_valid = mask_date & mask_score & mask_sentiment
-
-    # ---------------------------------------------------------
-    # B. Split DataFrames
-    # ---------------------------------------------------------
-    df_valid = df[is_valid].copy()
-    df_quarantine = df[~is_valid].copy()
-
-    # ---------------------------------------------------------
-    # C. Prepare Quarantine Data (Add Reason)
-    # ---------------------------------------------------------
-    if not df_quarantine.empty:
-        def get_reason(row):
-            reasons = []
-            if pd.isna(row['data_publicacao']): reasons.append("Invalid Date")
-            if pd.isna(row['risk_score']): reasons.append("Invalid Risk Score")
-            if len(str(row['sentiment'])) > 50: reasons.append("Sentiment too long")
-            return "; ".join(reasons)
-        
-        df_quarantine['quarantine_reason'] = df_quarantine.apply(get_reason, axis=1)
-        # Add timestamp
-        df_quarantine['loaded_at'] = pd.Timestamp.now()
-
-    print(f"Total Records: {len(df)}")
-    print(f" -> Valid (to Staging): {len(df_valid)}")
-    print(f" -> Invalid (to Quarantine): {len(df_quarantine)}")
-
-    # ---------------------------------------------------------
-    # D. Write to SQL Server
-    # ---------------------------------------------------------
-    engine = sa.create_engine(conn_str, fast_executemany=True)
-
-    with engine.begin() as conn:
-        # 1. Load Valid Data -> stg_news_feed
-        if not df_valid.empty:
-            # Select only columns needed for Staging
-            cols_staging = [
-                'titulo', 'link', 'data_publicacao', 'fonte', 
-                'sentiment', 'risk_score', 'keywords_str', 
-                'year', 'month', 'day', 'weekday', 'month_name', 'polarity', 'source_country'
-            ]
-            df_valid[cols_staging].to_sql(
-                'stg_news_feed', 
-                con=conn, 
-                if_exists='replace', # Wipe and reload staging
-                index=False,
-                dtype={
-                    'keywords_str': sa.types.NVARCHAR(None),
-                    'sentiment': sa.types.NVARCHAR(50), 
-                    'titulo': sa.types.NVARCHAR(None),
-                    'link': sa.types.NVARCHAR(None)
-                }
-            )
-            print("Successfully wrote to 'stg_news_feed'.")
-
-        # 2. Load Invalid Data -> quarantine_news
-        if not df_quarantine.empty:
-            # Select relevant columns for debugging
-            cols_quarantine = [
-                'titulo', 'link', 'data_publicacao', 'fonte', 
-                'sentiment', 'risk_score', 'quarantine_reason', 'loaded_at'
-            ]
+    for row in data:
+        try:
+            # --- A. Type Validation ---
             
-            # Use 'append' so we keep history of bad data (optional, could be 'replace')
-            df_quarantine[cols_quarantine].to_sql(
-                'quarantine_news', 
-                con=conn, 
-                if_exists='append', 
-                index=False,
-                dtype={
-                    'sentiment': sa.types.NVARCHAR(None), # Allow long text here
-                    'quarantine_reason': sa.types.NVARCHAR(255)
-                }
-            )
-            print("Successfully wrote to 'quarantine_news'.")
+            # 1. Date (Must be present and parsable)
+            raw_date = row.get('data_publicacao')
+            if not raw_date:
+                raise ValueError("Missing 'data_publicacao'")
+            try:
+                # Format: 'Fri, 15 Dec 2023 10:00:00 GMT'
+                dt_obj = datetime.strptime(raw_date, '%a, %d %b %Y %H:%M:%S GMT')
+            except ValueError:
+                raise ValueError(f"Invalid date format: {raw_date}")
+
+            # 2. Risk Score (Must be valid Integer)
+            raw_risk = row.get('risk_score')
+            risk_val = 0
+            if raw_risk is not None:
+                try:
+                    risk_val = int(float(raw_risk))
+                except (ValueError, TypeError):
+                    raise ValueError(f"Invalid risk_score type: {raw_risk}")
+            
+            # 3. Lists (Must be lists)
+            keywords = row.get('keywords')
+            if keywords is not None and not isinstance(keywords, list):
+                raise ValueError("Keywords must be a list")
+            
+            entities = row.get('entities')
+            if entities is not None and not isinstance(entities, list):
+                raise ValueError("Entities must be a list")
+
+            # --- B. Constraint/Length Validation ---
+            # We validate string lengths here to prevent SQL Truncation errors later.
+            
+            source = row.get('fonte') or 'Unknown'
+            if len(source) > 255:
+                raise ValueError(f"Source name too long ({len(source)} > 255)")
+
+            sentiment = row.get('sentiment') or 'Unknown'
+            if len(sentiment) > 50:
+                raise ValueError(f"Sentiment string too long ({len(sentiment)} > 50)")
+
+            # Title and Link are allowed to be MAX, but let's sanitize if needed.
+            title = row.get('titulo')
+            if not title:
+                raise ValueError("Missing 'titulo'")
+                
+            link = row.get('link')
+
+            # --- C. Prepare Valid Record ---
+            valid_row = {
+                'title': title,
+                'link': link,
+                'date': dt_obj,
+                'source': source,
+                'sentiment': sentiment,
+                'risk_score': risk_val,
+                'keywords': json.dumps(keywords or [], ensure_ascii=False),
+                'entities': json.dumps(entities or [], ensure_ascii=False)
+            }
+            valid_records.append(valid_row)
+
+        except Exception as e:
+            # --- D. Prepare Quarantine Record ---
+            # Captures the raw data and the specific error reason
+            quarantine_row = {
+                'raw_json': json.dumps(row, ensure_ascii=False),
+                'error_message': str(e),
+                'ingestion_time': datetime.now()
+            }
+            quarantine_records.append(quarantine_row)
+
+    print(f"Validation Complete: {len(valid_records)} Valid, {len(quarantine_records)} Invalid.")
+    return valid_records, quarantine_records
 
 # -------------------------------------------------------------------------
-# 4. Database Setup (Ensure Tables Exist)
+# 3. LOAD (Staging & Quarantine)
 # -------------------------------------------------------------------------
-def create_schema(conn_str):
-    """Ensures Staging and Quarantine tables exist."""
-    engine = sa.create_engine(conn_str)
+def load_to_sql_server(valid_data, quarantine_data, conn_str):
+    print("--- Loading Data to SQL Server ---")
+    
+    engine = sa.create_engine(conn_str, fast_executemany=True)
+    
     with engine.connect() as conn:
-        conn.execute(sa.text("""
-            -- 1. Quarantine Table
-            IF NOT EXISTS (SELECT * FROM sysobjects WHERE name='quarantine_news' and xtype='U')
-            CREATE TABLE quarantine_news (
-                q_id INT IDENTITY(1,1) PRIMARY KEY,
-                titulo NVARCHAR(MAX),
-                link NVARCHAR(MAX),
-                data_publicacao DATETIME, -- Can be NULL
-                fonte NVARCHAR(255),
-                sentiment NVARCHAR(MAX),  -- Max length to catch overflow errors
-                risk_score FLOAT,         -- Can be NULL
-                quarantine_reason NVARCHAR(255),
-                loaded_at DATETIME DEFAULT GETDATE()
-            );
+        trans = conn.begin()
+        try:
+            # 1. Reset Staging Tables (Drop & Recreate)
+            # This ensures the schema (lengths/types) is always correct for the current run
+            # and prevents "String data, right truncation" errors from old table definitions.
+            print("Resetting Staging Tables...")
+            conn.execute(sa.text("""
+                IF OBJECT_ID('stg_news', 'U') IS NOT NULL DROP TABLE stg_news;
+                IF OBJECT_ID('stg_quarantine', 'U') IS NOT NULL DROP TABLE stg_quarantine;
+                
+                CREATE TABLE stg_news (
+                    stg_id INT IDENTITY(1,1) PRIMARY KEY,
+                    title NVARCHAR(MAX),
+                    link NVARCHAR(MAX),
+                    date DATETIME,
+                    source NVARCHAR(255),
+                    sentiment NVARCHAR(50),
+                    risk_score INT,
+                    keywords NVARCHAR(MAX),
+                    entities NVARCHAR(MAX)
+                );
+                
+                CREATE TABLE stg_quarantine (
+                    quarantine_id INT IDENTITY(1,1) PRIMARY KEY,
+                    raw_json NVARCHAR(MAX),
+                    error_message NVARCHAR(MAX),
+                    ingestion_time DATETIME
+                );
+            """))
 
-            -- 2. Staging Table (Implicitly created by Pandas 'to_sql', but good to define if needed)
-            -- We don't strictly need CREATE TABLE for staging if using if_exists='replace' in Pandas,
-            -- but this ensures the DB is reachable.
-        """))
-        conn.commit()
-        print("Schema check completed.")
+            # 2. Insert Valid Data
+            if valid_data:
+                df_stg = pd.DataFrame(valid_data)
+                print(f"Inserting {len(df_stg)} rows into stg_news...")
+                # We specify dtypes explicitly to ensure NVARCHAR(MAX) is used where needed
+                df_stg.to_sql('stg_news', con=conn, if_exists='append', index=False, dtype={
+                    'title': sa.types.NVARCHAR(None),    # MAX
+                    'link': sa.types.NVARCHAR(None),     # MAX
+                    'keywords': sa.types.NVARCHAR(None), # MAX
+                    'entities': sa.types.NVARCHAR(None), # MAX
+                    'source': sa.types.NVARCHAR(255),
+                    'sentiment': sa.types.NVARCHAR(50),
+                    'risk_score': sa.types.Integer,
+                    'date': sa.types.DateTime
+                })
+            
+            # 3. Insert Quarantine Data
+            if quarantine_data:
+                df_quar = pd.DataFrame(quarantine_data)
+                print(f"Inserting {len(df_quar)} rows into stg_quarantine...")
+                df_quar.to_sql('stg_quarantine', con=conn, if_exists='append', index=False, dtype={
+                    'raw_json': sa.types.NVARCHAR(None),      # MAX - Ensures no truncation for invalid data
+                    'error_message': sa.types.NVARCHAR(None), # MAX
+                    'ingestion_time': sa.types.DateTime
+                })
+            
+            trans.commit()
+            print("Load Process Completed Successfully.")
+            
+        except SQLAlchemyError as e:
+            trans.rollback()
+            print(f"Error occurred during loading: {e}")
+            raise
 
 # -------------------------------------------------------------------------
 # Main Execution
 # -------------------------------------------------------------------------
 if __name__ == "__main__":
-    # 1. Initialize Schema
-    create_schema(DB_CONNECTION_STR)
+    # 1. Extract
+    raw_data = extract_data(INPUT_FILE)
     
-    # 2. Extract
-    df_raw = extract_data(INPUT_FILE)
+    # 2. Validate / Segregate
+    valid_rows, invalid_rows = process_data(raw_data)
     
-    # 3. Transform
-    df_transformed = transform_data(df_raw)
-    
-    # 4. Load (Split & Store)
-    load_to_sql_server(df_transformed, DB_CONNECTION_STR)
+    # 3. Load (includes Table Creation)
+    load_to_sql_server(valid_rows, invalid_rows, DB_CONNECTION_STR)
