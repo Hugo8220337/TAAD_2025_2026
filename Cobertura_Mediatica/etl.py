@@ -7,6 +7,27 @@ import urllib.parse
 import argparse
 import sys
 import os
+import pyodbc  # Necessário para listar os drivers instalados
+
+# -------------------------------------------------------------------------
+# HELPER: DRIVER DETECTION
+# -------------------------------------------------------------------------
+def get_best_odbc_driver(prefer=("ODBC Driver 18 for SQL Server", "ODBC Driver 17 for SQL Server", "SQL Server Native Client 11.0", "SQL Server")):
+    """
+    Detecta o melhor driver ODBC disponível no sistema baseado na lista de preferência.
+    """
+    try:
+        available = [d for d in pyodbc.drivers()]
+        if not available:
+            return None
+        
+        for pref in prefer:
+            for a in available:
+                if pref.lower() in a.lower():
+                    return a
+        return available[0]
+    except Exception:
+        return None
 
 # -------------------------------------------------------------------------
 # 1. EXTRACT
@@ -23,7 +44,7 @@ def extract_data(file_path):
         return data
     except Exception as e:
         print(f"Error reading file: {e}")
-        sys.exit(1) # Exit if file cannot be read
+        sys.exit(1)
 
 # -------------------------------------------------------------------------
 # 2. VALIDATE AND SEGREGATE
@@ -108,6 +129,7 @@ def load_to_sql_server(valid_data, quarantine_data, conn_str):
     print("--- Loading Data to SQL Server ---")
     
     try:
+        # conn_str já vem formatada do main com o driver correto
         engine = sa.create_engine(conn_str, fast_executemany=True)
         
         with engine.connect() as conn:
@@ -183,26 +205,42 @@ if __name__ == "__main__":
     # 1. Parse Arguments
     parser = argparse.ArgumentParser(description="ETL Process for News Data")
     
-    # Define arguments
     parser.add_argument(
         '--file', 
         required=True, 
-        help='Full path to the input JSON file (e.g., C:\\data\\output.json)'
+        help='Full path to the input JSON file'
     )
     parser.add_argument(
         '--conn', 
         required=True, 
-        help='ODBC Connection String (e.g., "DRIVER={ODBC Driver 17 for SQL Server};Server=.;Database=TAAD;...")'
+        help='Connection parameters (e.g., "Server=.;Database=TAAD;UID=sa;PWD=pass") WITHOUT Driver'
     )
     
     args = parser.parse_args()
 
-    # 2. Build SQLAlchemy URL
+    # 2. Build SQLAlchemy URL with Auto-Detected Driver
     try:
-        params = urllib.parse.quote_plus(args.conn)
+        base_conn_str = args.conn
+        
+        # Só adiciona o driver se o usuário não tiver especificado um manualmente
+        if "driver=" not in base_conn_str.lower():
+            print("Detecting ODBC Driver...")
+            driver = get_best_odbc_driver()
+            if not driver:
+                print("Error: No suitable ODBC Driver found. Please install ODBC Driver for SQL Server.")
+                sys.exit(1)
+            print(f"Using detected driver: {driver}")
+            # Adiciona o driver no formato exigido: Driver={Nome Do Driver};
+            full_conn_str = f"Driver={{{driver}}};{base_conn_str}"
+        else:
+            full_conn_str = base_conn_str
+
+        # Codifica para URL do SQLAlchemy
+        params = urllib.parse.quote_plus(full_conn_str)
         db_url = f"mssql+pyodbc:///?odbc_connect={params}"
+        
     except Exception as e:
-        print(f"Error parsing connection string: {e}")
+        print(f"Error building connection string: {e}")
         sys.exit(1)
 
     # 3. Execute ETL
