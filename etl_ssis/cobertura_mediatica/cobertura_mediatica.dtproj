@@ -26,7 +26,7 @@
           <SSIS:Property SSIS:Name="CreatorComputerName">DESKTOP-G01CPCN</SSIS:Property>
           <SSIS:Property SSIS:Name="Description">
           </SSIS:Property>
-          <SSIS:Property SSIS:Name="PasswordVerifier" SSIS:Sensitive="1">AQAAANCMnd8BFdERjHoAwE/Cl+sBAAAAnGLToHQ/QUCfAekZCVZnhwAAAAACAAAAAAAQZgAAAAEAACAAAAAByviUUUCKVxR3crwAJiHHWisH0HjmNkHUQYn1W1iaqQAAAAAOgAAAAAIAACAAAADDnfF4B7xQ1FMY0XXeN/OABENK8go3VOEW6lJByDPSqpAAAACLItn5qAXRycNnSh0xj9+dd1jV3g0ZnPkU7+MFfuTrl+8X5XY5IFbuqr1Ric2LXJDLKZ9XeT5JARp4rhdW71Oau9xqOlCFx84swrE5vU5PubPMZ9NFWItzPkFphxky5KSPI/Fw/mQ6JZLAvYacF3lJDoFmUN0/ihCqDOjYYCkFTvb2ndEb3wLy7v9uTHxPE0ZAAAAAoIe1F+J23Z79AyOiEN6W4OmCH+ZUKTX5NnWqg3E0qhTZFJ5cPuIvDenqyg9Mccjhp4+M/utwt8Qc1nzwZUS7GQ==</SSIS:Property>
+          <SSIS:Property SSIS:Name="PasswordVerifier" SSIS:Sensitive="1">AQAAANCMnd8BFdERjHoAwE/Cl+sBAAAAnGLToHQ/QUCfAekZCVZnhwAAAAACAAAAAAAQZgAAAAEAACAAAACTSXVJYWciEpiH0WgiJ1v+jNV6UUT+QeudUGg0bX7w2AAAAAAOgAAAAAIAACAAAAB5Oqu8F8lvqKcaxsgbd4feo7RpjZpOcwxdCYjDbIdXMpAAAACj85vD3zWAiELVUBCYiLlzAmd0oY6cStru4z7TVcpcU1UK/Um77e0fj1lkyiEjKbSNivk1yr//nK/8DJKPZeSwhNhV20fR/3icm14jOVTbeFeAezA141aLk3E8fcDgpz3D9ZLMevtjnhtmJ5d8iqTbmFF5EhxgRSgiNNpWobYYyEKX7QRrHwQTrc9pLT+v6+JAAAAAxg+PJJIelWz0sVnt8VP/hzQmev19qLIyWWWh0cpQfrINCN0LUoX+h/ZNI446KaRH8UBoqiH837Hv2yTjV3TLLg==</SSIS:Property>
           <SSIS:Property SSIS:Name="FormatVersion">1</SSIS:Property>
         </SSIS:Properties>
         <SSIS:Packages>
@@ -42,16 +42,46 @@
                 <SSIS:Property SSIS:Name="Name">Package</SSIS:Property>
                 <SSIS:Property SSIS:Name="VersionMajor">1</SSIS:Property>
                 <SSIS:Property SSIS:Name="VersionMinor">0</SSIS:Property>
-                <SSIS:Property SSIS:Name="VersionBuild">6</SSIS:Property>
+                <SSIS:Property SSIS:Name="VersionBuild">10</SSIS:Property>
                 <SSIS:Property SSIS:Name="VersionComments">
                 </SSIS:Property>
-                <SSIS:Property SSIS:Name="VersionGUID">{3A40495D-2FFD-4F1F-AC38-C7D5B996FEA4}</SSIS:Property>
+                <SSIS:Property SSIS:Name="VersionGUID">{F3724832-0112-4989-A8DB-B0DB87EF3BBB}</SSIS:Property>
                 <SSIS:Property SSIS:Name="PackageFormatVersion">8</SSIS:Property>
                 <SSIS:Property SSIS:Name="Description">
                 </SSIS:Property>
                 <SSIS:Property SSIS:Name="ProtectionLevel">1</SSIS:Property>
               </SSIS:Properties>
               <SSIS:Parameters>
+                <SSIS:Parameter SSIS:Name="CM.clean_staging.sql.ConnectByProxy">
+                  <SSIS:Properties>
+                    <SSIS:Property SSIS:Name="ID">
+                    </SSIS:Property>
+                    <SSIS:Property SSIS:Name="CreationName">
+                    </SSIS:Property>
+                    <SSIS:Property SSIS:Name="Description">
+                    </SSIS:Property>
+                    <SSIS:Property SSIS:Name="IncludeInDebugDump">0</SSIS:Property>
+                    <SSIS:Property SSIS:Name="Required">0</SSIS:Property>
+                    <SSIS:Property SSIS:Name="Sensitive">0</SSIS:Property>
+                    <SSIS:Property SSIS:Name="Value">false</SSIS:Property>
+                    <SSIS:Property SSIS:Name="DataType">3</SSIS:Property>
+                  </SSIS:Properties>
+                </SSIS:Parameter>
+                <SSIS:Parameter SSIS:Name="CM.clean_staging.sql.ConnectionString">
+                  <SSIS:Properties>
+                    <SSIS:Property SSIS:Name="ID">
+                    </SSIS:Property>
+                    <SSIS:Property SSIS:Name="CreationName">
+                    </SSIS:Property>
+                    <SSIS:Property SSIS:Name="Description">
+                    </SSIS:Property>
+                    <SSIS:Property SSIS:Name="IncludeInDebugDump">0</SSIS:Property>
+                    <SSIS:Property SSIS:Name="Required">0</SSIS:Property>
+                    <SSIS:Property SSIS:Name="Sensitive">0</SSIS:Property>
+                    <SSIS:Property SSIS:Name="Value">C:\Users\User\GitHub\TAAD_2025_2026\etl_ssis\cobertura_mediatica\apoio\scripts\clean_staging.sql</SSIS:Property>
+                    <SSIS:Property SSIS:Name="DataType">18</SSIS:Property>
+                  </SSIS:Properties>
+                </SSIS:Parameter>
                 <SSIS:Parameter SSIS:Name="CM.create_fact_news.sql.ConnectByProxy">
                   <SSIS:Properties>
                     <SSIS:Property SSIS:Name="ID">
