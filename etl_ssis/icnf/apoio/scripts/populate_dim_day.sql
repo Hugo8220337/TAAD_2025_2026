@@ -28,7 +28,8 @@ CalculatedDays AS (
         DATENAME(WEEKDAY, CleanDate) AS [weekday],
         CASE 
             WHEN MONTH(CleanDate) IN (3, 4, 5) THEN N'Primavera'
-            WHEN MONTH(CleanDate) IN (6, 7, 8) THEN N'Verão'
+            -- N'Ver' + NCHAR(227) + N'o' gera "Verão" de forma segura
+            WHEN MONTH(CleanDate) IN (6, 7, 8) THEN N'Ver' + NCHAR(227) + N'o'
             WHEN MONTH(CleanDate) IN (9, 10, 11) THEN N'Outono'
             ELSE N'Inverno'
         END AS season
