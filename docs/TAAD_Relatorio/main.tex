@@ -8,6 +8,7 @@
 \usepackage[T1]{fontenc}
 \usepackage[hidelinks]{hyperref} % Ativa links clicáveis no PDF
 \usepackage{graphicx}
+\usepackage{hyperref} % para poder colocar notas no rodapé
 
 \begin{document}
 %
@@ -43,11 +44,13 @@ O processo ETL desenvolvido garante a extração, transformação e integração
 %
 %
 
-\include{seccoes/proposta_trabalho}
-\include{seccoes/arquitetura_etl}
+\include{seccoes/definicao_problema}
 \include{seccoes/data_profilling}
-\include{seccoes/Diagramas_BPMN}
-\include{seccoes/processo_etl}
+
+\section{Implementação da Solução}
+\input{seccoes/arquitetura_geral}
+\input{seccoes/Diagramas_BPMN}
+\input{seccoes/processo_etl}
 
 
 

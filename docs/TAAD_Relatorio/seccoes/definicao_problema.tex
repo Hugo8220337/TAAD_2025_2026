@@ -1,44 +1,32 @@
 % --------------------------------------------------
 % Proposta de Trabalho (convertida de Markdown)
 % --------------------------------------------------
-\section{Proposta de Trabalho}
+\section{Definição do Problema}
 
 \subsection{Dataset}
 
 \subsubsection{ICNF}
-O principal conjunto de dados consiste numa versão filtrada dos registos do repositório \texttt{icnf\_fire\_data}, que agrega ocorrências do serviço \texttt{fogos.icnf.pt}. Para este estudo serão considerados apenas os incêndios entre 2020 e 2025, após remoção de registos irrelevantes, nomeadamente:
+O principal conjunto de dados consiste numa versão filtrada dos registos do repositório \texttt{icnf\_fire\_data} \footnote{\url{https://github.com/cityxdev/icnf_fire_data}}, que agrega ocorrências do serviço \texttt{fogos.icnf.pt}. Para este estudo foram considerados apenas os incêndios entre 2020 e 2025, após remoção de registos irrelevantes, nomeadamente:
 \begin{itemize}
-	\item falsos alarmes;
 	\item registos com coordenadas em falta;
-	\item incêndios com área ardida inferior a 5 hectares;
+	\item incêndios com área ardida inferior a 0.1 hectares;
 	\item queimadas controladas;
 	\item ocorrências não classificadas como incêndios;
 	\item registos sem data/hora de início ou fim.
 \end{itemize}
 
-O ano de 2025 inclui dados até 06/10/2025.
 
 \subsubsection{Meteorologia}
-Foi desenvolvido um script Python que consulta a API do \texttt{open-meteo}. Para cada ano são gerados dois ficheiros:
-\begin{itemize}
-	\item \texttt{meteorology\_[ano].csv} — registos diários de meteorologia por \texttt{incident\_id};
-	\item \texttt{summary\_[ano].csv} — agregação por \texttt{incident\_id} (médias, contagens e coordenadas), usada para validação.
-\end{itemize}
+A partir dos dados recolhidos de cada incêndio, construiu-se um scrypt que faz chamadas à API do \textit{open-meteo} \footnote{\url{https://open-meteo.com/}} de modo a conseguir o máximo de informação meteorológica para cada dia em que cada incêndio esteve ativo.
 
 \subsubsection{RSS Google News}
 Foram recolhidos artigos noticiosos usando filtros por idioma (português), termos-chave e período (2020–2025). Extraíram-se metadados (título, data, fonte, URL). Ainda não foi definida a utilização final destes dados, mas visam complementar informação sobre meios e cobertura mediática.
-
-\subsubsection{DECIR}
-Foram identificados PDFs da Diretiva Operacional Nacional nº2 (2020–2025) com informação sobre meios aéreos e terrestres mobilizados. A extração automática ainda não foi concluída devido à formatação irregular dos PDFs.
 
 \subsubsection{MODIS — MOD13Q1 (NDVI)}
 Será usado o produto MOD13Q1 (NDVI 16-day, 250 m) através do Google Earth Engine. Para cada perímetro de incêndio serão calculadas estatísticas zonais pré e pós-incêndio (média, contagem de píxeis, etc.). O período foco é 2020–2024.
 
 \subsubsection{CORINE Land Cover}
 Usado para atribuir classes de uso do solo a perímetros de incêndio e para construir áreas de controlo. O produto base será o CLC 2018.
-
-\subsubsection{INE}
-Indicadores socioeconómicos a nível municipal/freguesia (demografia, emprego, sector agrícola, turismo) a integrar para avaliar impactos locais e vulnerabilidades.
 
 \subsection{Objetivos}
 \begin{enumerate}
@@ -85,7 +73,7 @@ Medidas principais: área ardida (ha), duração (horas), número de focos inici
 \subsubsection{Meteorologia Diária}
 Grão: registo diário de condições meteorológicas associado a uma localização ou a um perímetro de incêndio.
 
-Medidas principais: temperatura média e máxima (ºC), humidade relativa (%), velocidade do vento (km/h), precipitação (mm). Estes valores servem para calcular indicadores derivados (ex.: número de dias com temperatura acima de um limiar, soma de precipitação no período do incêndio).
+Medidas principais: temperatura média e máxima (ºC), humidade relativa (\%), velocidade do vento (km/h), precipitação (mm). Estes valores servem para calcular indicadores derivados (ex.: número de dias com temperatura acima de um limiar, soma de precipitação no período do incêndio).
 
 \subsubsection{Operações de Combate}
 Grão: cada registo corresponde a uma operação ou intervenção num incêndio específico.

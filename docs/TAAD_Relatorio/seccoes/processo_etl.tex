@@ -1,4 +1,4 @@
-\section{Processo ETL}
+\subsection{Detalhes do ETL}
 O presente capítulo detalha a arquitetura e o desenvolvimento do processo de ETL (Extract, Transform, Load). Para a orquestração e execução dos fluxos de dados, recorreu-se à plataforma Microsoft SQL Server Integration Services (SSIS). O objetivo central desta etapa foi garantir a integridade, limpeza e estruturação dos dados provenientes de fontes heterogéneas antes de serem carregadas para o Data Warehouse. Esta secção explora as especificidades de implementação para cada conjunto de dados temático.
 
 \subsection{Incêndios} \label{section:etlIncedios}
@@ -8,7 +8,7 @@ Com os dados dentro da Staging Area, são realizados vários filtros através de
 
 Após os filtros, são criadas as tabelas no Data Warehouse, e as tabelas são populadas com os dados restantes da tabela de Staging.
 
-\begin{figure}[h]
+\begin{figure}[htbp]
 	\centering
 	\includegraphics[width=0.9\linewidth]{imagens/ETL_incendios}
 	\caption{Processo ETL para incêndios}
@@ -23,7 +23,7 @@ Para o processo ETL dos dados meteorológicos, o SSIS começa por executar um sc
 Após os dados estarem na base de dados de Staging, são criadas e populadas as dimensões e a tabela de factos na base de dados do Data Warehouse. Como os dados meteorológicos são recolhidos apenas para os dias e locais específicos, e como os dados vêm diretamente do \textit{Open Meteo}, logo não é necessário fazer qualquer filtro após os dados entrarem na Staging Area.
 
 Como este processo utiliza os dados da tabela de factos dos incêndios, logo, este processo tem como precedência a execução do processo ETL da secção \ref{section:etlIncedios}.
-\begin{figure}[h]
+\begin{figure}[htbp]
 	\centering
 	\includegraphics[width=0.9\linewidth]{imagens/etl_temperaturas}
 	\caption{Processo ETL para temperaturas}
@@ -37,7 +37,7 @@ Neste processo, não foi colocado o executável responsável pela extração de 
 
 Portanto, para este processo funcionar é necessário existir dentro do respetivo diretório do SSIS o ficheiro JSON com os dados já populados pelo modelo de machine learning. A partir desse ficheiro, o SSIS irá inserir os dados na Staging Area a partir de um executável já existente. Com os dados lá dentro, irá popular todas as tabelas do respetivo esquema em estrela através de scrypts em T-SQL.
 
-\begin{figure}[h]
+\begin{figure}[htbp]
 	\centering
 	\includegraphics[width=0.9\linewidth]{imagens/etl_cobertura_mediatica}
 	\caption{Processo ETL para cobertura mediática}
