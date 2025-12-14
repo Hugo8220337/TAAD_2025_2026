@@ -32,9 +32,7 @@ INSERT INTO [DW.TAAD].[dbo].[fact_fire] (
     longitude,
     
     -- Outros contadores
-    ndays,
-    dry_day_sum,
-    high_wind_sum
+    ndays
 )
 SELECT 
     src.id AS fire_id,
@@ -101,9 +99,7 @@ SELECT
     TRY_CAST(REPLACE(src.LON, ',', '.') AS FLOAT) AS longitude,
 
     -- Campos inteiros simples (assumindo que já vêm limpos ou NULL)
-    0 AS ndays,         -- Placeholder (podes calcular datediff se quiseres)
-    0 AS dry_day_sum,   -- Placeholder (dados meteorológicos)
-    0 AS high_wind_sum  -- Placeholder
+    0 AS ndays         -- Placeholder (podes calcular datediff)
 
 FROM dbo.dsa_icnf_fire src
 

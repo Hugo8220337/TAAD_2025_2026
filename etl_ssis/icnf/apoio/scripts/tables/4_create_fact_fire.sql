@@ -29,13 +29,9 @@ BEGIN
         -- Dados Espaciais
         [latitude] FLOAT,
         [longitude] FLOAT,
-        [centroid_lon] FLOAT,
-        [centroid_lat] FLOAT,
 
         -- Contadores
         [ndays] INT,
-        [dry_day_sum] INT,
-        [high_wind_sum] INT,
 
         -- Auditoria
         [processing_date] DATETIME2(3) DEFAULT SYSUTCDATETIME(),
