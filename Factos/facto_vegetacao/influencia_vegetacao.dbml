@@ -10,8 +10,6 @@ Table fact_vegetation {
   location_id int [ref: > dim_location.location_id, note: "Reference to geographic aggregation unit"]
   landcover_id int [ref: > dim_landcover.landcover_id, note: "Landcover class used for aggregation"]
   species_id int [ref: > dim_species.species_id, note: "Dominant species hint (optional)"]
-  sensor_id int [ref: > dim_sensor.sensor_id, note: "Sensor/product used for aggregation"]
-  source_id int [ref: > dim_source.source_id, note: "Dataset source/version"]
 
   time_window varchar [note: "Window label (e.g., pre_30, pre_90, post_90, annual_2023)"]
   area_m2 float [note: "Area of the aggregated polygon (m²)"]
@@ -50,16 +48,10 @@ Table dim_location {
   location_id int [pk, increment, note: "Surrogate key for geographic dimension (auto-increment)"]
   district varchar
   municipality varchar
-  parish varchar
-  centroid_lon float
-  centroid_lat float
-  latitude float
-  longitude float
-  altitude float
-  nuts3 varchar
-  geom geometry
+  parish varchar // freguesia
+  nuts3 varchar // NUTS3 code (Nomenclatura das Unidades Territoriais para Fins Estatísticos)
 
-  Note: "Geographic dimension — administrative information and coordinates."
+  Note: 'Geographic dimension — administrative information and coordinates.'
 }
 
 Table dim_landcover {
@@ -80,55 +72,3 @@ Table dim_species {
 
   Note: "Species dimension (link IFN / stand maps to facts)"
 }
-
-Table dim_sensor {
-  sensor_id int [pk, increment, note: "Surrogate key for sensor/dataset (auto-increment)"]
-  sensor_name varchar
-  spatial_resolution varchar
-  temporal_resolution varchar
-  dataset_ref varchar
-
-  Note: "Information about sensors and dataset collections"
-}
-
-Table dim_source {
-  source_id int [pk, increment, note: "Primary key for source metadata (auto-increment)"]
-  dataset varchar
-  version varchar
-  license varchar
-  url varchar
-
-  Note: "Metadata about data sources and processing pipelines"
-}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
