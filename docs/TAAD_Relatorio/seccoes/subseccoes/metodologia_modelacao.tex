@@ -1,0 +1,33 @@
+\subsection{Abordagem Metodológica}
+O desenho da arquitetura do sistema seguiu a metodologia de modelação dimensional orientada aos processos de negócio, proposta por Ralph Kimball. Esta abordagem permitiu identificar os processos fundamentais da organização, definindo para cada um o grão (nível de detalhe), as dimensões (contexto) e as medidas (factos numéricos).
+
+Com base nos requisitos levantados, foram modelados quatro processos de negócio distintos, conforme descrito abaixo.
+
+\subsubsection{Ocorrência de Incêndio}
+Este processo centraliza a informação sobre os eventos de fogo.
+\begin{itemize}
+	\item \textbf{Grão:} Um registo por incêndio, identificado univocamente pelo \texttt{incident\_id}.
+	\item \textbf{Dimensões:} Tempo (data/hora início e fim), Localização (distrito, concelho, freguesia), Tipo de Incêndio e Entidade Responsável.
+	\item \textbf{Medidas:} Área ardida (ha), duração (horas) e métricas derivadas como a taxa de expansão.
+\end{itemize}
+
+\subsubsection{Meteorologia Diária}
+Permite a análise das condições ambientais adversas.
+\begin{itemize}
+	\item \textbf{Grão:} Registo diário das condições meteorológicas num determinado local geográfico afetado.
+	\item \textbf{Medidas:} Temperatura (média e máxima), humidade relativa, velocidade do vento e precipitação.
+\end{itemize}
+
+\subsubsection{Operações de Combate}
+Foca-se na resposta operacional e logística.
+\begin{itemize}
+	\item \textbf{Grão:} Cada registo corresponde a uma intervenção ou mobilização de meios para um incêndio específico.
+	\item \textbf{Medidas:} Número de operacionais, veículos terrestres, meios aéreos, tempo de resposta e eficácia da contenção.
+\end{itemize}
+
+\subsubsection{Monitorização de Vegetação}
+Avalia o impacto ecológico e o estado do combustível.
+\begin{itemize}
+	\item \textbf{Grão:} Medições de índices de vegetação (NDVI) agregadas por perímetro de incêndio e janela temporal.
+	\item \textbf{Medidas:} NDVI médio pré-incêndio (combustível disponível) e pós-incêndio (severidade do dano).
+\end{itemize}

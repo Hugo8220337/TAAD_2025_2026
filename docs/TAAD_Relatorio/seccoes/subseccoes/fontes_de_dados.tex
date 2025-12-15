@@ -1,0 +1,27 @@
+\subsection{Caraterização das Fontes de Dados}
+A construção do Data Warehouse assentou na integração de múltiplas fontes de dados heterogéneas, permitindo fundir informação operacional de incêndios com variáveis meteorológicas, dados de observação terrestre e cobertura mediática.
+
+\subsubsection{Registo de Ocorrências (ICNF)}
+A principal fonte de dados consistiu numa versão tratada dos registos do repositório \texttt{icnf\_fire\_data}\footnote{\url{https://github.com/cityxdev/icnf_fire_data}}, que agrega o histórico de ocorrências do serviço \texttt{fogos.icnf.pt}.
+Embora na fonte conste dados desde o ano de 2001, no estudo realizado utilizou-se dados desde o período entre 2020 e 2025. Para garantir a relevância analítica, o dataset foi submetido a um processo de filtragem, resultando na exclusão de:
+\begin{itemize}
+	\item Registos com inconsistências geográficas (coordenadas em falta);
+	\item Ocorrências com área ardida residual (inferior a 0,1 hectares);
+	% \item Queimadas controladas e falsos alarmes;
+	\item Registos incompletos sem data de início ou fim
+\end{itemize}
+
+\subsubsection{Dados Meteorológicos}
+Para caracterizar o contexto atmosférico de cada ocorrência, recorreu-se à API do serviço \textit{Open-Meteo}\footnote{\url{https://open-meteo.com/}}. Onde, através de um processo automatizado de extração, foram recolhidos dados históricos diários correspondentes às coordenadas geográficas e aos dias de atividade de cada incêndio, permitindo associar variáveis como temperatura, vento e precipitação a cada evento.
+
+\subsubsection{Contexto Mediático (Google News)}
+Para avaliar o impacto mediático dos incêndios, foram recolhidos artigos noticiosos através de feeds RSS do Google News. A extração foi filtrada por idioma (português) e por termos-chave associados a incêndios florestais no período de 2020 a 2025.
+Estes dados não estruturados foram processados para extração de metadados (título, fonte, data), visando complementar a da atenção pública dada às ocorrências.
+
+\subsubsection{Índices de Vegetação (MODIS)}
+% TODO isto vai ter de mudar
+A monitorização do estado da vegetação foi realizada através do produto MOD13Q1 (NDVI de 16 dias com resolução de 250m), acedido via Google Earth Engine.
+Para cada perímetro de incêndio, foram calculadas estatísticas zonais (média e contagem de píxeis) referentes aos períodos pré e pós-incêndio (focando o intervalo 2020–2024), permitindo avaliar a biomassa disponível antes da ignição e o impacto na vegetação após a extinção.
+
+\subsubsection{Ocupação do Solo (CORINE)}
+Para a caracterização do território, utilizou-se o inventário \textit{CORINE Land Cover} (CLC 2018). Esta fonte permitiu atribuir classes padronizadas de uso do solo aos perímetros ardidos, possibilitando a análise da suscetibilidade ao fogo em diferentes tipos de coberto (floresta, mato, agrícola ou urbano).

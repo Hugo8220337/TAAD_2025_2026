@@ -1,4 +1,4 @@
-\subsection{Arquitetura Geral}
+\subsection{Arquitetura ETL/DSA}
 A arquitetura implementada para o sistema de suporte analítico assenta num processo de integração que reúne dados provenientes de diferentes fontes, aplica transformações adequadas e prepara a sua posterior carga no repositório analítico. Esta secção apresenta a visão geral do fluxo de dados e dos componentes envolvidos, permitindo compreender como a informação é organizada antes de ser disponibilizada no armazém de dados.
 
 A Figura \ref{fig:arquiteturaetl} representa a arquitetura do processo ELT utilizado no sistema analítico. No lado esquerdo encontram se as fontes de dados. Estas incluem ficheiros fornecidos pelo ICNF, dados meteorológicos em formato bruto e informação proveniente da internet como a cobertura mediática. Os dados extraídos seguem para a área de preparação onde ocorre a transformação. Esta área inclui estruturas de suporte, um espaço de quarentena para validação e a camada de transformação que organiza os dados em zonas específicas de integração. Após a preparação, a informação é enviada para a área de carregamento onde é finalmente armazenada no data warehouse.
