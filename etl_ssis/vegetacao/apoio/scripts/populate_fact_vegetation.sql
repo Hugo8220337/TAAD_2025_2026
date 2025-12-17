@@ -1,6 +1,7 @@
 /*
-    Script: populate_fact_vegetation.sql
-    Origem: [DSA.TAAD].[dbo].[dsa_vegetation]
+    Script: populate_fact_vegetation.sql (Versão Lookup via fact_fire)
+    Objetivo: Carregar factos de vegetação cruzando com fact_fire para obter contexto geográfico.
+    Origem: [DSA.TAAD].[dbo].[dsa_vegetation] + [DW.TAAD].[dbo].[fact_fire]
     Destino: [DW.TAAD].[dbo].[fact_vegetation]
 */
 
@@ -8,20 +9,22 @@ INSERT INTO [DW.TAAD].[dbo].[fact_vegetation] (
     -- Chaves Estrangeiras (FKs)
     day_id,
     location_id,
-    landcover_id,
-    species_id,
+    landcover_id, -- Ficará como -1 (não disponível na fonte atual)
+    species_id,   -- Ficará como -1 (não disponível na fonte atual)
 
     -- Atributos de Contexto
     time_window,
     external_fire_id,
 
     -- Métricas (Measures)
-    area_m2,
+    area_m2,       -- Convertido de ha para m2
     ndvi_mean,
-    ndvi_median,
     ndvi_std,
     ndvi_count,
     pct_area_ndvi_gt_thr,
+    
+    -- Colunas opcionais (definidas como NULL se não existirem na staging nova)
+    ndvi_median,
     veg_density_mean,
     fuel_index,
     
@@ -30,77 +33,70 @@ INSERT INTO [DW.TAAD].[dbo].[fact_vegetation] (
 )
 SELECT 
     -------------------------------------------------------
-    -- 1. CHAVE TEMPORAL (Day ID)
+    -- 1. CHAVE TEMPORAL (Baseada no t0 da Staging)
     -------------------------------------------------------
-    -- Assume-se que o day_id na staging já vem como 'AAAAMMDD' ou data convertível
+    -- Converte '2024-05-24' para 20240524
     COALESCE(
-        TRY_CAST(src.day_id AS INT),
+        (YEAR(TRY_CAST(src.t0 AS DATE)) * 10000) + 
+        (MONTH(TRY_CAST(src.t0 AS DATE)) * 100) + 
+        DAY(TRY_CAST(src.t0 AS DATE)), 
         -1
     ) AS day_id,
 
     -------------------------------------------------------
-    -- 2. LOOKUPS PARA AS DIMENSÕES (Joins)
-    -- Se o LEFT JOIN falhar (NULL), usa -1 (Desconhecido)
+    -- 2. LOOKUP DE LOCALIZAÇÃO (Via fact_fire)
     -------------------------------------------------------
-    COALESCE(loc.location_id, -1) AS location_id,
-    COALESCE(lc.landcover_id, -1) AS landcover_id,
-    COALESCE(sp.species_id, -1) AS species_id,
+    -- Vai buscar o location_id associado ao incêndio na tabela de factos de incêndio [cite: 6]
+    COALESCE(ff.location_id, -1) AS location_id,
 
     -------------------------------------------------------
-    -- 3. ATRIBUTOS DIRETOS
+    -- 3. DIMENSÕES EM FALTA (Landcover/Species)
+    -------------------------------------------------------
+    -- Como a staging só tem métricas e o fact_fire não tem detalhe de solo/espécie,
+    -- definimos como -1 (Desconhecido).
+    -1 AS landcover_id,
+    -1 AS species_id,
+
+    -------------------------------------------------------
+    -- 4. ATRIBUTOS DE CONTEXTO
     -------------------------------------------------------
     src.time_window,
-    src.external_fire_id,
+    src.fire_id AS external_fire_id, -- Mantemos o ID original para referência visual
 
     -------------------------------------------------------
-    -- 4. CONVERSÃO DE MÉTRICAS (Texto -> Float/Int)
-    -- Nota: Substitui vírgula por ponto para garantir compatibilidade SQL
+    -- 5. CONVERSÃO DE MÉTRICAS
     -------------------------------------------------------
-    TRY_CAST(REPLACE(src.area_m2, ',', '.') AS FLOAT) AS area_m2,
+    -- Conversão de Hectares (staging) para m2 (DW) 
+    -- 1 ha = 10,000 m2
+    (TRY_CAST(REPLACE(src.area_ha, ',', '.') AS FLOAT) * 10000.0) AS area_m2,
+
     TRY_CAST(REPLACE(src.ndvi_mean, ',', '.') AS FLOAT) AS ndvi_mean,
-    TRY_CAST(REPLACE(src.ndvi_median, ',', '.') AS FLOAT) AS ndvi_median,
     TRY_CAST(REPLACE(src.ndvi_std, ',', '.') AS FLOAT) AS ndvi_std,
-    TRY_CAST(REPLACE(src.ndvi_count, ',', '.') AS INT) AS ndvi_count, -- Count é inteiro
+    TRY_CAST(REPLACE(src.ndvi_count, ',', '.') AS INT) AS ndvi_count,
     TRY_CAST(REPLACE(src.pct_area_ndvi_gt_thr, ',', '.') AS FLOAT) AS pct_area_ndvi_gt_thr,
-    TRY_CAST(REPLACE(src.veg_density_mean, ',', '.') AS FLOAT) AS veg_density_mean,
-    TRY_CAST(REPLACE(src.fuel_index, ',', '.') AS FLOAT) AS fuel_index,
+    
+    -- Campos que não existem na staging nova vão como NULL
+    NULL AS ndvi_median,
+    NULL AS veg_density_mean,
+    NULL AS fuel_index,
 
-    -- Data de processamento atual
+    -- Data de processamento
     SYSUTCDATETIME()
 
-[cite_start]FROM [DSA.TAAD].[dbo].[dsa_vegetation] src [cite: 1]
+FROM [DSA.TAAD].[dbo].[dsa_vegetation] src
 
--- JOIN LOCALIZAÇÃO
--- Tenta corresponder Distrito, Concelho e Freguesia
-[cite_start]LEFT JOIN [DW.TAAD].[dbo].[dim_location] loc [cite: 4] ON 
-    loc.district     = TRIM(UPPER(COALESCE(src.district, N'Desconhecido'))) AND
-    loc.municipality = TRIM(UPPER(COALESCE(src.municipality, N'Desconhecido'))) AND
-    loc.parish       = TRIM(UPPER(COALESCE(src.parish, N'Desconhecido')))
-
--- JOIN OCUPAÇÃO DO SOLO (Landcover)
--- Tenta corresponder Código Corine, Descrição e Categoria de Combustível
-[cite_start]LEFT JOIN [DW.TAAD].[dbo].[dim_landcover] lc [cite: 5] ON 
-    lc.corine_code        = TRY_CAST(src.corine_code AS INT) AND
-    lc.corine_description = TRIM(COALESCE(src.corine_description, N'Desconhecido')) AND
-    lc.fuel_category      = TRIM(COALESCE(src.fuel_category, N'Desconhecido'))
-
--- JOIN ESPÉCIES
--- Tenta corresponder o nome da espécie
-[cite_start]LEFT JOIN [DW.TAAD].[dbo].[dim_species] sp [cite: 5] ON 
-    sp.species_name = TRIM(UPPER(COALESCE(src.species_name, N'Desconhecido')))
+-- JOIN com a Fact Table de Incêndios para recuperar a localização
+LEFT JOIN [DW.TAAD].[dbo].[fact_fire] ff [cite: 6]
+    ON src.fire_id = ff.fire_id
 
 WHERE 
-    -- Validação básica para ignorar linhas totalmente vazias ou cabeçalhos errados
-    TRY_CAST(src.day_id AS INT) IS NOT NULL
+    -- Garante que temos uma data válida
+    TRY_CAST(src.t0 AS DATE) IS NOT NULL
     
-    -- Evitar duplicados: verifica se já existe um registo com a mesma combinação de dimensões e janela temporal
+    -- Evitar duplicados (Idempotência)
     AND NOT EXISTS (
         SELECT 1 FROM [DW.TAAD].[dbo].[fact_vegetation] tgt
-        WHERE tgt.day_id = COALESCE(TRY_CAST(src.day_id AS INT), -1)
-          AND tgt.location_id = COALESCE(loc.location_id, -1)
-          AND tgt.landcover_id = COALESCE(lc.landcover_id, -1)
-          AND tgt.species_id = COALESCE(sp.species_id, -1)
+        WHERE tgt.external_fire_id = src.fire_id
           AND tgt.time_window = src.time_window
-          -- Se necessário, adicionar filtro por external_fire_id para unicidade extra
-          AND (tgt.external_fire_id = src.external_fire_id OR (tgt.external_fire_id IS NULL AND src.external_fire_id IS NULL))
+          AND tgt.day_id = (YEAR(TRY_CAST(src.t0 AS DATE)) * 10000) + (MONTH(TRY_CAST(src.t0 AS DATE)) * 100) + DAY(TRY_CAST(src.t0 AS DATE))
     );
