@@ -1,9 +1,9 @@
 \subsection{Perfil dos Dados (Data Profiling)}
 \label{subsec:data_profiling}
 
-O \textit{Data Profiling} constitui uma etapa fundamental na análise exploratória, permitindo comparar a estrutura, qualidade e integridade dos dados antes da integração no Data Warehouse. Esta secção detalha a análise efetuada sobre o conjunto de dados principal, proveniente do Instituto da Conservação da Natureza e das Florestas (ICNF).
+O \textit{Data Profiling} constitui uma etapa fundamental na análise exploratória, permitindo aferir a estrutura, qualidade e integridade dos dados antes da sua integração no \textit{Data Warehouse}. Esta secção detalha a análise efetuada sobre o conjunto de dados principal, proveniente do Instituto da Conservação da Natureza e das Florestas (ICNF).
 
-A análise incidiu sobre 23 variáveis selecionadas pela sua relevância para os objetivos do projeto, abrangendo dimensões geográficas, temporais, métricas de severidade e contexto meteorológico. Dado que as restantes fontes de dados (ex: Open-Meteo) foram integradas por derivação espacial e temporal a partir deste dataset base, a validação da qualidade dos dados do ICNF assume um papel central na fiabilidade do sistema.
+A análise incidiu sobre 23 variáveis selecionadas pela sua relevância para os objetivos do projeto, abrangendo dimensões geográficas, temporais, métricas de severidade e contexto meteorológico. Dado que as restantes fontes de dados (ex: Open-Meteo) foram integradas por derivação espacial e temporal a partir deste \textit{dataset} base, a validação da qualidade dos dados do ICNF assume um papel central na fiabilidade do sistema.
 
 \subsubsection{Análise de Completude}
 A verificação de valores nulos evidenciou padrões distintos de preenchimento. Destaca-se a elevada taxa de ausência nas variáveis meteorológicas originais, reflexo de limitações na cobertura histórica da rede de estações ou falhas no registo sistemático.
@@ -32,9 +32,9 @@ Por outro lado, as variáveis categóricas de classificação (TIPO, CAUSA, TIPO
 \end{table}
 
 \subsubsection{Unicidade e Duplicados}
-A integridade referencial e a unicidade dos registos são pré-requisitos essenciais para evitar a distorção de medidas agregadas no Data Warehouse.
+A integridade referencial e a unicidade dos registos são pré-requisitos essenciais para evitar a distorção de medidas agregadas no \textit{Data Warehouse}.
 
-A análise confirmou a inexistência de identificadores (\textit{IDs}) duplicados ou de registos inteiramente redundantes. Este resultado valida a qualidade dos dados de origem, assim, dispensando etapas complexas de deduplicação durante o processo de ETL e garantindo que cada ocorrência de incêndio é contabilizada uma única vez nas análises estatísticas.
+A análise confirmou a inexistência de identificadores (\textit{IDs}) duplicados ou de registos inteiramente redundantes. Este resultado valida a qualidade dos dados de origem, dispensando, deste modo, etapas complexas de deduplicação durante o processo de ETL e garantindo que cada ocorrência de incêndio é contabilizada uma única vez nas análises estatísticas.
 
 \subsubsection{Deteção de Outliers}
 A análise de distribuição, representada pelos boxplots na Figura \ref{fig:boxplot_individuais}, permitiu identificar o comportamento das variáveis numéricas:
@@ -57,7 +57,7 @@ A análise geográfica (Figura \ref{fig:20Distritos}) evidencia uma forte concen
 
 \begin{figure}[htbp]
 	\centering
-	\includegraphics[width=0.7\linewidth]{imagens/03_grafico_DISTRITO.png}
+	\includegraphics[width=0.8\linewidth]{imagens/03_grafico_DISTRITO.png}
 	\caption{Os 20 distritos com maior frequência de ocorrências}
 	\label{fig:20Distritos}
 \end{figure}
@@ -84,8 +84,8 @@ A matriz de correlações (Figura \ref{fig:correlacoes}) permitiu validar relaç
 \end{figure}
 
 Da análise destacam-se as seguintes relações lineares:
-\begin{enumerate}
+\begin{itemize}
 	\item \textbf{Composição da Área Ardida:} Correlações fortes ($r > 0.7$) entre a Área Total e as suas componentes (Mato/Povoamento), indicando a predominância do tipo de vegetação afetado.
 	\item \textbf{Fatores Meteorológicos:} A correlação negativa entre Temperatura e Humidade Relativa, bem como a forte correlação entre os índices FFMC e FWI, validam a consistência física dos dados.
 	\item \textbf{Severidade vs. Clima:} As correlações moderadas entre índices meteorológicos e área ardida sugerem que, embora o clima propicie as condições para grandes incêndios, a dimensão final da ocorrência depende de outros fatores operacionais (meios de combate, acessibilidades), justificando a inclusão destas variáveis no modelo multidimensional.
-\end{enumerate}
+\end{itemize}

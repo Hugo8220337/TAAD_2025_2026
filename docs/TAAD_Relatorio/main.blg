@@ -1,12 +1,19 @@
-This is BibTeX, Version 0.99d (TeX Live 2025/dev/Debian)
+This is BibTeX, Version 0.99d
 Capacity: max_strings=200000, hash_size=200000, hash_prime=170003
 The top-level auxiliary file: main.aux
+Reallocating 'name_of_file' (item size: 1) to 23 items.
 A level-1 auxiliary file: seccoes/introducao.aux
+Reallocating 'name_of_file' (item size: 1) to 32 items.
 A level-1 auxiliary file: seccoes/dados_e_metodologia.aux
+Reallocating 'name_of_file' (item size: 1) to 43 items.
 A level-1 auxiliary file: seccoes/arquitetura_e_implemetacao_ETL.aux
+Reallocating 'name_of_file' (item size: 1) to 23 items.
 A level-1 auxiliary file: seccoes/resultados.aux
+Reallocating 'name_of_file' (item size: 1) to 41 items.
 A level-1 auxiliary file: seccoes/conclusoes_e_trabalho_futuro.aux
+Reallocating 'name_of_file' (item size: 1) to 9 items.
 The style file: splncs04.bst
+Reallocating 'name_of_file' (item size: 1) to 15 items.
 Database file #1: references.bib
 You've used 5 entries,
             2850 wiz_defined-function locations,

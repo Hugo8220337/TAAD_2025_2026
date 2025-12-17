@@ -1,20 +1,18 @@
 \subsection{Processos de Negócio e Modelação Dimensional}
 
-A modelação do processo ETL é complementada pela criação de diagramas BPMN que permitem representar de forma clara e sistemática o fluxo de atividades envolvidas na preparação dos dados que irão alimentar o Data Warehouse. Estes diagramas facilitam a compreensão das várias fases do processo, permitindo identificar dependências e contribuem para a deteção de possíveis pontos de melhoria na execução das tarefas.
+A modelação do processo ETL é complementada pela criação de diagramas BPMN que permitem representar de forma clara e sistemática o fluxo de atividades envolvidas na preparação dos dados que irão alimentar o \textit{Data Warehouse}. Estes diagramas facilitam a compreensão das várias fases do processo, permitindo identificar dependências e contribuir para a deteção de possíveis pontos de melhoria na execução das tarefas.
 
-Existem três níveis de diagramas BPMN que representam a aplicação do processo ETL, sendo eles: nível do processo; nível padrão e nível da tarefa. Sendo que, no âmbito deste projeto, não foi necessário a especificação dos diagramas ao nível da tarefa, como também não foram descritos de forma individual todos os processos ao nível padrão, visto que são todos bastante semelhantes entre si 
+Existem três níveis de diagramas BPMN que representam a aplicação do processo ETL: nível do processo, nível padrão e nível da tarefa. No âmbito deste projeto, não foi necessária a especificação dos diagramas ao nível da tarefa, nem a descrição individual de todos os processos ao nível padrão, dada a similaridade estrutural entre eles.
 
 \subsection{Visão Global do Processo}
-A Figura \ref{fig:bpmnprocesso} ilustra a arquitetura macroscópica do fluxo ETL, modelada através de um diagrama BPMN ao nível do processo. Esta representação de alto nível oferece uma visão abrangente das etapas fundamentais, desde o carregamento das tabelas de dimensão até às tabelas de factos utilizadas pelo \textit{Data Warehouse}
+A Figura \ref{fig:bpmnprocesso} ilustra a arquitetura macroscópica do fluxo ETL, modelada através de um diagrama BPMN ao nível do processo. Esta representação de alto nível oferece uma visão abrangente das etapas fundamentais, desde o carregamento das tabelas de dimensão até ao povoamento das tabelas de factos do \textit{Data Warehouse}.
 
-\begin{figure}[h!]
+\begin{figure}[htbp]
 	\centering
 	\includegraphics[width=1\linewidth]{imagens/BPMN_Processo}
 	\caption{Diagrama BPMN ao nível do processo}
 	\label{fig:bpmnprocesso}
 \end{figure}
-
-
 
 \subsection{Detalhe de Atividades Específicas}
 Algumas partes do processo ETL são representadas por diagramas BPMN ao nível padrão. Estes diagramas permitem aprofundar tarefas que exigem uma descrição mais granular, como procedimentos de validação, mecanismos de controlo de qualidade ou etapas específicas de transformação e enriquecimento dos dados.
@@ -22,7 +20,7 @@ Algumas partes do processo ETL são representadas por diagramas BPMN ao nível p
 Abaixo, detalham-se os fluxos específicos para o carregamento das principais dimensões e da tabela de factos central.
 
 \subsubsection{Carregamento da Dimensão Tipo de Incêndio}
-Este processo (Figura \ref{fig:bpmnprocessoloaddaydimension}) foca-se na classificação das ocorrências. O fluxo garante a normalização das categorias de incêndio (ex: Agrícola, Florestal, Queimada) e a gestão de novos tipos que possam surgir nos dados de origem, assegurando a consistência na categorização das ocorrências.
+Este processo (Figura \ref{fig:bpmnprocessoloadfiretypedimension}) foca-se na classificação das ocorrências. O fluxo garante a normalização das categorias de incêndio (ex: Agrícola, Florestal, Queimada) e a gestão de novos tipos que possam surgir nos dados de origem, assegurando a consistência na categorização das ocorrências.
 
 \begin{figure}[htbp]
 	\centering
@@ -42,7 +40,7 @@ A dimensão temporal é crítica para a análise de sazonalidade. O processo ilu
 \end{figure}
 
 \subsubsection{Carregamento da Dimensão Localização}
-Dado o carácter geográfico do projeto, o carregamento da dimensão de localização exige validações rigorosas. O fluxo trata da hierarquia espacial (Distrito > Concelho > Freguesia), validando as coordenadas e garantindo a integridade referencial das áreas administrativas afetadas. % TODO eu não fali isto
+Dado o carácter geográfico do projeto, o carregamento da dimensão de localização exige o tratamento cuidado da hierarquia espacial. O fluxo ilustrado na Figura \ref{fig:bpmnprocessoloadlocationdimension} assegura a extração e carregamento das localizações únicas (Distrito, Concelho e Freguesia), garantindo que cada área administrativa possui um identificador único no sistema antes de ser associada a uma ocorrência.
 
 \begin{figure}[htbp]
 	\centering
@@ -52,7 +50,7 @@ Dado o carácter geográfico do projeto, o carregamento da dimensão de localiza
 \end{figure}
 
 \subsubsection{Carregamento da Tabela de Factos de Incêndio}
-Este é o processo central do sistema, onde as métricas (área ardida, duração) são misturadas com as chaves das dimensões anteriormente carregadas. O diagrama da Figura \ref{fig:bpmnprocessoloadfirefacttable} demonstra a lógica de obtenção das chaves substitutas (\textit{surrogate keys}) e o cálculo de medidas derivadas antes da inserção final no Data Warehouse.
+Este é o processo central do sistema, onde as métricas (como a área ardida e a duração) são integradas com as chaves das dimensões anteriormente carregadas. O diagrama da Figura \ref{fig:bpmnprocessoloadfirefacttable} demonstra a lógica de obtenção das chaves substitutas (\textit{surrogate keys}) e o cálculo de medidas derivadas antes da inserção final no \textit{Data Warehouse}.
 
 \begin{figure}[htbp]
 	\centering

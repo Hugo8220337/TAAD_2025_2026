@@ -1,33 +1,36 @@
 \subsection{Abordagem Metodológica}
-O desenho da arquitetura do sistema seguiu a metodologia de modelação dimensional orientada aos processos de negócio, proposta por Ralph Kimball. Esta abordagem permitiu identificar os processos fundamentais da organização, definindo para cada um o grão (nível de detalhe), as dimensões (contexto) e as medidas (factos numéricos).
+O desenho da arquitetura do sistema seguiu a metodologia de modelação dimensional orientada aos processos de negócio, proposta por Ralph Kimball. Esta abordagem permitiu identificar os processos fundamentais, definindo para cada um o grão (nível de detalhe), as dimensões (contexto analítico) e as medidas (factos numéricos).
 
 Com base nos requisitos levantados, foram modelados quatro processos de negócio distintos, conforme descrito abaixo.
 
 \subsubsection{Ocorrência de Incêndio}
-Este processo centraliza a informação sobre os eventos de fogo.
+Este processo centraliza a informação relativa aos eventos de fogo.
 \begin{itemize}
 	\item \textbf{Grão:} Um registo por incêndio, identificado univocamente pelo \texttt{incident\_id}.
-	\item \textbf{Dimensões:} Tempo (data/hora início e fim), Localização (distrito, concelho, freguesia), Tipo de Incêndio e Entidade Responsável.
-	\item \textbf{Medidas:} Área ardida (ha), duração (horas) e métricas derivadas como a taxa de expansão.
+	\item \textbf{Dimensões:} Tempo (início/fim), Localização (Distrito, Concelho, Freguesia), Tipo de Incêndio e possível causa.
+	\item \textbf{Medidas:} Área ardida (ha), duração (horas) e métricas derivadas (ex: taxa de expansão).
 \end{itemize}
 
 \subsubsection{Meteorologia Diária}
-Permite a análise das condições ambientais adversas.
+Permite a análise das condições ambientais que propiciam ou agravam as ocorrências.
 \begin{itemize}
 	\item \textbf{Grão:} Registo diário das condições meteorológicas num determinado local geográfico afetado.
-	\item \textbf{Medidas:} Temperatura (média e máxima), humidade relativa, velocidade do vento e precipitação.
+	\item \textbf{Dimensões:} Tempo (Dia) e Localização (coordenadas aproximadas ou freguesia).
+	\item \textbf{Medidas:} Temperatura (média e máxima), humidade relativa, velocidade do vento e precipitação acumulada.
 \end{itemize}
 
-\subsubsection{Operações de Combate}
-Foca-se na resposta operacional e logística.
+\subsubsection{Cobertura Mediática}
+Analisa a repercussão pública e o impacto mediático dos eventos.
 \begin{itemize}
-	\item \textbf{Grão:} Cada registo corresponde a uma intervenção ou mobilização de meios para um incêndio específico.
-	\item \textbf{Medidas:} Número de operacionais, veículos terrestres, meios aéreos, tempo de resposta e eficácia da contenção.
+	\item \textbf{Grão:} Um artigo noticioso individual, identificado univocamente por um id.
+	\item \textbf{Dimensões:} Tempo (Data de publicação), Fonte (Entidade emissora/Jornal) e Sentimento (Classificação da tonalidade da notícia).
+	\item \textbf{Medidas:} \textit{Risk Score} (pontuação de risco associada), Polaridade (valor numérico do sentimento) e volume de notícias (contagem).
 \end{itemize}
 
 \subsubsection{Monitorização de Vegetação}
-Avalia o impacto ecológico e o estado do combustível.
+Avalia o impacto ecológico e o estado do combustível florestal.
 \begin{itemize}
-	\item \textbf{Grão:} Medições de índices de vegetação (NDVI) agregadas por perímetro de incêndio e janela temporal.
-	\item \textbf{Medidas:} NDVI médio pré-incêndio (combustível disponível) e pós-incêndio (severidade do dano).
+	\item \textbf{Grão:} Medições de índices de vegetação agregadas por perímetro de incêndio e janela temporal.
+	\item \textbf{Dimensões:} Tempo (Janela pré/pós incêndio), Localização.
+	\item \textbf{Medidas:} NDVI médio pré-incêndio (combustível disponível), NDVI médio pós-incêndio e variação percentual (severidade do dano).
 \end{itemize}

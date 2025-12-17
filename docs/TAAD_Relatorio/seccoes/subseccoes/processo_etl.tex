@@ -1,12 +1,14 @@
-\subsection{Detalhes do ETL}
-O presente capítulo detalha a arquitetura e o desenvolvimento do processo de ETL (Extract, Transform, Load). Para a orquestração e execução dos fluxos de dados, recorreu-se à plataforma Microsoft SQL Server Integration Services (SSIS). O objetivo central desta etapa foi garantir a integridade, limpeza e estruturação dos dados provenientes de fontes heterogéneas antes de serem carregadas para o Data Warehouse. Esta secção explora as especificidades de implementação para cada conjunto de dados temático.
+\subsection{Implementação dos Processos de ETL}
+O presente capítulo detalha a arquitetura e o desenvolvimento dos processos de ETL (\textit{Extract, Transform, Load}). Para a orquestração e execução dos fluxos de dados, recorreu-se à plataforma Microsoft SQL Server Integration Services (SSIS). O objetivo central desta etapa foi garantir a integridade, limpeza e estruturação dos dados provenientes de fontes heterogéneas antes do seu carregamento no Data Warehouse. Esta secção explora as especificidades de implementação para cada conjunto de dados temático.
+
+Transversalmente a todos os processos, optou-se por uma estratégia de gestão de erros baseada em registos de texto. Caso ocorram falhas na inserção de dados na \textit{Staging Area} (devido a incompatibilidades de formato ou tipo de dados), os registos rejeitados são desviados para ficheiros de \textit{log} para posterior auditoria, em detrimento de tabelas de quarentena na base de dados, evitando que erros estruturais graves bloqueiem o fluxo de carga.
 
 \subsection{Incêndios} \label{section:etlIncedios}
-Para fazer o processo de ETL para os dados provenientes do ICNF, gerou-se um executável do \textit{script} de extração dos dados do ICNF, e criou-se outro responsável por inserir os dados na \textit{Staging Area}. Esta abordagem foi escolhida porque o SISS não apresenta mecanismos simples para a gestão de dados em formato CSV, portanto, por simplicidade, tanto neste processo como nos restantes, a manipulação dos dados, antes de serem carregados para a base de dados de \textit{staging}, é realizada em \textit{python} através de um executável.
+Para operacionalizar o processo de ETL referente aos dados do ICNF, desenvolveu-se um executável a partir do \textit{script} de extração, criando-se posteriormente outro responsável pela inserção dos dados na \textit{Staging Area}. Esta abordagem mista foi adotada dado que o SSIS pode apresentar limitações na manipulação complexa de ficheiros CSV; assim, optou-se por realizar o pré-processamento e limpeza inicial em \textit{Python} para garantir maior flexibilidade e simplicidade no fluxo.
 
-Com os dados dentro da \textit{Staging Area}, são realizados vários filtros através de \textit{scripts} em T-SQL, para poder: remover valores nulos de latitude e longitude; e remover incêndios cuja zona queimada não seja significativa (superior a 0.1 hectares).
+Já com os dados na \textit{Staging Area}, são aplicados filtros através de \textit{scripts} em T-SQL com o objetivo de remover registos com valores nulos de latitude e longitude, bem como excluir incêndios cuja área ardida não seja significativa (igual ou inferior a 0,1 hectares).
 
-Após os filtros, são criadas as tabelas no Data Warehouse, e as tabelas são populadas com os dados restantes da tabela de \textit{Staging}.
+Após a filtragem, as tabelas de dimensão e factos no Data Warehouse são criadas e carregadas com os dados processados provenientes da tabela de \textit{Staging}.
 
 \begin{figure}[htbp]
 	\centering
@@ -15,14 +17,13 @@ Após os filtros, são criadas as tabelas no Data Warehouse, e as tabelas são p
 	\label{fig:etlIncendios}
 \end{figure}
 
-
-
 \subsection{Temperaturas}
-Para o processo ETL dos dados meteorológicos, o SSIS começa por executar um \textit{script} em \textit{pyhton} através de um executável, onde irá à tabela de factos dos incêndios para poder recolher somente os dados meteorológicos para os dias e locais onde houveram incêndios, inserindo no final os dados para a \textit{Staging Area}.
+No fluxo de ETL dos dados meteorológicos, o SSIS inicia a execução chamando um \textit{script} em \textit{Python} (via executável). Este \textit{script} consulta a tabela de factos dos incêndios para identificar os dias e locais exatos das ocorrências, extraindo apenas a meteorologia relevante e inserindo-a na \textit{Staging Area}.
 
-Após os dados estarem na base de dados de \textit{Staging}, são criadas e populadas as dimensões e a tabela de factos na base de dados do Data Warehouse. Como os dados meteorológicos são recolhidos apenas para os dias e locais específicos, e como os dados vêm diretamente do \textit{Open Meteo}, logo não é necessário fazer qualquer filtro após os dados entrarem na \textit{Staging Area}.
+Uma vez carregados os dados em \textit{Staging}, procede-se ao povoamento das dimensões e da tabela de factos no \textit{Data Warehouse}. Visto que os dados meteorológicos são recolhidos de forma direcionada (apenas para os dias/locais necessários) e provêm diretamente da API do \textit{Open-Meteo}, não é necessária a aplicação de filtros adicionais nesta fase.
 
-Como este processo utiliza os dados da tabela de factos dos incêndios, logo, este processo tem como precedência a execução do processo ETL da secção \ref{section:etlIncedios}.
+Dado que este processo depende dos dados de localização e data dos fogos, a sua execução tem como precedência obrigatória a conclusão do processo ETL descrito na secção \ref{section:etlIncedios}.
+
 \begin{figure}[htbp]
 	\centering
 	\includegraphics[width=0.9\linewidth]{imagens/etl_temperaturas}
@@ -30,12 +31,10 @@ Como este processo utiliza os dados da tabela de factos dos incêndios, logo, es
 	\label{fig:etlTemperaturas}
 \end{figure}
 
-
-
 \subsection{Cobertura Mediática}
-Neste processo, não foi colocado o executável responsável pela extração de notícias, pois, este para além de fazer a extração das notícias, ainda é necessário fazer um processo de povoamento onde são criados mais campos através de um modelo de \textit{machine learning}. Podendo esse processo consumir bastante tempo, logo, não foi colocado no processo ETL, de modo a ser mais simples de o exemplificar.
+Neste fluxo, o executável responsável pela extração de notícias não foi integrado diretamente no pacote ETL principal. Isto deve-se ao facto de o processo incluir, para além da extração, uma etapa de enriquecimento de dados através de um modelo de \textit{Machine Learning}. Visto que esta etapa requer um tempo de processamento elevado, optou-se por desacoplá-la para simplificar a demonstração do processo de carga.
 
-Portanto, para este processo funcionar é necessário existir dentro do respetivo diretório do SSIS o ficheiro \textit{JSON} com os dados já populados pelo modelo de \textit{machine learning}. A partir desse ficheiro, o SSIS irá inserir os dados na \textit{Staging Area} a partir de um executável já existente. Com os dados lá dentro, irá popular todas as tabelas do respetivo esquema em estrela através de \textit{scrypts} construídos com a linguagem T-SQL.
+Portanto, para o correto funcionamento deste processo no SSIS, é pré-requisito a existência de um ficheiro JSON no diretório configurado, contendo os dados já processados pelo modelo. A partir desse ficheiro, o SSIS aciona um executável auxiliar para inserir os dados na \textit{Staging Area}. Com os dados carregados, o fluxo prossegue para alimentar todas as tabelas do respetivo esquema em estrela através de \textit{scripts} em T-SQL.
 
 \begin{figure}[htbp]
 	\centering
@@ -44,8 +43,16 @@ Portanto, para este processo funcionar é necessário existir dentro do respetiv
 	\label{fig:etlCoberturaMediatica}
 \end{figure}
 
-
-
 \subsection{Vegetação}
-%TODO falta isto
+À semelhança do verificado na cobertura mediática, a extração de dados do \textit{Google Earth Engine} (GEE) não foi integrada no fluxo automatizado do SSIS, devido à complexidade técnica de automatização da recolha nesta plataforma específica. Desta forma, o projeto SSIS foi configurado para ingerir ficheiros CSV previamente extraídos e depositados no diretório do projeto.
 
+Foi estabelecida uma dependência funcional estrita para este processo: a sua execução ocorre obrigatoriamente após o processo ETL dos Incêndios. Esta precedência é necessária pois o carregamento dos dados de vegetação exige a consulta prévia à tabela de factos dos incêndios, garantindo assim a correta associação com a dimensão de localização e a integridade referencial do modelo.
+
+Tal como nos restantes processos, eventuais falhas de inserção de registos resultam na geração de um ficheiro de \textit{log} de erros.
+
+\begin{figure}[htbp]
+	\centering
+	\includegraphics[width=0.7\linewidth]{imagens/etl_vegetacao}
+	\caption{Processo ETL para vegetação}
+	\label{fig:etlvegetacao}
+\end{figure}
