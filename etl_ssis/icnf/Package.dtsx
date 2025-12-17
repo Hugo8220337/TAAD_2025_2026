@@ -11,8 +11,8 @@
   DTS:LocaleID="2070"
   DTS:ObjectName="Package"
   DTS:PackageType="5"
-  DTS:VersionBuild="144"
-  DTS:VersionGUID="{FDA3B4AC-64C8-4172-8A11-E25857CC6999}">
+  DTS:VersionBuild="146"
+  DTS:VersionGUID="{C168723C-C92C-4C1F-B7D8-F4CBA4217960}">
   <DTS:Property
     DTS:Name="PackageFormatVersion">8</DTS:Property>
   <DTS:ConnectionManagers>
@@ -1524,7 +1524,7 @@
         <DTS:Property
           DTS:DataType="8"
           DTS:Name="ParameterValue"
-          Encrypted="1">AQAAANCMnd8BFdERjHoAwE/Cl+sBAAAAnGLToHQ/QUCfAekZCVZnhwAAAAAIAAAARABUAFMAAAAQZgAAAAEAACAAAAAJUOnbaBrErhHCiokHi+QiePY2zRb0Y9dbmLWGTRFOUwAAAAAOgAAAAAIAACAAAADKAwnZwEZfvg4nCWHK3ot2xGqTEWxsHAyno9qLoUlsqKAAAAC6XF9WBhsmkroIvMxo7SRFyHIGMqAQeX4fdeYKopMa6RPzrbqqS4aWruhV64ssStauMN0tYoW90aL+nzZSSGQZOq4ZKkstG/PP3gldmcGONNwnSL0WCQYTvzDJWbjt5KuE4NqobXo5JTvnuBXG690PU6AtbjoOG3wJvEtHVdHJ5+r1LJAOSw0wxLGhAO4ww3pMd3Or50SB9RPolwGvxK0/QAAAAH6r56gKzaQvd/4sIRc2XDcQ3XhzXUHOOhbBPuk/htBWarQRnXYey8ZJv80qNABHl9D4r1OCIZEB0cJy5nWP+Mw</DTS:Property>
+          Encrypted="1">AQAAANCMnd8BFdERjHoAwE/Cl+sBAAAAnGLToHQ/QUCfAekZCVZnhwAAAAAIAAAARABUAFMAAAAQZgAAAAEAACAAAAA0Di9SS9YxaOnB60q14KgfQhRfrjeamKOjYdoGiUybbQAAAAAOgAAAAAIAACAAAADg0YD7i7dgKz2Ihu4xaS+TNDGGQdBlrw7g4ql7sPDX/aAAAAA3aERh2A0VNreWkOGZX9WN/SrTaWUzSnxS7ofEtshMgDdg2Qxy7IBLJBVhK8vLwpP1KvZG0jWu5/Ellz8/trlho6Ou9gD8z4Nx4NZlUrS5Rk/oS9FGsD7vaRhtSLV2YEt+ofW96EFFKn03m9Vjt1+6AxK9WZwYQn3gpcyKVThPQJ3pvJnXiaf1VtfvhVGnhMLR6E5xBbaNQp93HOk5J542QAAAABvJ8pGgMqG7RY3TMvGHZ7rAbL9thy2uRQwsC5Ei+OAcbZRR+DxSODesjOx3xvJA33UlWa8ELXVf/tycXS5PwkI</DTS:Property>
       </DTS:Property>
     </DTS:PackageParameter>
   </DTS:PackageParameters>
@@ -1671,7 +1671,7 @@
           DTS:ExecutableType="Microsoft.ExecuteSQLTask"
           DTS:LocaleID="-1"
           DTS:ObjectName="Povoar Dimensao Causa"
-          DTS:ThreadHint="1">
+          DTS:ThreadHint="0">
           <DTS:Variables />
           <DTS:ObjectData>
             <SQLTask:SqlTaskData
@@ -1688,7 +1688,7 @@
           DTS:ExecutableType="Microsoft.ExecuteSQLTask"
           DTS:LocaleID="-1"
           DTS:ObjectName="Povoar Dimensao DIa"
-          DTS:ThreadHint="2">
+          DTS:ThreadHint="1">
           <DTS:Variables />
           <DTS:ObjectData>
             <SQLTask:SqlTaskData
@@ -1705,7 +1705,7 @@
           DTS:ExecutableType="Microsoft.ExecuteSQLTask"
           DTS:LocaleID="-1"
           DTS:ObjectName="Povoar Dimensao Hora"
-          DTS:ThreadHint="0">
+          DTS:ThreadHint="2">
           <DTS:Variables />
           <DTS:ObjectData>
             <SQLTask:SqlTaskData
