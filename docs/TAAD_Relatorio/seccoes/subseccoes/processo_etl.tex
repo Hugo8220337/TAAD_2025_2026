@@ -2,11 +2,11 @@
 O presente capítulo detalha a arquitetura e o desenvolvimento do processo de ETL (Extract, Transform, Load). Para a orquestração e execução dos fluxos de dados, recorreu-se à plataforma Microsoft SQL Server Integration Services (SSIS). O objetivo central desta etapa foi garantir a integridade, limpeza e estruturação dos dados provenientes de fontes heterogéneas antes de serem carregadas para o Data Warehouse. Esta secção explora as especificidades de implementação para cada conjunto de dados temático.
 
 \subsection{Incêndios} \label{section:etlIncedios}
-Para fazer o processo de ETL para os dados provenientes do ICNF, gerou-se um executável do script de extração dos dados do ICNF, e criou-se outro responsável por inserir os dados na Staging Area. Esta abordagem foi escolhida porque o SISS não apresenta mecanismos simples para a gestão de dados em formato CSV, portanto, por simplicidade, tanto neste processo como nos restantes, a manipulação dos dados, antes de serem carregados para a base de dados de staging, é realizada em python através de um executável.
+Para fazer o processo de ETL para os dados provenientes do ICNF, gerou-se um executável do \textit{script} de extração dos dados do ICNF, e criou-se outro responsável por inserir os dados na \textit{Staging Area}. Esta abordagem foi escolhida porque o SISS não apresenta mecanismos simples para a gestão de dados em formato CSV, portanto, por simplicidade, tanto neste processo como nos restantes, a manipulação dos dados, antes de serem carregados para a base de dados de \textit{staging}, é realizada em \textit{python} através de um executável.
 
-Com os dados dentro da Staging Area, são realizados vários filtros através de scripts em T-SQL, para poder: remover valores nulos de latitude e longitude; e remover incêndios cuja zona queimada não seja significativa (superior a 0.1 hectares).
+Com os dados dentro da \textit{Staging Area}, são realizados vários filtros através de \textit{scripts} em T-SQL, para poder: remover valores nulos de latitude e longitude; e remover incêndios cuja zona queimada não seja significativa (superior a 0.1 hectares).
 
-Após os filtros, são criadas as tabelas no Data Warehouse, e as tabelas são populadas com os dados restantes da tabela de Staging.
+Após os filtros, são criadas as tabelas no Data Warehouse, e as tabelas são populadas com os dados restantes da tabela de \textit{Staging}.
 
 \begin{figure}[htbp]
 	\centering
@@ -18,9 +18,9 @@ Após os filtros, são criadas as tabelas no Data Warehouse, e as tabelas são p
 
 
 \subsection{Temperaturas}
-Para o processo ETL dos dados meteorológicos, o SSIS começa por executar um script em pyhton através de um executável, onde irá à tabela de factos dos incêndios para poder recolher somente os dados meteorológicos para os dias e locais onde houveram incêndios, inserindo no final os dados para a Staging Area.
+Para o processo ETL dos dados meteorológicos, o SSIS começa por executar um \textit{script} em \textit{pyhton} através de um executável, onde irá à tabela de factos dos incêndios para poder recolher somente os dados meteorológicos para os dias e locais onde houveram incêndios, inserindo no final os dados para a \textit{Staging Area}.
 
-Após os dados estarem na base de dados de Staging, são criadas e populadas as dimensões e a tabela de factos na base de dados do Data Warehouse. Como os dados meteorológicos são recolhidos apenas para os dias e locais específicos, e como os dados vêm diretamente do \textit{Open Meteo}, logo não é necessário fazer qualquer filtro após os dados entrarem na Staging Area.
+Após os dados estarem na base de dados de \textit{Staging}, são criadas e populadas as dimensões e a tabela de factos na base de dados do Data Warehouse. Como os dados meteorológicos são recolhidos apenas para os dias e locais específicos, e como os dados vêm diretamente do \textit{Open Meteo}, logo não é necessário fazer qualquer filtro após os dados entrarem na \textit{Staging Area}.
 
 Como este processo utiliza os dados da tabela de factos dos incêndios, logo, este processo tem como precedência a execução do processo ETL da secção \ref{section:etlIncedios}.
 \begin{figure}[htbp]
@@ -33,9 +33,9 @@ Como este processo utiliza os dados da tabela de factos dos incêndios, logo, es
 
 
 \subsection{Cobertura Mediática}
-Neste processo, não foi colocado o executável responsável pela extração de notícias, pois, este para além de fazer a extração das notícias, ainda é necessário fazer um processo de povoamento onde são criados mais campos através de um modelo de machine learning. Podendo esse processo consumir bastante tempo, logo, não foi colocado no processo ETL, de modo a ser mais simples de o exemplificar.
+Neste processo, não foi colocado o executável responsável pela extração de notícias, pois, este para além de fazer a extração das notícias, ainda é necessário fazer um processo de povoamento onde são criados mais campos através de um modelo de \textit{machine learning}. Podendo esse processo consumir bastante tempo, logo, não foi colocado no processo ETL, de modo a ser mais simples de o exemplificar.
 
-Portanto, para este processo funcionar é necessário existir dentro do respetivo diretório do SSIS o ficheiro JSON com os dados já populados pelo modelo de machine learning. A partir desse ficheiro, o SSIS irá inserir os dados na Staging Area a partir de um executável já existente. Com os dados lá dentro, irá popular todas as tabelas do respetivo esquema em estrela através de scrypts em T-SQL.
+Portanto, para este processo funcionar é necessário existir dentro do respetivo diretório do SSIS o ficheiro \textit{JSON} com os dados já populados pelo modelo de \textit{machine learning}. A partir desse ficheiro, o SSIS irá inserir os dados na \textit{Staging Area} a partir de um executável já existente. Com os dados lá dentro, irá popular todas as tabelas do respetivo esquema em estrela através de \textit{scrypts} construídos com a linguagem T-SQL.
 
 \begin{figure}[htbp]
 	\centering
@@ -47,4 +47,5 @@ Portanto, para este processo funcionar é necessário existir dentro do respetiv
 
 
 \subsection{Vegetação}
+%TODO falta isto
 

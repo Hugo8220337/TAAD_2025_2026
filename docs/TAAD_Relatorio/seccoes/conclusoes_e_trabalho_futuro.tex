@@ -1,1 +1,31 @@
 \section{Conclusões e Trabalho Futuro} \label{sec:concusoes-e-trabalho-futuro}
+
+\subsection{Conclusões} % TODO não me parece bem
+O presente trabalho alcançou o objetivo principal de desenvolver um sistema de Business Intelligence em \textit{Power BI} para a análise de incêndios florestais em Portugal Continental.
+A dispersão de dados, identificada inicialmente como um problema central, foi mitigada através de um processo ETL robusto.
+A integração de dados operacionais do ICNF com fontes externas, como a meteorologia (\textit{Open-Meteo}) e índices de vegetação, permitiu enriquecer significativamente a análise.
+
+A adoção da metodologia de modelação dimensional de Kimball provou ser eficaz.
+A definição clara dos processos de negócio facilitou a estruturação do Data Warehouse.
+
+A análise de perfil de dados (\textit{Data Profiling}) revelou-se uma etapa crítica.
+A identificação de lacunas nas variáveis meteorológicas originais validou a decisão de recorrer a APIs externas, garantindo a completude da informação climática.
+Adicionalmente, a análise geográfica permitiu identificar padrões de concentração espacial (\textit{hotspots}) nos distritos do interior, confirmando a utilidade do sistema para o planeamento estratégico.
+
+Em suma, o sistema desenvolvido transforma dados brutos e dispersos em conhecimento acionável.
+A solução oferece às entidades competentes uma ferramenta analítica capaz de apoiar decisões baseadas em evidências históricas e operacionais.
+
+\subsection{Limitações do Estudo}
+Apesar dos resultados positivos, o projeto apresenta algumas limitações.
+A primeira limitação reside na componente de cobertura mediática. Embora os dados tenham sido extraídos, a sua integração plena no modelo de análise carece ainda de técnicas avançadas de processamento de linguagem natural para aferir o sentimento das notícias.
+Outra da limitação reside da pouca informação recolhida sobre vegetação do terreno antes e depois de cada incêndio.
+Por fim, o período temporal analisado (2020-2025), embora recente, é relativamente curto para identificar tendências climáticas de longo prazo.
+
+\subsection{Trabalho Futuro}
+Para dar continuidade a este projeto e potenciar a sua utilidade, sugerem-se as seguintes linhas de investigação e desenvolvimento:
+
+\begin{itemize}
+	\item \textbf{Recolha de dados automática no ETL}: Embora haja no SSIS de incêndios e meteorologia um processo automático de recolha de dados diretamente na fonte, o mesmo não acontece nos processos de cobertura mediática e vegetação;
+	\item \textbf{Integração em Tempo Real:} Adaptar a arquitetura ETL para processamento em \textit{near real-time}, permitindo o acompanhamento de ocorrências ativas nos dashboards de controlo.
+	\item \textbf{Enriquecimento de Dados:} Incorporar dados sobre a orografia do terreno (declive e exposição solar), uma vez que são fatores determinantes na velocidade de propagação das chamas.
+\end{itemize}
