@@ -1,37 +1,56 @@
 //////////////////////////////////////////////////
-// Star Schema 
+// Star Schema - News Analysis (Corrigido)
 //////////////////////////////////////////////////
 
+// Tabela: dim_date
+// SQL: create_news_dimensions.sql
 Table dim_date {
-  date_id int [pk]
+  date_id int [pk, note: "YYYYMMDD"]
   date date
   year int
   month int
-  month_name text
+  month_name varchar [note: "NVARCHAR(50)"]
   day int
-  weekday text
+  weekday varchar [note: "NVARCHAR(50)"]
 }
 
+// Tabela: dim_source
+// SQL: create_news_dimensions.sql
 Table dim_source {
   source_id int [pk, increment]
-  source_name text
-  country text
+  source_name varchar [note: "NVARCHAR(255)"]
+  country varchar [note: "NVARCHAR(100)"]
 }
 
+// Tabela: dim_sentiment
+// SQL: create_news_dimensions.sql
 Table dim_sentiment {
   sentiment_id int [pk, increment]
-  sentiment text
+  sentiment varchar [note: "NVARCHAR(50)"]
   polarity int
 }
 
+// Tabela: fact_news
+// SQL: create_fact_news.sql
 Table fact_news {
   news_id int [pk, increment]
-  title text
-  link text
+  
+  // Dados Descritivos
+  title varchar [note: "NVARCHAR(MAX)"]
+  link varchar [note: "NVARCHAR(MAX)"]
+  
+  // Chaves Estrangeiras
   date_id int [ref: > dim_date.date_id]
   source_id int [ref: > dim_source.source_id]
   sentiment_id int [ref: > dim_sentiment.sentiment_id]
+  
+  // Métricas
   risk_score int
-  keywords text[] 
-  entities text[] 
+  
+  // Campos Especiais (Armazenados como JSON/Texto no SQL)
+  keywords varchar [note: "NVARCHAR(MAX) - JSON/CSV"]
+  entities varchar [note: "NVARCHAR(MAX) - JSON/CSV"]
+  
+  // Auditoria (Faltava no DBML original)
+  ingestion_date datetime [default: `SYSUTCDATETIME()`]
 }
