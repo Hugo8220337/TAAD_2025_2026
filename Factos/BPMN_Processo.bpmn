@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:modeler="http://camunda.org/schema/modeler/1.0" id="Definitions_0cq8ciz" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="5.40.1" modeler:executionPlatform="Camunda Cloud" modeler:executionPlatformVersion="8.8.0">
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:modeler="http://camunda.org/schema/modeler/1.0" id="Definitions_0cq8ciz" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="5.42.0" modeler:executionPlatform="Camunda Cloud" modeler:executionPlatformVersion="8.8.0">
   <bpmn:process id="Process_0ff807z" isExecutable="true">
     <bpmn:startEvent id="Event_1drhkxr">
       <bpmn:outgoing>Flow_02mb64k</bpmn:outgoing>
@@ -14,9 +14,6 @@
       <bpmn:outgoing>Flow_0470u12</bpmn:outgoing>
       <bpmn:outgoing>Flow_041r38t</bpmn:outgoing>
       <bpmn:outgoing>Flow_1n4wt9p</bpmn:outgoing>
-      <bpmn:outgoing>Flow_08q4ps5</bpmn:outgoing>
-      <bpmn:outgoing>Flow_0mpc2mc</bpmn:outgoing>
-      <bpmn:outgoing>Flow_1rkv8qv</bpmn:outgoing>
       <bpmn:outgoing>Flow_16pbbgr</bpmn:outgoing>
     </bpmn:parallelGateway>
     <bpmn:sequenceFlow id="Flow_13el37l" sourceRef="Gateway_1menvov" targetRef="Activity_0151esb" />
@@ -805,36 +802,15 @@ Post-Condition: Dados novos e atualizados são guardados na dimensão de tipo de
       <bpmn:incoming>Flow_0tjm2in</bpmn:incoming>
       <bpmn:incoming>Flow_019jp0p</bpmn:incoming>
       <bpmn:incoming>Flow_1aza45e</bpmn:incoming>
-      <bpmn:incoming>Flow_0oa2m81</bpmn:incoming>
-      <bpmn:incoming>Flow_0yp1nw6</bpmn:incoming>
-      <bpmn:incoming>Flow_1x3j75e</bpmn:incoming>
       <bpmn:incoming>Flow_0wwxu51</bpmn:incoming>
       <bpmn:outgoing>Flow_0sm40s4</bpmn:outgoing>
       <bpmn:outgoing>Flow_1t2z6af</bpmn:outgoing>
       <bpmn:outgoing>Flow_0yai5ds</bpmn:outgoing>
       <bpmn:outgoing>Flow_1f9akzj</bpmn:outgoing>
     </bpmn:parallelGateway>
-    <bpmn:sequenceFlow id="Flow_08q4ps5" sourceRef="Gateway_1menvov" targetRef="Activity_1iv9y43" />
-    <bpmn:sequenceFlow id="Flow_0oa2m81" sourceRef="Activity_1iv9y43" targetRef="Gateway_00khc21" />
-    <bpmn:sequenceFlow id="Flow_0mpc2mc" sourceRef="Gateway_1menvov" targetRef="Activity_0uskcvy" />
-    <bpmn:sequenceFlow id="Flow_0yp1nw6" sourceRef="Activity_0uskcvy" targetRef="Gateway_00khc21" />
-    <bpmn:sequenceFlow id="Flow_1rkv8qv" sourceRef="Gateway_1menvov" targetRef="Activity_0f8wcvn" />
-    <bpmn:sequenceFlow id="Flow_1x3j75e" sourceRef="Activity_0f8wcvn" targetRef="Gateway_00khc21" />
     <bpmn:sequenceFlow id="Flow_16pbbgr" sourceRef="Gateway_1menvov" targetRef="Activity_1m6iqr6" />
     <bpmn:sequenceFlow id="Flow_0wwxu51" sourceRef="Activity_1m6iqr6" targetRef="Gateway_00khc21" />
     <bpmn:sequenceFlow id="Flow_0yai5ds" sourceRef="Gateway_00khc21" targetRef="Activity_0ea71fq" />
-    <bpmn:subProcess id="Activity_1iv9y43" name="Load Landcover Dimension">
-      <bpmn:incoming>Flow_08q4ps5</bpmn:incoming>
-      <bpmn:outgoing>Flow_0oa2m81</bpmn:outgoing>
-    </bpmn:subProcess>
-    <bpmn:subProcess id="Activity_0uskcvy" name="Load Species Dimension">
-      <bpmn:incoming>Flow_0mpc2mc</bpmn:incoming>
-      <bpmn:outgoing>Flow_0yp1nw6</bpmn:outgoing>
-    </bpmn:subProcess>
-    <bpmn:subProcess id="Activity_0f8wcvn" name="Load Sensor Dimension">
-      <bpmn:incoming>Flow_1rkv8qv</bpmn:incoming>
-      <bpmn:outgoing>Flow_1x3j75e</bpmn:outgoing>
-    </bpmn:subProcess>
     <bpmn:subProcess id="Activity_1m6iqr6" name="Load Source Dimension">
       <bpmn:incoming>Flow_16pbbgr</bpmn:incoming>
       <bpmn:outgoing>Flow_0wwxu51</bpmn:outgoing>
@@ -878,21 +854,6 @@ Post-Condition: Dados novos e atualizados são guardados na dimensão de tipo de
       <bpmndi:BPMNShape id="Activity_0aj9o5l_di" bpmnElement="Activity_0442wy4">
         <dc:Bounds x="460" y="380" width="100" height="80" />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Gateway_0mnwxj2_di" bpmnElement="Gateway_00khc21">
-        <dc:Bounds x="705" y="395" width="50" height="50" />
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Activity_1f60jpo_di" bpmnElement="Activity_1iv9y43">
-        <dc:Bounds x="460" y="680" width="100" height="80" />
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Activity_0a4fz9d_di" bpmnElement="Activity_0uskcvy">
-        <dc:Bounds x="460" y="780" width="100" height="80" />
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Activity_178ja2i_di" bpmnElement="Activity_0f8wcvn">
-        <dc:Bounds x="460" y="880" width="100" height="80" />
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Activity_1u56tyk_di" bpmnElement="Activity_1m6iqr6">
-        <dc:Bounds x="460" y="980" width="100" height="80" />
-      </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_11c43a0_di" bpmnElement="Activity_0g0lz6g">
         <dc:Bounds x="860" y="240" width="100" height="80" />
         <bpmndi:BPMNLabel />
@@ -900,11 +861,17 @@ Post-Condition: Dados novos e atualizados são guardados na dimensão de tipo de
       <bpmndi:BPMNShape id="Activity_0p3p3gd_di" bpmnElement="Activity_1ekn212">
         <dc:Bounds x="860" y="435" width="100" height="80" />
       </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Gateway_0mnwxj2_di" bpmnElement="Gateway_00khc21">
+        <dc:Bounds x="705" y="395" width="50" height="50" />
+      </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_0ytqds7_di" bpmnElement="Activity_0ea71fq">
         <dc:Bounds x="860" y="340" width="100" height="80" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_01o4mez_di" bpmnElement="Activity_0494qkg">
         <dc:Bounds x="860" y="530" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1u56tyk_di" bpmnElement="Activity_1m6iqr6">
+        <dc:Bounds x="460" y="680" width="100" height="80" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="TextAnnotation_04gdekk_di" bpmnElement="TextAnnotation_04gdekk">
         <dc:Bounds x="140" y="500" width="100" height="30" />
@@ -984,44 +951,14 @@ Post-Condition: Dados novos e atualizados são guardados na dimensão de tipo de
         <di:waypoint x="820" y="475" />
         <di:waypoint x="860" y="475" />
       </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Flow_08q4ps5_di" bpmnElement="Flow_08q4ps5">
+      <bpmndi:BPMNEdge id="Flow_16pbbgr_di" bpmnElement="Flow_16pbbgr">
         <di:waypoint x="340" y="445" />
         <di:waypoint x="340" y="720" />
         <di:waypoint x="460" y="720" />
       </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Flow_0oa2m81_di" bpmnElement="Flow_0oa2m81">
+      <bpmndi:BPMNEdge id="Flow_0wwxu51_di" bpmnElement="Flow_0wwxu51">
         <di:waypoint x="560" y="720" />
         <di:waypoint x="730" y="720" />
-        <di:waypoint x="730" y="445" />
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Flow_0mpc2mc_di" bpmnElement="Flow_0mpc2mc">
-        <di:waypoint x="340" y="445" />
-        <di:waypoint x="340" y="820" />
-        <di:waypoint x="460" y="820" />
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Flow_0yp1nw6_di" bpmnElement="Flow_0yp1nw6">
-        <di:waypoint x="560" y="820" />
-        <di:waypoint x="730" y="820" />
-        <di:waypoint x="730" y="445" />
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Flow_1rkv8qv_di" bpmnElement="Flow_1rkv8qv">
-        <di:waypoint x="340" y="445" />
-        <di:waypoint x="340" y="920" />
-        <di:waypoint x="460" y="920" />
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Flow_1x3j75e_di" bpmnElement="Flow_1x3j75e">
-        <di:waypoint x="560" y="920" />
-        <di:waypoint x="730" y="920" />
-        <di:waypoint x="730" y="445" />
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Flow_16pbbgr_di" bpmnElement="Flow_16pbbgr">
-        <di:waypoint x="340" y="445" />
-        <di:waypoint x="340" y="1020" />
-        <di:waypoint x="460" y="1020" />
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Flow_0wwxu51_di" bpmnElement="Flow_0wwxu51">
-        <di:waypoint x="560" y="1020" />
-        <di:waypoint x="730" y="1020" />
         <di:waypoint x="730" y="445" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_0yai5ds_di" bpmnElement="Flow_0yai5ds">
@@ -1030,15 +967,15 @@ Post-Condition: Dados novos e atualizados são guardados na dimensão de tipo de
         <di:waypoint x="820" y="380" />
         <di:waypoint x="860" y="380" />
       </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Association_0xim8mh_di" bpmnElement="Association_0xim8mh">
-        <di:waypoint x="198" y="438" />
-        <di:waypoint x="191" y="500" />
-      </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_1f9akzj_di" bpmnElement="Flow_1f9akzj">
         <di:waypoint x="755" y="420" />
         <di:waypoint x="820" y="420" />
         <di:waypoint x="820" y="570" />
         <di:waypoint x="860" y="570" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Association_0xim8mh_di" bpmnElement="Association_0xim8mh">
+        <di:waypoint x="198" y="438" />
+        <di:waypoint x="191" y="500" />
       </bpmndi:BPMNEdge>
     </bpmndi:BPMNPlane>
   </bpmndi:BPMNDiagram>
@@ -1700,6 +1637,14 @@ Post-Condition: Dados novos e atualizados são guardados na dimensão de tipo de
           <dc:Bounds x="286" y="562" width="88" height="14" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0cgh23o_di" bpmnElement="Activity_0m1n22p">
+        <dc:Bounds x="350" y="360" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_01me7q3_di" bpmnElement="Activity_0kqsqh9">
+        <dc:Bounds x="740" y="360" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="DataStoreReference_06gn4sv_di" bpmnElement="DataStoreReference_06gn4sv">
         <dc:Bounds x="925" y="525" width="50" height="50" />
         <bpmndi:BPMNLabel>
@@ -1712,6 +1657,10 @@ Post-Condition: Dados novos e atualizados são guardados na dimensão de tipo de
           <dc:Bounds x="1018" y="582" width="87" height="27" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0ke14es_di" bpmnElement="Activity_1x321i3">
+        <dc:Bounds x="950" y="360" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Event_1nkty9c_di" bpmnElement="Event_1nkty9c">
         <dc:Bounds x="1162" y="382" width="36" height="36" />
       </bpmndi:BPMNShape>
@@ -1721,33 +1670,9 @@ Post-Condition: Dados novos e atualizados são guardados na dimensão de tipo de
           <dc:Bounds x="418" y="562" width="86" height="27" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Activity_0cgh23o_di" bpmnElement="Activity_0m1n22p">
-        <dc:Bounds x="350" y="360" width="100" height="80" />
-        <bpmndi:BPMNLabel />
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Activity_01me7q3_di" bpmnElement="Activity_0kqsqh9">
-        <dc:Bounds x="740" y="360" width="100" height="80" />
-        <bpmndi:BPMNLabel />
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Activity_0ke14es_di" bpmnElement="Activity_1x321i3">
-        <dc:Bounds x="950" y="360" width="100" height="80" />
-        <bpmndi:BPMNLabel />
-      </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_17y1yee_di" bpmnElement="Activity_1x55q22">
         <dc:Bounds x="540" y="360" width="100" height="80" />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNEdge id="Association_0cqezvp_di" bpmnElement="Association_0cqezvp">
-        <di:waypoint x="366" y="360" />
-        <di:waypoint x="226" y="197" />
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Association_12hid3w_di" bpmnElement="Association_12hid3w">
-        <di:waypoint x="789" y="360" />
-        <di:waypoint x="783" y="178" />
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Association_1da5cbz_di" bpmnElement="Association_1da5cbz">
-        <di:waypoint x="998" y="360" />
-        <di:waypoint x="994" y="300" />
-      </bpmndi:BPMNEdge>
       <bpmndi:BPMNShape id="TextAnnotation_168kzbw_di" bpmnElement="TextAnnotation_168kzbw">
         <dc:Bounds x="210" y="84" width="330" height="113" />
         <bpmndi:BPMNLabel />
@@ -1772,14 +1697,6 @@ Post-Condition: Dados novos e atualizados são guardados na dimensão de tipo de
         <di:waypoint x="419" y="440" />
         <di:waypoint x="450" y="505" />
       </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Flow_0lws0zh_di" bpmnElement="Flow_0lws0zh">
-        <di:waypoint x="450" y="400" />
-        <di:waypoint x="540" y="400" />
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Flow_10jsz72_di" bpmnElement="Flow_10jsz72">
-        <di:waypoint x="640" y="400" />
-        <di:waypoint x="740" y="400" />
-      </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_1gf4r5g_di" bpmnElement="Flow_1gf4r5g">
         <di:waypoint x="840" y="400" />
         <di:waypoint x="950" y="400" />
@@ -1795,6 +1712,26 @@ Post-Condition: Dados novos e atualizados são guardados na dimensão de tipo de
       <bpmndi:BPMNEdge id="Flow_07ap3rq_di" bpmnElement="Flow_07ap3rq">
         <di:waypoint x="1050" y="400" />
         <di:waypoint x="1162" y="400" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0lws0zh_di" bpmnElement="Flow_0lws0zh">
+        <di:waypoint x="450" y="400" />
+        <di:waypoint x="540" y="400" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_10jsz72_di" bpmnElement="Flow_10jsz72">
+        <di:waypoint x="640" y="400" />
+        <di:waypoint x="740" y="400" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Association_0cqezvp_di" bpmnElement="Association_0cqezvp">
+        <di:waypoint x="366" y="360" />
+        <di:waypoint x="226" y="197" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Association_12hid3w_di" bpmnElement="Association_12hid3w">
+        <di:waypoint x="789" y="360" />
+        <di:waypoint x="783" y="178" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Association_1da5cbz_di" bpmnElement="Association_1da5cbz">
+        <di:waypoint x="998" y="360" />
+        <di:waypoint x="994" y="300" />
       </bpmndi:BPMNEdge>
     </bpmndi:BPMNPlane>
   </bpmndi:BPMNDiagram>
@@ -2069,6 +2006,9 @@ Post-Condition: Dados novos e atualizados são guardados na dimensão de tipo de
           <dc:Bounds x="296" y="272" width="88" height="27" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1rfu9e9_di" bpmnElement="Activity_0jz2je9">
+        <dc:Bounds x="290" y="80" width="100" height="80" />
+      </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_0k87of5_di" bpmnElement="Activity_0k87of5">
         <dc:Bounds x="500" y="80" width="100" height="80" />
         <bpmndi:BPMNLabel />
@@ -2088,6 +2028,14 @@ Post-Condition: Dados novos e atualizados são guardados na dimensão de tipo de
           <dc:Bounds x="606" y="1022" width="88" height="14" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="BPMNShape_0s6m63q" bpmnElement="Activity_1tqb9y2">
+        <dc:Bounds x="670" y="820" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="BPMNShape_1sijd9g" bpmnElement="Activity_01emrlj">
+        <dc:Bounds x="1060" y="820" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="BPMNShape_13lmbke" bpmnElement="DataStoreReference_0e9xl42">
         <dc:Bounds x="1245" y="985" width="50" height="50" />
         <bpmndi:BPMNLabel>
@@ -2100,6 +2048,10 @@ Post-Condition: Dados novos e atualizados são guardados na dimensão de tipo de
           <dc:Bounds x="1338" y="1042" width="87" height="27" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="BPMNShape_12i67cj" bpmnElement="Activity_1y0tecn">
+        <dc:Bounds x="1270" y="820" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="BPMNShape_1exqxoj" bpmnElement="Event_08dnx7i">
         <dc:Bounds x="1482" y="842" width="36" height="36" />
       </bpmndi:BPMNShape>
@@ -2108,6 +2060,9 @@ Post-Condition: Dados novos e atualizados são guardados na dimensão de tipo de
         <bpmndi:BPMNLabel>
           <dc:Bounds x="738" y="1022" width="86" height="27" />
         </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="BPMNShape_1lw3x6b" bpmnElement="Activity_0qfcub2">
+        <dc:Bounds x="860" y="820" width="100" height="80" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_0hfmx00_di" bpmnElement="Activity_0hfmx00">
         <dc:Bounds x="880" y="80" width="100" height="80" />
@@ -2133,36 +2088,6 @@ Post-Condition: Dados novos e atualizados são guardados na dimensão de tipo de
         <dc:Bounds x="690" y="80" width="100" height="80" />
         <bpmndi:BPMNLabel />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Activity_1rfu9e9_di" bpmnElement="Activity_0jz2je9">
-        <dc:Bounds x="290" y="80" width="100" height="80" />
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="BPMNShape_0s6m63q" bpmnElement="Activity_1tqb9y2">
-        <dc:Bounds x="670" y="820" width="100" height="80" />
-        <bpmndi:BPMNLabel />
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="BPMNShape_1sijd9g" bpmnElement="Activity_01emrlj">
-        <dc:Bounds x="1060" y="820" width="100" height="80" />
-        <bpmndi:BPMNLabel />
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="BPMNShape_12i67cj" bpmnElement="Activity_1y0tecn">
-        <dc:Bounds x="1270" y="820" width="100" height="80" />
-        <bpmndi:BPMNLabel />
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="BPMNShape_1lw3x6b" bpmnElement="Activity_0qfcub2">
-        <dc:Bounds x="860" y="820" width="100" height="80" />
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNEdge id="BPMNEdge_1f6jmvq" bpmnElement="Association_1amhacr">
-        <di:waypoint x="686" y="820" />
-        <di:waypoint x="546" y="657" />
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="BPMNEdge_0a7vmt9" bpmnElement="Association_1t46exj">
-        <di:waypoint x="1109" y="820" />
-        <di:waypoint x="1103" y="638" />
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="BPMNEdge_1dw2cd8" bpmnElement="Association_0fu7am9">
-        <di:waypoint x="1318" y="820" />
-        <di:waypoint x="1314" y="760" />
-      </bpmndi:BPMNEdge>
       <bpmndi:BPMNShape id="BPMNShape_04riuq5" bpmnElement="TextAnnotation_13819j1">
         <dc:Bounds x="530" y="544" width="330" height="113" />
         <bpmndi:BPMNLabel />
@@ -2183,25 +2108,21 @@ Post-Condition: Dados novos e atualizados são guardados na dimensão de tipo de
         <di:waypoint x="340" y="215" />
         <di:waypoint x="340" y="160" />
       </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Flow_1ca3skt_di" bpmnElement="Flow_1ca3skt">
-        <di:waypoint x="390" y="120" />
-        <di:waypoint x="500" y="120" />
-      </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="DataOutputAssociation_0igogxr_di" bpmnElement="DataOutputAssociation_0igogxr">
         <di:waypoint x="547" y="160" />
         <di:waypoint x="542" y="215" />
       </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Flow_0x3dpdw_di" bpmnElement="Flow_0x3dpdw">
-        <di:waypoint x="600" y="120" />
-        <di:waypoint x="690" y="120" />
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="BPMNEdge_0nuhuym" bpmnElement="Flow_1be31gv">
-        <di:waypoint x="588" y="860" />
-        <di:waypoint x="670" y="860" />
+      <bpmndi:BPMNEdge id="Flow_1ca3skt_di" bpmnElement="Flow_1ca3skt">
+        <di:waypoint x="390" y="120" />
+        <di:waypoint x="500" y="120" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="BPMNEdge_1udf8ox" bpmnElement="DataInputAssociation_1eurufc">
         <di:waypoint x="656" y="965" />
         <di:waypoint x="683" y="900" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="BPMNEdge_085jjq2" bpmnElement="DataOutputAssociation_1pb76s1">
+        <di:waypoint x="739" y="900" />
+        <di:waypoint x="770" y="965" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="BPMNEdge_0ugim56" bpmnElement="DataInputAssociation_0p3kii2">
         <di:waypoint x="1277" y="985" />
@@ -2211,29 +2132,9 @@ Post-Condition: Dados novos e atualizados são guardados na dimensão de tipo de
         <di:waypoint x="1339" y="900" />
         <di:waypoint x="1378" y="985" />
       </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="BPMNEdge_1vym6dz" bpmnElement="Flow_0mpoqtl">
-        <di:waypoint x="1370" y="860" />
-        <di:waypoint x="1482" y="860" />
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="BPMNEdge_085jjq2" bpmnElement="DataOutputAssociation_1pb76s1">
-        <di:waypoint x="739" y="900" />
-        <di:waypoint x="770" y="965" />
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Flow_0rx1h1g_di" bpmnElement="Flow_0rx1h1g">
-        <di:waypoint x="790" y="120" />
-        <di:waypoint x="880" y="120" />
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Flow_10no321_di" bpmnElement="Flow_10no321">
-        <di:waypoint x="980" y="120" />
-        <di:waypoint x="1070" y="120" />
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="DataInputAssociation_00e54pw_di" bpmnElement="DataInputAssociation_00e54pw">
-        <di:waypoint x="1080" y="215" />
-        <di:waypoint x="1114" y="160" />
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="DataOutputAssociation_0r5vh0k_di" bpmnElement="DataOutputAssociation_0r5vh0k">
-        <di:waypoint x="1137" y="160" />
-        <di:waypoint x="1161" y="215" />
+      <bpmndi:BPMNEdge id="BPMNEdge_0nuhuym" bpmnElement="Flow_1be31gv">
+        <di:waypoint x="588" y="860" />
+        <di:waypoint x="670" y="860" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="BPMNEdge_14mzcjm" bpmnElement="Flow_0z9z9k1">
         <di:waypoint x="770" y="860" />
@@ -2247,6 +2148,42 @@ Post-Condition: Dados novos e atualizados são guardados na dimensão de tipo de
         <di:waypoint x="1160" y="860" />
         <di:waypoint x="1270" y="860" />
       </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="BPMNEdge_1vym6dz" bpmnElement="Flow_0mpoqtl">
+        <di:waypoint x="1370" y="860" />
+        <di:waypoint x="1482" y="860" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="DataInputAssociation_00e54pw_di" bpmnElement="DataInputAssociation_00e54pw">
+        <di:waypoint x="1080" y="215" />
+        <di:waypoint x="1114" y="160" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="DataOutputAssociation_0r5vh0k_di" bpmnElement="DataOutputAssociation_0r5vh0k">
+        <di:waypoint x="1137" y="160" />
+        <di:waypoint x="1161" y="215" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_10no321_di" bpmnElement="Flow_10no321">
+        <di:waypoint x="980" y="120" />
+        <di:waypoint x="1070" y="120" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0x3dpdw_di" bpmnElement="Flow_0x3dpdw">
+        <di:waypoint x="600" y="120" />
+        <di:waypoint x="690" y="120" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0rx1h1g_di" bpmnElement="Flow_0rx1h1g">
+        <di:waypoint x="790" y="120" />
+        <di:waypoint x="880" y="120" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="BPMNEdge_1f6jmvq" bpmnElement="Association_1amhacr">
+        <di:waypoint x="686" y="820" />
+        <di:waypoint x="546" y="657" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="BPMNEdge_0a7vmt9" bpmnElement="Association_1t46exj">
+        <di:waypoint x="1109" y="820" />
+        <di:waypoint x="1103" y="638" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="BPMNEdge_1dw2cd8" bpmnElement="Association_0fu7am9">
+        <di:waypoint x="1318" y="820" />
+        <di:waypoint x="1314" y="760" />
+      </bpmndi:BPMNEdge>
     </bpmndi:BPMNPlane>
   </bpmndi:BPMNDiagram>
   <bpmndi:BPMNDiagram id="BPMNDiagram_0d8iynk">
@@ -2257,15 +2194,6 @@ Post-Condition: Dados novos e atualizados são guardados na dimensão de tipo de
   </bpmndi:BPMNDiagram>
   <bpmndi:BPMNDiagram id="BPMNDiagram_122zss4">
     <bpmndi:BPMNPlane id="BPMNPlane_0wypy3f" bpmnElement="Activity_1x321i3" />
-  </bpmndi:BPMNDiagram>
-  <bpmndi:BPMNDiagram id="BPMNDiagram_08t6y3h">
-    <bpmndi:BPMNPlane id="BPMNPlane_1ovvq3d" bpmnElement="Activity_1iv9y43" />
-  </bpmndi:BPMNDiagram>
-  <bpmndi:BPMNDiagram id="BPMNDiagram_1ppr9uq">
-    <bpmndi:BPMNPlane id="BPMNPlane_1cfqj5c" bpmnElement="Activity_0uskcvy" />
-  </bpmndi:BPMNDiagram>
-  <bpmndi:BPMNDiagram id="BPMNDiagram_19m90di">
-    <bpmndi:BPMNPlane id="BPMNPlane_1y9srx4" bpmnElement="Activity_0f8wcvn" />
   </bpmndi:BPMNDiagram>
   <bpmndi:BPMNDiagram id="BPMNDiagram_0xs9tum">
     <bpmndi:BPMNPlane id="BPMNPlane_1he0hyt" bpmnElement="Activity_1m6iqr6" />
