@@ -5,6 +5,7 @@ IF NOT EXISTS (
 BEGIN
 CREATE TABLE dbo.dsa_meteorology_quarentine (
     incident_id NVARCHAR(100) NOT NULL,
+    location_id NVARCHAR(100) NULL,
     source_file NVARCHAR(MAX) NULL,
     date NVARCHAR(20) NOT NULL, -- YYYY-MM-DD
     lat NVARCHAR(MAX) NULL,

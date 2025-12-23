@@ -77,6 +77,7 @@ def fetch_fire_data(connection_string, table_name="fact_fire"):
     query = f"""
     SELECT 
         fire_id,
+        location_id,
         latitude,
         longitude,
         start_day_id,
@@ -124,6 +125,7 @@ def process_incidents(df: pd.DataFrame, out_dir: Path):
             logging.info(f"Progress: {idx}/{total_rows} ({idx/total_rows*100:.1f}%) - Est. remaining: {estimated_remaining/60:.1f} min")
 
         incident_id = row['fire_id']
+        location_id = row['location_id']
         lat = row['latitude']
         lon = row['longitude']
         
@@ -170,6 +172,7 @@ def process_incidents(df: pd.DataFrame, out_dir: Path):
         for i, d in enumerate(times):
             records.append({
                 "incident_id": incident_id,
+                "location_id": location_id,
                 "date": d,
                 "lat": lat,
                 "lon": lon,
