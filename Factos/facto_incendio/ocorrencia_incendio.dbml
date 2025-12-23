@@ -5,6 +5,7 @@
 // ------------------ FACT: general fire metrics ------------------
 
 Table fact_fire {
+  id int [pk, increment, note: "Surrogate key for fire fact table (auto-increment)"]
   fire_id varchar [pk, note: "Original ICNF fire identifier (natural key)"]
   
   alert_hour_id int [ref: > dim_hour.hour_id]

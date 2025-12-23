@@ -1,12 +1,15 @@
 /* 
-   Ficheiro: 4_create_fact_fire_dw.sql
+   Ficheiro: 4_create_fact_fire.sql
    Executar na Base de Dados: [DW.TAAD]
 */
 
 IF NOT EXISTS (SELECT 1 FROM sys.tables WHERE name = 'fact_fire' AND schema_id = SCHEMA_ID('dbo'))
 BEGIN
     CREATE TABLE [dbo].[fact_fire] (
-        [fire_id] VARCHAR(100) NOT NULL, -- Chave natural do ICNF
+        -- id auto-incremental (opcional)
+        [id] INT IDENTITY(1,1) NOT NULL,
+
+        [fire_id] VARCHAR(100) NOT NULL, -- Chave natural do ICNF (O tal "2022...") ou PK
         
         -- Chaves Estrangeiras (FKs)
         [alert_hour_id] INT,
@@ -36,10 +39,10 @@ BEGIN
         -- Auditoria
         [processing_date] DATETIME2(3) DEFAULT SYSUTCDATETIME(),
 
-        CONSTRAINT [PK_fact_fire] PRIMARY KEY CLUSTERED ([fire_id])
+        CONSTRAINT [PK_fact_fire] PRIMARY KEY CLUSTERED ([id])
     );
-
-    -- Criar Relações (Foreign Keys)
+    
+    -- (Adicionar aqui os ALTER TABLE para as FKs...)
     ALTER TABLE [dbo].[fact_fire] WITH CHECK ADD CONSTRAINT [FK_fact_fire_dim_hour_alert] FOREIGN KEY([alert_hour_id]) REFERENCES [dbo].[dim_hour] ([hour_id]);
     ALTER TABLE [dbo].[fact_fire] WITH CHECK ADD CONSTRAINT [FK_fact_fire_dim_day_start] FOREIGN KEY([start_day_id]) REFERENCES [dbo].[dim_day] ([day_id]);
     ALTER TABLE [dbo].[fact_fire] WITH CHECK ADD CONSTRAINT [FK_fact_fire_dim_location] FOREIGN KEY([location_id]) REFERENCES [dbo].[dim_location] ([location_id]);

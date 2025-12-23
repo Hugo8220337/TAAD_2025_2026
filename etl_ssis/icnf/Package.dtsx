@@ -11,8 +11,8 @@
   DTS:LocaleID="2070"
   DTS:ObjectName="Package"
   DTS:PackageType="5"
-  DTS:VersionBuild="153"
-  DTS:VersionGUID="{8B61D9A3-2F56-4FB1-898A-1CAB7D1150A2}">
+  DTS:VersionBuild="158"
+  DTS:VersionGUID="{663B4E90-CB7D-4823-9D2B-B59C4800E20A}">
   <DTS:Property
     DTS:Name="PackageFormatVersion">8</DTS:Property>
   <DTS:ConnectionManagers>
@@ -1524,7 +1524,7 @@
         <DTS:Property
           DTS:DataType="8"
           DTS:Name="ParameterValue"
-          Encrypted="1">AQAAANCMnd8BFdERjHoAwE/Cl+sBAAAAnGLToHQ/QUCfAekZCVZnhwAAAAAIAAAARABUAFMAAAAQZgAAAAEAACAAAABMrYb9kLlhGbsUbSxKLdruR0NgZGpgZuEWwn2LBOI6FwAAAAAOgAAAAAIAACAAAAAYsN3JgdKPUieb32Vjcjbc7VIlMbqHynBIRqnlsnt+jaAAAADDJM4R3uhTRamWMHMj9eNCQWtkFb7ij8lBASKq4CSZEPrjnT7q2h5KIsR6Iy2Ek4fOvyyMEF52LQvE/hZuMaNZd5uPlKLr18498UnL4AzjPrX7khjiKW2ZQ8+aSvgZioXZa4xbP80/VxVG4ymOo0eXCXtNjmpDtAy1LyML7G0WwFZCrnLZ4bJJEx0FjpvTMJm5NFZ7qf94V/qh/a2kQIILQAAAAAJ7s487xBBnA/pv0THim9+jQdIlECevmSmyRB/W0mZLNbMxFh0HwvFnUqiT8dpsxypGq723XAKgEegPYtJ3Mi4</DTS:Property>
+          Encrypted="1">AQAAANCMnd8BFdERjHoAwE/Cl+sBAAAAnGLToHQ/QUCfAekZCVZnhwAAAAAIAAAARABUAFMAAAAQZgAAAAEAACAAAAD4VFWSYB9VP3LAl2sYOPSuFiGw3mQ6GiclP1AF7OICugAAAAAOgAAAAAIAACAAAAAbPW4ce1mMTAAHOvB9R56oCkw2p+Qzn8KLDnZ0xTiZCKAAAACANM1/H8fgeClOOFZIudAya9971HlWcdkTxa7QYIdXFhJBskL8MlLZNwun0XXrx0lscZwUUTBtxm4nPPXNqjDdkTn3Q5rHW67/9EGZ8UFNDZLLAYBR2RTeeAMLTlPf1R+aUpoPyko2gd1QsGYft68HHgHKiDocE0iqd1ca2POGY2CDPWyY6XS/x5ACTy0edO+nN3L1UuE3Xj9PI06TzGZ9QAAAAA5nw2RfV97cyDEFwEegRme9KhYLtVP6gUb/m+t5nr0UQOSY1BByCWtSEX9ccr3fzPAw8uZx5DXC4gvsAIbbxEw</DTS:Property>
       </DTS:Property>
     </DTS:PackageParameter>
   </DTS:PackageParameters>
@@ -1688,7 +1688,7 @@
           DTS:ExecutableType="Microsoft.ExecuteSQLTask"
           DTS:LocaleID="-1"
           DTS:ObjectName="Povoar Dimensao DIa"
-          DTS:ThreadHint="0">
+          DTS:ThreadHint="2">
           <DTS:Variables />
           <DTS:ObjectData>
             <SQLTask:SqlTaskData
@@ -1705,7 +1705,7 @@
           DTS:ExecutableType="Microsoft.ExecuteSQLTask"
           DTS:LocaleID="-1"
           DTS:ObjectName="Povoar Dimensao Hora"
-          DTS:ThreadHint="2">
+          DTS:ThreadHint="0">
           <DTS:Variables />
           <DTS:ObjectData>
             <SQLTask:SqlTaskData
@@ -2173,10 +2173,6 @@
           Id="Package\Insert Data to Staging Area"
           TopLeft="374.583312867003,133.149999552518" />
         <NodeLayout
-          Size="172.8,41.6"
-          Id="Package\Limpar Staging Area"
-          TopLeft="977.290556336398,223.753439411057" />
-        <NodeLayout
           Size="155.2,41.6"
           Id="Package\Run ICNF scrypt"
           TopLeft="391.874978588895,60.2333329144785" />
@@ -2247,28 +2243,6 @@
           </EdgeLayout.Labels>
         </EdgeLayout>
         <EdgeLayout
-          Id="Package.PrecedenceConstraints[Constraint 3]"
-          TopLeft="1063.02839238211,305.973807800821">
-          <EdgeLayout.Curve>
-            <mssgle:Curve
-              StartConnector="{assembly:Null}"
-              EndConnector="0,-40.6203683897642"
-              Start="0,0"
-              End="0,-33.1203683897642">
-              <mssgle:Curve.Segments>
-                <mssgle:SegmentCollection
-                  Capacity="5">
-                  <mssgle:LineSegment
-                    End="0,-33.1203683897642" />
-                </mssgle:SegmentCollection>
-              </mssgle:Curve.Segments>
-            </mssgle:Curve>
-          </EdgeLayout.Curve>
-          <EdgeLayout.Labels>
-            <EdgeLabelCollection />
-          </EdgeLayout.Labels>
-        </EdgeLayout>
-        <EdgeLayout
           Id="Package.PrecedenceConstraints[Constraint 4]"
           TopLeft="474.895816401372,174.749999552518">
           <EdgeLayout.Curve>
@@ -2282,6 +2256,32 @@
                   Capacity="5">
                   <mssgle:LineSegment
                     End="0,25.0351854220675" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <NodeLayout
+          Size="172.8,41.6"
+          Id="Package\Limpar Staging Area"
+          TopLeft="977.290556336398,223.753439411057" />
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 3]"
+          TopLeft="1063.02839238211,305.973807800821">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,-40.6203683897642"
+              Start="0,0"
+              End="0,-33.1203683897642">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,-33.1203683897642" />
                 </mssgle:SegmentCollection>
               </mssgle:Curve.Segments>
             </mssgle:Curve>
