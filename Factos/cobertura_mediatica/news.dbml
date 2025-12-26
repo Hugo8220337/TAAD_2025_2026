@@ -2,10 +2,10 @@
 // Star Schema - News Analysis (Corrigido)
 //////////////////////////////////////////////////
 
-// Tabela: dim_date
+// Tabela: dim_day
 // SQL: create_news_dimensions.sql
-Table dim_date {
-  date_id int [pk, note: "YYYYMMDD"]
+Table dim_day {
+  day_id int [pk, note: "YYYYMMDD"]
   date date
   year int
   month int
@@ -40,7 +40,7 @@ Table fact_news {
   link varchar [note: "NVARCHAR(MAX)"]
   
   // Chaves Estrangeiras
-  date_id int [ref: > dim_date.date_id]
+  day_id int [ref: > dim_day.day_id]
   source_id int [ref: > dim_source.source_id]
   sentiment_id int [ref: > dim_sentiment.sentiment_id]
   
