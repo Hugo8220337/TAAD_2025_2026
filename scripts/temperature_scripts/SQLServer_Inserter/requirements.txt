@@ -1,0 +1,4 @@
+pypyodbc
+pandas
+pyodbc
+pyinstaller

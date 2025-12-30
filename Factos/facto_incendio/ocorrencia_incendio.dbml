@@ -1,0 +1,112 @@
+//////////////////////////////////////////////////////////
+//  TABELA DE FACTOS
+//////////////////////////////////////////////////////////
+
+// ------------------ FACT: general fire metrics ------------------
+
+Table fact_fire {
+  id int [pk, increment, note: "Surrogate key for fire fact table (auto-increment)"]
+  fire_id varchar [pk, note: "Original ICNF fire identifier (natural key)"]
+  
+  alert_hour_id int [ref: > dim_hour.hour_id]
+  extinguish_hour_id int [ref: > dim_hour.hour_id]
+  first_intervention_hour_id int [ref: > dim_hour.hour_id]
+
+  start_day_id int [ref: > dim_day.day_id]
+  end_day_id int [ref: > dim_day.day_id]
+
+  location_id int [ref: > dim_location.location_id]
+  fire_type_id int [ref: > dim_fire_type.fire_type_id]
+  cause_id int [ref: > dim_cause.cause_id]
+
+  area_total_m2 float
+  area_pov_m2 float
+  area_shrub_m2 float
+  area_agri_m2 float
+  duration_hours float
+  perimeter_m float
+
+  latitude float
+  longitude float
+  centroid_lon float
+  centroid_lat float
+
+  ndays int
+  dry_day_sum int
+  high_wind_sum int
+
+  processing_date datetime
+
+  Note: 'Main fact table — measures associated with each fire'
+}
+
+//////////////////////////////////////////////////////////
+//  DIMENSÕES
+//////////////////////////////////////////////////////////
+
+Table dim_hour {
+  // id: hhmmss (22) isto ajuda a não ter de fazer filtro
+  hour_id int [pk] 
+  hour int [note: "Hour of the day (0-23)"]
+  time_of_day varchar [note: "e.g., Manhã, Tarde, Noite, Madrugada"]
+}
+
+Table dim_day {
+  // id: aammdd (20250211) isto ajuda a não ter de fazer filtro
+  day_id int [pk]
+  day int
+  month int
+  year int
+  week int
+  season varchar
+  weekday varchar
+}
+
+Table dim_location {
+  location_id int [pk, increment, note: "Surrogate key for geographic dimension (auto-increment)"]
+  district varchar
+  municipality varchar
+  parish varchar // freguesia
+  nuts3 varchar // NUTS3 code (Nomenclatura das Unidades Territoriais para Fins Estatísticos)
+
+  Note: 'Geographic dimension — administrative information and coordinates.'
+}
+
+Table dim_fire_type {
+  fire_type_id int [pk, increment, note: "Surrogate key for fire type classification (auto-increment)"]
+  type_name varchar
+  is_control_burn boolean
+  is_false_alarm boolean
+  is_agricultural boolean
+
+  Note: 'Classification of fire types used to categorize fire events'
+}
+
+Table dim_cause {
+  cause_id int [pk, increment, note: "Surrogate key for cause taxonomy (auto-increment)"]
+  cause_name varchar
+  cause_category varchar
+  cause_family varchar
+
+  Note: 'Cause taxonomy for fires (detailed and aggregated levels)'
+}
+
+// Table dim_meteorology {
+//   meteorology_id int [pk, increment, note: "Surrogate key for meteorology summary (auto-increment)"]
+//   fire_id varchar [ref: > fact_fire.fire_id, note: "FK linking to dim_fire (when available)"]
+//   mean_temp_max float
+//   mean_temp_min float
+//   rh_max_mean float
+//   rh_min_mean float
+//   precip_sum_mean float
+//   rain_sum_mean float
+//   wind_max_mean float
+//   gust_max_mean float
+//   radiation_mean float
+//   sunshine_mean float
+//   et0_mean float
+//   dry_day_sum int
+//   high_wind_sum int
+
+//   Note: "Meteorological summary aggregated per fire (validation / summary dataset)"
+// }

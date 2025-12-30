@@ -1,0 +1,1 @@
+TRUNCATE TABLE [DSA.TAAD].[dbo].[dsa_meteorology];

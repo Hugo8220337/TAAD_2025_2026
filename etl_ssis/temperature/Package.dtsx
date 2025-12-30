@@ -1,0 +1,569 @@
+﻿<?xml version="1.0"?>
+<DTS:Executable xmlns:DTS="www.microsoft.com/SqlServer/Dts"
+  DTS:refId="Package"
+  DTS:CreationDate="12/6/2025 5:29:44 PM"
+  DTS:CreationName="Microsoft.Package"
+  DTS:CreatorComputerName="DESKTOP-G01CPCN"
+  DTS:CreatorName="DESKTOP-G01CPCN\User"
+  DTS:DTSID="{DC361C26-9E00-4433-B57D-7DEE84985011}"
+  DTS:ExecutableType="Microsoft.Package"
+  DTS:LastModifiedProductVersion="17.0.1008.3"
+  DTS:LocaleID="2070"
+  DTS:ObjectName="Package"
+  DTS:PackageType="5"
+  DTS:VersionBuild="33"
+  DTS:VersionGUID="{53260A6C-034D-4591-A198-F68B5D31F5BA}">
+  <DTS:Property
+    DTS:Name="PackageFormatVersion">8</DTS:Property>
+  <DTS:ConnectionManagers>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[clean_staging.sql]"
+      DTS:CreationName="FILE"
+      DTS:DTSID="{C436DB92-82B1-45C1-903D-E8439DDD44D6}"
+      DTS:ObjectName="clean_staging.sql">
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectionString="C:\Users\User\GitHub\TAAD_2025_2026\etl_ssis\temperature\apoio\scripts\clean_staging.sql" />
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[create_fact_meteorology.sql]"
+      DTS:CreationName="FILE"
+      DTS:DTSID="{4B5A7A45-94C7-4C56-A332-B6A2C09F3A26}"
+      DTS:ObjectName="create_fact_meteorology.sql">
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectionString="C:\Users\User\GitHub\TAAD_2025_2026\etl_ssis\temperature\apoio\scripts\tables\create_fact_meteorology.sql" />
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[create_meteorology_dimensions.sql]"
+      DTS:CreationName="FILE"
+      DTS:DTSID="{64729691-68A3-4614-9CF5-BD93452DA527}"
+      DTS:ObjectName="create_meteorology_dimensions.sql">
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectionString="C:\Users\User\GitHub\TAAD_2025_2026\etl_ssis\temperature\apoio\scripts\tables\create_meteorology_dimensions.sql" />
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[DESKTOP-G01CPCN.DSA.TAAD]"
+      DTS:CreationName="OLEDB"
+      DTS:DTSID="{628A2FB4-96D3-4818-B7FB-283A52C176AA}"
+      DTS:ObjectName="DESKTOP-G01CPCN.DSA.TAAD">
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectRetryCount="1"
+          DTS:ConnectRetryInterval="5"
+          DTS:ConnectionString="Data Source=DESKTOP-G01CPCN;Initial Catalog=DSA.TAAD;Provider=MSOLEDBSQL.1;Integrated Security=SSPI;Application Name=SSIS-Package-{628A2FB4-96D3-4818-B7FB-283A52C176AA}DESKTOP-G01CPCN.DSA.TAAD;Auto Translate=False;" />
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[DESKTOP-G01CPCN.DW.TAAD]"
+      DTS:CreationName="OLEDB"
+      DTS:DTSID="{8ECFB4BE-E8A7-4D28-AA63-3C4C93647185}"
+      DTS:ObjectName="DESKTOP-G01CPCN.DW.TAAD">
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectRetryCount="1"
+          DTS:ConnectRetryInterval="5"
+          DTS:ConnectionString="Data Source=DESKTOP-G01CPCN;Initial Catalog=DW.TAAD;Provider=MSOLEDBSQL.1;Integrated Security=SSPI;Application Name=SSIS-Package-{8ECFB4BE-E8A7-4D28-AA63-3C4C93647185}DESKTOP-G01CPCN.DW.TAAD;Auto Translate=False;" />
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[populate_dim_day_meteo.sql]"
+      DTS:CreationName="FILE"
+      DTS:DTSID="{5BE7F1CE-6D1B-4DBD-A1BC-C1FB214F1384}"
+      DTS:ObjectName="populate_dim_day_meteo.sql">
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectionString="C:\Users\User\GitHub\TAAD_2025_2026\etl_ssis\temperature\apoio\scripts\populate_dim_day_meteo.sql" />
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[populate_dim_location_meteo.sql]"
+      DTS:CreationName="FILE"
+      DTS:DTSID="{889B6596-16F6-4DC3-B1A5-3277FE98B2D1}"
+      DTS:ObjectName="populate_dim_location_meteo.sql">
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectionString="C:\Users\User\GitHub\TAAD_2025_2026\etl_ssis\temperature\apoio\scripts\populate_dim_location_meteo.sql" />
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[populate_fact_meteorology.sql]"
+      DTS:CreationName="FILE"
+      DTS:DTSID="{F51BFFE5-7183-49DF-B7C6-4F87E002013F}"
+      DTS:ObjectName="populate_fact_meteorology.sql">
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectionString="C:\Users\User\GitHub\TAAD_2025_2026\etl_ssis\temperature\apoio\scripts\populate_fact_meteorology.sql" />
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+  </DTS:ConnectionManagers>
+  <DTS:Variables />
+  <DTS:Executables>
+    <DTS:Executable
+      DTS:refId="Package\Criar Tabelas"
+      DTS:CreationName="STOCK:SEQUENCE"
+      DTS:Description="Sequence Container"
+      DTS:DTSID="{4713de1d-e358-428c-9794-9284c67fb139}"
+      DTS:ExecutableType="STOCK:SEQUENCE"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Criar Tabelas">
+      <DTS:Variables />
+      <DTS:Executables>
+        <DTS:Executable
+          DTS:refId="Package\Criar Tabelas\Criar Dimensoes no DW"
+          DTS:CreationName="Microsoft.ExecuteSQLTask"
+          DTS:Description="Execute SQL Task"
+          DTS:DTSID="{39953071-6fea-404a-8863-0a22eb31670f}"
+          DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+          DTS:LocaleID="-1"
+          DTS:ObjectName="Criar Dimensoes no DW"
+          DTS:ThreadHint="0">
+          <DTS:Variables />
+          <DTS:ObjectData>
+            <SQLTask:SqlTaskData
+              SQLTask:Connection="{8ECFB4BE-E8A7-4D28-AA63-3C4C93647185}"
+              SQLTask:SqlStmtSourceType="FileConnection"
+              SQLTask:SqlStatementSource="create_meteorology_dimensions.sql" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+          </DTS:ObjectData>
+        </DTS:Executable>
+        <DTS:Executable
+          DTS:refId="Package\Criar Tabelas\Criar Tabela de Factos"
+          DTS:CreationName="Microsoft.ExecuteSQLTask"
+          DTS:Description="Execute SQL Task"
+          DTS:DTSID="{ef21e3f4-cc59-4fdb-a1b1-28442ceff788}"
+          DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+          DTS:LocaleID="-1"
+          DTS:ObjectName="Criar Tabela de Factos"
+          DTS:ThreadHint="0">
+          <DTS:Variables />
+          <DTS:ObjectData>
+            <SQLTask:SqlTaskData
+              SQLTask:Connection="{8ECFB4BE-E8A7-4D28-AA63-3C4C93647185}"
+              SQLTask:SqlStmtSourceType="FileConnection"
+              SQLTask:SqlStatementSource="create_fact_meteorology.sql" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+          </DTS:ObjectData>
+        </DTS:Executable>
+      </DTS:Executables>
+      <DTS:PrecedenceConstraints>
+        <DTS:PrecedenceConstraint
+          DTS:refId="Package\Criar Tabelas.PrecedenceConstraints[Constraint]"
+          DTS:CreationName=""
+          DTS:DTSID="{87355fdf-cbc1-4aa4-a471-93bda7190595}"
+          DTS:From="Package\Criar Tabelas\Criar Dimensoes no DW"
+          DTS:LogicalAnd="True"
+          DTS:ObjectName="Constraint"
+          DTS:To="Package\Criar Tabelas\Criar Tabela de Factos" />
+      </DTS:PrecedenceConstraints>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\Get Temperature Data"
+      DTS:CreationName="Microsoft.ExecuteProcess"
+      DTS:Description="Execute Process Task"
+      DTS:DTSID="{a872acf1-fdd7-497c-a79e-b7bf8b0b5081}"
+      DTS:ExecutableType="Microsoft.ExecuteProcess"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Get Temperature Data"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <ExecuteProcessData
+          Executable="C:\Users\User\GitHub\TAAD_2025_2026\etl_ssis\temperature\apoio\raw\MeteorologyExtractor.exe"
+          Arguments="--db_connection &quot;Server=DESKTOP-G01CPCN;Database=DW.TAAD;UID=sa;PWD=risidihu2032003;&quot; --table_name &quot;fact_fire&quot; --output_dir C:\Users\User\GitHub\TAAD_2025_2026\etl_ssis\temperature\apoio\raw\temperature_data"
+          WorkingDirectory="C:\Users\User\GitHub\TAAD_2025_2026\etl_ssis\temperature\apoio\raw" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\Insert Data to Staging Area"
+      DTS:CreationName="Microsoft.ExecuteProcess"
+      DTS:Description="Execute Process Task"
+      DTS:DTSID="{8302c324-4346-4f64-a041-e1bc31d7e819}"
+      DTS:ExecutableType="Microsoft.ExecuteProcess"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Insert Data to Staging Area"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <ExecuteProcessData
+          Executable="C:\Users\User\GitHub\TAAD_2025_2026\etl_ssis\temperature\apoio\raw\SQLServerInserter.exe"
+          Arguments="--sep &quot;,&quot; --table_name dsa_meteorology --data_dir &quot;C:\Users\User\GitHub\TAAD_2025_2026\etl_ssis\temperature\apoio\raw\temperature_data&quot; --sql_dir &quot;C:\Users\User\GitHub\TAAD_2025_2026\etl_ssis\temperature\apoio\raw\sql&quot; --db_connection &quot;Server=DESKTOP-G01CPCN;Database=DSA.TAAD;UID=sa;PWD=risidihu2032003;&quot;"
+          WorkingDirectory="C:\Users\User\GitHub\TAAD_2025_2026\etl_ssis\temperature\apoio\raw" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\Limpar Staging Area"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:Description="Execute SQL Task"
+      DTS:DTSID="{3c8a6f0e-7edc-4bd0-ada6-7a5b6620a451}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Limpar Staging Area"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{628A2FB4-96D3-4818-B7FB-283A52C176AA}"
+          SQLTask:SqlStmtSourceType="FileConnection"
+          SQLTask:SqlStatementSource="clean_staging.sql" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\Processar Dados"
+      DTS:CreationName="STOCK:SEQUENCE"
+      DTS:Description="Sequence Container"
+      DTS:DTSID="{8e5e9e2d-df5a-46e6-89bf-6fcf3bcb8489}"
+      DTS:ExecutableType="STOCK:SEQUENCE"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Processar Dados">
+      <DTS:Variables />
+      <DTS:Executables>
+        <DTS:Executable
+          DTS:refId="Package\Processar Dados\Povoar Dimensao Dia"
+          DTS:CreationName="Microsoft.ExecuteSQLTask"
+          DTS:Description="Execute SQL Task"
+          DTS:DTSID="{ef2a92cf-db32-496b-a846-4e623793ab5f}"
+          DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+          DTS:LocaleID="-1"
+          DTS:ObjectName="Povoar Dimensao Dia"
+          DTS:ThreadHint="0">
+          <DTS:Variables />
+          <DTS:ObjectData>
+            <SQLTask:SqlTaskData
+              SQLTask:Connection="{628A2FB4-96D3-4818-B7FB-283A52C176AA}"
+              SQLTask:SqlStmtSourceType="FileConnection"
+              SQLTask:SqlStatementSource="populate_dim_day_meteo.sql" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+          </DTS:ObjectData>
+        </DTS:Executable>
+        <DTS:Executable
+          DTS:refId="Package\Processar Dados\Povoar Dimensao Localizacao"
+          DTS:CreationName="Microsoft.ExecuteSQLTask"
+          DTS:Description="Execute SQL Task"
+          DTS:DTSID="{322e549f-bc12-43e9-a13b-31c842c8981c}"
+          DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+          DTS:LocaleID="-1"
+          DTS:ObjectName="Povoar Dimensao Localizacao"
+          DTS:ThreadHint="1">
+          <DTS:Variables />
+          <DTS:ObjectData>
+            <SQLTask:SqlTaskData
+              SQLTask:Connection="{628A2FB4-96D3-4818-B7FB-283A52C176AA}"
+              SQLTask:SqlStmtSourceType="FileConnection"
+              SQLTask:SqlStatementSource="populate_dim_location_meteo.sql" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+          </DTS:ObjectData>
+        </DTS:Executable>
+        <DTS:Executable
+          DTS:refId="Package\Processar Dados\Povoar Tabela de Factos"
+          DTS:CreationName="Microsoft.ExecuteSQLTask"
+          DTS:Description="Execute SQL Task"
+          DTS:DTSID="{000ff357-a40f-4a76-a91a-7358fc3999a3}"
+          DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+          DTS:LocaleID="-1"
+          DTS:ObjectName="Povoar Tabela de Factos"
+          DTS:ThreadHint="0">
+          <DTS:Variables />
+          <DTS:ObjectData>
+            <SQLTask:SqlTaskData
+              SQLTask:Connection="{628A2FB4-96D3-4818-B7FB-283A52C176AA}"
+              SQLTask:SqlStmtSourceType="FileConnection"
+              SQLTask:SqlStatementSource="populate_fact_meteorology.sql" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+          </DTS:ObjectData>
+        </DTS:Executable>
+      </DTS:Executables>
+      <DTS:PrecedenceConstraints>
+        <DTS:PrecedenceConstraint
+          DTS:refId="Package\Processar Dados.PrecedenceConstraints[Constraint]"
+          DTS:CreationName=""
+          DTS:DTSID="{F6CC7C35-7501-439F-A1D7-9ABDC41B08CF}"
+          DTS:From="Package\Processar Dados\Povoar Dimensao Dia"
+          DTS:LogicalAnd="True"
+          DTS:ObjectName="Constraint"
+          DTS:To="Package\Processar Dados\Povoar Tabela de Factos" />
+        <DTS:PrecedenceConstraint
+          DTS:refId="Package\Processar Dados.PrecedenceConstraints[Constraint 1]"
+          DTS:CreationName=""
+          DTS:DTSID="{B34F28A4-C3BD-4563-9CD0-C8B45E23064B}"
+          DTS:From="Package\Processar Dados\Povoar Dimensao Localizacao"
+          DTS:LogicalAnd="True"
+          DTS:ObjectName="Constraint 1"
+          DTS:To="Package\Processar Dados\Povoar Tabela de Factos" />
+      </DTS:PrecedenceConstraints>
+    </DTS:Executable>
+  </DTS:Executables>
+  <DTS:PrecedenceConstraints>
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint 2]"
+      DTS:CreationName=""
+      DTS:DTSID="{5ED88B73-4DC8-4C62-A829-DB7CD87566C2}"
+      DTS:From="Package\Get Temperature Data"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint 2"
+      DTS:To="Package\Insert Data to Staging Area" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint 3]"
+      DTS:CreationName=""
+      DTS:DTSID="{714D03D6-E26E-41EF-859F-DAF62FD38C92}"
+      DTS:From="Package\Insert Data to Staging Area"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint 3"
+      DTS:To="Package\Criar Tabelas" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint 4]"
+      DTS:CreationName=""
+      DTS:DTSID="{4E0E32B4-666E-4E18-818C-62BBCF45E907}"
+      DTS:From="Package\Processar Dados"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint 4"
+      DTS:To="Package\Limpar Staging Area" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint 5]"
+      DTS:CreationName=""
+      DTS:DTSID="{C164E19D-7A32-417C-B96B-86C27840F44F}"
+      DTS:From="Package\Criar Tabelas"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint 5"
+      DTS:To="Package\Processar Dados" />
+  </DTS:PrecedenceConstraints>
+  <DTS:DesignTimeProperties><![CDATA[<?xml version="1.0"?>
+<!--This CDATA section contains the layout information of the package. The section includes information such as (x,y) coordinates, width, and height.-->
+<!--If you manually edit this section and make a mistake, you can delete it. -->
+<!--The package will still be able to load normally but the previous layout information will be lost and the designer will automatically re-arrange the elements on the design surface.-->
+<Objects
+  Version="8">
+  <!--Each node below will contain properties that do not affect runtime behavior.-->
+  <Package
+    design-time-name="Package">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="32" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
+        <NodeLayout
+          Size="180,41.6"
+          Id="Package\Criar Tabelas\Criar Dimensoes no DW"
+          TopLeft="11.1777934709074,19.7407393740205" />
+        <NodeLayout
+          Size="180,41.6"
+          Id="Package\Criar Tabelas\Criar Tabela de Factos"
+          TopLeft="13.9555710969141,96.3037025110879" />
+        <EdgeLayout
+          Id="Package\Criar Tabelas.PrecedenceConstraints[Constraint]"
+          TopLeft="102.566682283911,61.3407393740205">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,34.9629631370674"
+              Start="0,0"
+              End="0,27.4629631370674">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,27.4629631370674" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <ContainerLayout
+          HeaderHeight="43"
+          IsExpanded="True"
+          PanelSize="204.8,164.8"
+          Size="204.8,208"
+          Id="Package\Criar Tabelas"
+          TopLeft="301.014308837694,438.111108561246" />
+        <NodeLayout
+          Size="203.2,41.6"
+          Id="Package\Insert Data to Staging Area"
+          TopLeft="299.166653599177,357.199999746878" />
+        <NodeLayout
+          Size="179.2,41.6"
+          Id="Package\Processar Dados\Povoar Dimensao Dia"
+          TopLeft="26.6333231798484,16.9999994756778" />
+        <NodeLayout
+          Size="226.4,41.6"
+          Id="Package\Processar Dados\Povoar Dimensao Localizacao"
+          TopLeft="349.766641305719,20.1333320918349" />
+        <NodeLayout
+          Size="194.4,41.6"
+          Id="Package\Processar Dados\Povoar Tabela de Factos"
+          TopLeft="213.299979647498,121.733332091835" />
+        <EdgeLayout
+          Id="Package\Processar Dados.PrecedenceConstraints[Constraint]"
+          TopLeft="116.233323179848,58.5999994756778">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="163.199989800983,63.1333326161569"
+              Start="0,0"
+              End="163.199989800983,55.6333326161569">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,33.570775083411" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,33.570775083411"
+                    Point2="0,37.570775083411"
+                    Point3="4,37.570775083411" />
+                  <mssgle:LineSegment
+                    End="159.199989800983,37.570775083411" />
+                  <mssgle:CubicBezierSegment
+                    Point1="159.199989800983,37.570775083411"
+                    Point2="163.199989800983,37.570775083411"
+                    Point3="163.199989800983,41.570775083411" />
+                  <mssgle:LineSegment
+                    End="163.199989800983,55.6333326161569" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\Processar Dados.PrecedenceConstraints[Constraint 1]"
+          TopLeft="462.966641305719,61.7333320918349">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="-121.399994991554,59.9999999999998"
+              Start="0,0"
+              End="-121.399994991554,52.4999999999998">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,31.7061224489795" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,31.7061224489795"
+                    Point2="0,35.7061224489795"
+                    Point3="-4,35.7061224489795" />
+                  <mssgle:LineSegment
+                    End="-117.399994991554,35.7061224489795" />
+                  <mssgle:CubicBezierSegment
+                    Point1="-117.399994991554,35.7061224489795"
+                    Point2="-121.399994991554,35.7061224489795"
+                    Point3="-121.399994991554,39.7061224489795" />
+                  <mssgle:LineSegment
+                    End="-121.399994991554,52.4999999999998" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <ContainerLayout
+          HeaderHeight="43"
+          IsExpanded="True"
+          PanelSize="608.8,196.8"
+          Size="608.8,240"
+          Id="Package\Processar Dados"
+          TopLeft="564.999973969092,429.759788308608" />
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 3]"
+          TopLeft="402.090481218435,398.799999746878">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,39.311108814368"
+              Start="0,0"
+              End="0,31.811108814368">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,31.811108814368" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 5]"
+          TopLeft="505.814308837694,545.935448434927">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="59.1856651313979,0"
+              Start="0,0"
+              End="51.6856651313979,0">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="51.6856651313979,0" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <NodeLayout
+          Size="182.4,41.6"
+          Id="Package\Get Temperature Data"
+          TopLeft="312.314801028942,267.637036700211" />
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 2]"
+          TopLeft="402.140727314059,309.237036700211">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,47.962963046667"
+              Start="0,0"
+              End="0,40.462963046667">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,40.462963046667" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <NodeLayout
+          Size="172.8,48"
+          Id="Package\Limpar Staging Area"
+          TopLeft="778.49202423539,323.873018794526" />
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 4]"
+          TopLeft="867.145999102241,429.759788308608">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,-57.8867695140816"
+              Start="0,0"
+              End="0,-50.3867695140816">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,-50.3867695140816" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+      </GraphLayout>
+    </LayoutInfo>
+  </Package>
+</Objects>]]></DTS:DesignTimeProperties>
+</DTS:Executable>

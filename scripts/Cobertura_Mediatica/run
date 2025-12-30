@@ -1,0 +1,1 @@
+etl.exe --file "C:\Path\To\News\output.json" --conn "DRIVER={ODBC Driver 17 for SQL Server};Server=.;Database=TAAD;Trusted_Connection=yes;"

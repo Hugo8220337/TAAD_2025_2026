@@ -1,0 +1,38 @@
+\begin{thebibliography}{1}
+\providecommand{\url}[1]{\texttt{#1}}
+\providecommand{\urlprefix}{URL }
+\providecommand{\doi}[1]{https://doi.org/#1}
+
+\bibitem{almeida2023}
+Almeida, J., Costa, M.: Desafios na integração de dados para a gestão dos
+  incêndios florestais em portugal. Revista de Gestão do Território e
+  Floresta  \textbf{5}(2),  45--62 (2023), discussão da dispersão de dados
+  entre diferentes entidades e formatos heterogéneos
+
+\bibitem{pereira2016}
+Autor, A., Pereira, P.: Incêndios florestais em portugal: dinâmicas, impactos
+  e políticas. In: Incêndios Florestais em Portugal: dinâmicas e políticas,
+  pp. 15--48. Editora Académica, Lisboa (2016), análise dos impactos
+  ambientais, económicos e sociais dos incêndios florestais em Portugal
+  continental
+
+\bibitem{agif2024}
+para a Gestão Integrada~de Fogos~Rurais, A.: Relatório anual sobre incêndios
+  rurais em portugal. Relatório técnico (2024), estatísticas nacionais de
+  ocorrências, área ardida, prejuízos económicos e vítimas
+
+\bibitem{oliveira2018}
+Oliveira, R., Santos, L.: Fragmentação estatística no setor florestal
+  português: implicações para as políticas públicas. Revista de Estudos
+  Rurais e Florestais  \textbf{12}(1),  73--90 (2018), análise crítica da
+  falta de integração de informação e dos seus efeitos na definição de
+  políticas
+
+\bibitem{silva2023}
+Silva, T., Rodrigues, P., Carvalho, F.: Aplicação de business intelligence e
+  data mining à gestão de incêndios florestais em portugal. In: Atas da
+  Conferência Portuguesa de Sistemas de Informação Geográfica e Florestal.
+  pp. 201--214. Coimbra (2023), proposta de sistema de BI para integração de
+  dados históricos, meteorológicos e territoriais
+
+\end{thebibliography}

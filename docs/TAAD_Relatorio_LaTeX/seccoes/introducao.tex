@@ -1,0 +1,23 @@
+\section{Introdução}
+
+\subsection{Contextualização}
+Os incêndios florestais representam, recorrentemente, uma das maiores calamidades naturais em Portugal, com uma incidência superior à média europeia \cite{pereira2016}. Este fenómeno provoca, anualmente, graves prejuízos económicos, danos ambientais irreversíveis e impactos sociais profundos, incluindo a perda de vidas humanas e a destruição de bens \cite{agif2024}.
+
+A complexidade do combate e prevenção dos incêndios exige uma gestão baseada em dados concretos e fiáveis. Contudo, a informação relevante para o estudo destes eventos encontra-se frequentemente dispersa por diversas entidades e em formatos heterogéneos, dificultando uma visão integrada do problema \cite{almeida2023}. A fragmentação dos dados estatísticos do setor florestal é reconhecida como um entrave à definição de políticas públicas eficazes e à alocação eficiente de recursos \cite{oliveira2018}.
+
+Neste contexto, a aplicação de sistemas de \textit{Business Intelligence} (BI) e técnicas de \textit{Data Mining} surge como uma solução promissora. Estas ferramentas permitem consolidar grandes volumes de dados históricos, detetar padrões ocultos e apoiar a tomada de decisão estratégica e operacional \cite{silva2023}. Compreender a relação entre as ocorrências de incêndio, as condições meteorológicas e as características do território é essencial para transitar de uma abordagem reativa para uma gestão preventiva mais robusta.
+
+\subsection{Objetivos do Trabalho}
+O objetivo principal deste projeto é o desenvolvimento de um sistema de suporte à decisão (\textit{Decision Support System}) focado na análise de incêndios florestais em Portugal Continental. O trabalho centra-se na construção de um \textit{Data Warehouse} dimensional que integre múltiplas fontes de dados.
+
+Os objetivos específicos incluem:
+\begin{itemize}
+	\item Integrar dados operacionais do ICNF com registos meteorológicos e índices de vegetação, superando a dispersão de fontes identificada;
+	\item Identificar as zonas geográficas e as épocas do ano com maior risco de ignição;
+	\item Analisar a correlação entre variáveis climáticas (temperatura, humidade, vento) e a severidade das ocorrências (área ardida);
+	\item Avaliar a influência do estado da vegetação (NDVI) e do uso do solo na propagação do fogo;
+	\item Disponibilizar visualizações interativas que auxiliem as entidades competentes na monitorização e planeamento.
+\end{itemize}
+
+\subsection{Estrutura do Relatório}
+O presente relatório encontra-se organizado em cinco secções principais. A Secção \ref{sec:dados_e_metologia} apresenta a caracterização das fontes de dados, a metodologia de modelação dimensional adotada e a análise de perfil (\textit{Data Profiling}). A Secção \ref{sec:Arquitetura_e_implementacao_ETL} descreve a arquitetura técnica e a implementação dos processos de Extração, Transformação e Carga (ETL). A Secção \ref{sec:resultados} apresenta os resultados obtidos através da análise dos indicadores de desempenho nos dashboards desenvolvidos em \textit{Microsoft Power BI}. Por fim, a Secção \ref{sec:concusoes-e-trabalho-futuro} apresenta as conclusões e aponta caminhos para trabalhos futuros.

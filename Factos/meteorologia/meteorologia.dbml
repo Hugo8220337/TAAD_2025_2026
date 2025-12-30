@@ -1,0 +1,80 @@
+//////////////////////////////////////////////////////////
+//  TABELA DE FACTOS
+//////////////////////////////////////////////////////////
+
+// ------------------ FACT: daily meteorology (date x location) ------------------
+
+Table fact_daily_meteorology {
+  id int [pk, increment]
+
+  // Dimensões temporais e espaciais
+  day_id int [ref: > dim_day.day_id]
+  location_id int [ref: > dim_location.location_id]
+
+  // Temperatura
+  temp_max float
+  temp_min float
+  temp_mean float [note: "FALTA: temperatura média"]
+  
+  // Humidade Relativa
+  rh_max float
+  rh_min float
+  rh_mean float [note: "FALTA: humidade relativa média"]
+  
+  // Precipitação
+  precip_sum float
+  rain_sum float
+  precip_hours int
+  
+  // Vento
+  wind_max float
+  gust_max float
+  wind_dir float // tem muitos tipos de direção, será que à mean?
+  wind_speed_mean float [note: "FALTA: velocidade média do vento"]
+  
+  // Radiação e Insolação
+  radiation float
+  sunshine float
+  shortwave_radiation float [note: "FALTA: radiação de onda curta"]
+  
+  // Evapotranspiração
+  et0 float
+  
+  // Pressão atmosférica
+  pressure_msl float [note: "FALTA: pressão ao nível do mar"]
+  
+  // Cobertura de nuvens
+  cloud_cover float [note: "FALTA: cobertura de nuvens (%)"]
+  
+  // Índices derivados (se calculados)
+  is_dry_day boolean [note: "FALTA: dia seco (precip < threshold)"]
+  is_high_wind_day boolean [note: "FALTA: dia de vento forte"]
+  fire_weather_index float [note: "FALTA: índice de risco meteorológico (FWI)"]
+
+}
+
+//////////////////////////////////////////////////////////
+//  DIMENSÕES
+//////////////////////////////////////////////////////////
+
+
+Table dim_day {
+  // id: aammdd (20250211) isto ajuda a não ter de fazer filtro
+  day_id int [pk]
+  day int
+  month int
+  year int
+  week int
+  season varchar
+  weekday varchar
+}
+
+Table dim_location {
+  location_id int [pk, increment, note: "Surrogate key for geographic dimension (auto-increment)"]
+  district varchar
+  municipality varchar
+  parish varchar
+  nuts3 varchar
+
+  Note: 'Geographic dimension — administrative information and coordinates.'
+}

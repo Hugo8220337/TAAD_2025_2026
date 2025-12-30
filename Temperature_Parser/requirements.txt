@@ -1,4 +1,0 @@
-pathlib
-typing
-requests
-pandas

@@ -1,0 +1,8 @@
+{
+    "dbmlERDPreviewer.preferredTheme": "dark",
+    "python.testing.pytestArgs": [
+        "data_proffiling"
+    ],
+    "python.testing.unittestEnabled": false,
+    "python.testing.pytestEnabled": true
+}

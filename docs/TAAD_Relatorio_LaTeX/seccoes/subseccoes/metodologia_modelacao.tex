@@ -1,0 +1,66 @@
+\subsection{Abordagem Metodológica}
+O desenho da arquitetura do sistema seguiu a metodologia de modelação dimensional orientada aos processos de negócio, proposta por Ralph Kimball. Esta abordagem permitiu identificar os processos fundamentais, definindo para cada um o grão (nível de detalhe), as dimensões (contexto analítico) e as medidas (factos numéricos).
+
+Com base nos requisitos levantados, foram modelados quatro processos de negócio distintos, conforme descrito abaixo.
+
+\subsubsection{Ocorrência de Incêndio}
+Este processo centraliza a informação relativa aos eventos de fogo, conforme ilustrado no modelo dimensional da Figura \ref{fig:star_fire}.
+\begin{itemize}
+	\item \textbf{Grão:} Um registo por incêndio, identificado univocamente pelo \texttt{incident\_id}.
+	\item \textbf{Dimensões:} Tempo (início/fim), Localização (Distrito, Concelho, Freguesia), Tipo de Incêndio e possível causa.
+	\item \textbf{Medidas:} Área ardida (ha), duração (horas) e métricas derivadas (ex: taxa de expansão).
+\end{itemize}
+
+\begin{figure}[htbp]
+	\centering
+	\includegraphics[width=0.8\linewidth]{imagens/star_schema_fire}
+	\caption{Modelo em estrela para o processo de Ocorrência de Incêndio}
+	\label{fig:star_fire}
+\end{figure}
+
+\subsubsection{Meteorologia Diária}
+O modelo apresentado na Figura \ref{fig:star_weather} permite a análise das condições ambientais que propiciam ou agravam as ocorrências.
+\begin{itemize}
+	\item \textbf{Grão:} Registo diário das condições meteorológicas num determinado local geográfico afetado.
+	\item \textbf{Dimensões:} Tempo (Dia) e Localização (coordenadas aproximadas ou freguesia).
+	\item \textbf{Medidas:} Temperatura (média e máxima), humidade relativa, velocidade do vento e precipitação acumulada.
+\end{itemize}
+
+\begin{figure}[htbp]
+	\centering
+	\includegraphics[width=0.8\linewidth]{imagens/star_schema_weather}
+	\caption{Modelo em estrela para o processo de Meteorologia}
+	\label{fig:star_weather}
+\end{figure}
+
+\subsubsection{Monitorização de Vegetação}
+Este processo avalia o impacto ecológico e o estado do combustível florestal (Figura \ref{fig:star_vegetation}).
+
+\begin{itemize}
+	\item \textbf{Grão:} Medições de índices de vegetação agregadas por perímetro de incêndio e janela temporal.
+	\item \textbf{Dimensões:} Tempo (Janela pré/pós incêndio), Localização.
+	\item \textbf{Medidas:} NDVI médio pré-incêndio (combustível disponível), NDVI médio pós-incêndio e variação percentual (severidade do dano).
+\end{itemize}
+
+\begin{figure}[htbp]
+	\centering
+	\includegraphics[width=0.8\linewidth]{imagens/star_schema_vegetation}
+	\caption{Modelo em estrela para o processo de Vegetação}
+	\label{fig:star_vegetation}
+\end{figure}
+
+\subsubsection{Cobertura Mediática}
+A Figura \ref{fig:star_news} ilustra a estrutura que suporta a análise da repercussão pública e do impacto mediático dos eventos.
+
+\begin{itemize}
+	\item \textbf{Grão:} Um artigo noticioso individual, identificado univocamente por um id.
+	\item \textbf{Dimensões:} Tempo (Data de publicação), Fonte (Entidade emissora/Jornal) e Sentimento (Classificação da tonalidade da notícia).
+	\item \textbf{Medidas:} \textit{Risk Score} (pontuação de risco associada), Polaridade (valor numérico do sentimento) e volume de notícias (contagem).
+\end{itemize}
+
+\begin{figure}[htbp]
+	\centering
+	\includegraphics[width=0.8\linewidth]{imagens/star_schema_news}
+	\caption{Modelo em estrela para o processo de Cobertura Mediática}
+	\label{fig:star_news}
+\end{figure}

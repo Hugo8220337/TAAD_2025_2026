@@ -1,0 +1,74 @@
+//////////////////////////////////////////////////////////
+//  TABELA DE FACTOS
+//////////////////////////////////////////////////////////
+
+// ------------------ FACT: NDVI / vegetation ------------------
+
+Table fact_vegetation {
+  veg_fact_id int [pk, increment, note: "Surrogate PK for vegetation fact (auto-increment)"]
+  day_id int [ref: > dim_day.day_id, note: "Reference to day dimension (window representative date)"]
+  location_id int [ref: > dim_location.location_id, note: "Reference to geographic aggregation unit"]
+  landcover_id int [ref: > dim_landcover.landcover_id, note: "Landcover class used for aggregation"]
+  species_id int [ref: > dim_species.species_id, note: "Dominant species hint (optional)"]
+
+  time_window varchar [note: "Window label (e.g., pre_30, pre_90, post_90, annual_2023)"]
+  area_m2 float [note: "Area of the aggregated polygon (m²)"]
+
+  ndvi_mean float [note: "Mean NDVI over area and window"]
+  ndvi_median float
+  ndvi_std float
+  ndvi_count int [note: "Number of valid NDVI pixels/observations used"]
+  pct_area_ndvi_gt_thr float [note: "Percent of area with NDVI above configured threshold"]
+  veg_density_mean float [note: "Vegetation density proxy (e.g., % canopy cover)"]
+  fuel_index float [note: "Optional derived flammability proxy"]
+
+  external_fire_id varchar [note: "Optional external fire identifier for visual joins to fire dataset (NO FK)"]
+  processing_date datetime [note: "When this aggregated record was produced"]
+
+  Note: "Vegetation fact table: aggregated vegetation metrics per area × window (one fact table for vegetation analyses)"
+}
+
+//////////////////////////////////////////////////////////
+//  DIMENSÕES
+//////////////////////////////////////////////////////////
+
+
+Table dim_day {
+  // id: aammdd (20250211) isto ajuda a não ter de fazer filtro
+  day_id int [pk]
+  day int
+  month int
+  year int
+  week int
+  season varchar
+  weekday varchar
+}
+
+Table dim_location {
+  location_id int [pk, increment, note: "Surrogate key for geographic dimension (auto-increment)"]
+  district varchar
+  municipality varchar
+  parish varchar // freguesia
+  nuts3 varchar // NUTS3 code (Nomenclatura das Unidades Territoriais para Fins Estatísticos)
+
+  Note: 'Geographic dimension — administrative information and coordinates.'
+}
+
+Table dim_landcover {
+  landcover_id int [pk, increment, note: "Surrogate key for land cover class (auto-increment)"]
+  corine_code int
+  corine_description varchar
+  fuel_category varchar [note: "e.g., Forest / Shrub / Agricultural"]
+  typical_fuel_load float
+  dominant_species_hint varchar
+
+  Note: "Dimension representing land cover classes (CORINE) and fuel categories."
+}
+
+Table dim_species {
+  species_id int [pk, increment, note: "Surrogate key for species (auto-increment)"]
+  species_name varchar
+  flammability_score float
+
+  Note: "Species dimension (link IFN / stand maps to facts)"
+}
