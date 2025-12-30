@@ -3,48 +3,34 @@
 % Responder às "Questões Analíticas" que levantaste na proposta.
 
 Esta secção apresenta os resultados obtidos através da exploração do \textit{Data Warehouse} desenvolvido. A visualização e análise de dados foram realizadas recorrendo à ferramenta \textit{Microsoft Power BI}, permitindo responder às questões analíticas e objetivos definidos no início do projeto.
-A análise divide-se em quatro dimensões principais: caracterização das ocorrências, padrões temporais, influência meteorológica e monitorização da vegetação.
+A análise divide-se em quatro dimensões principais: caracterização das ocorrências, influência meteorológica, monitorização da vegetação e análise da cobertura mediática.
 
 \subsection{Visão Geral e Distribuição Geográfica}
 O \textit{dashboard} principal oferece uma visão macroscópica dos incêndios florestais em Portugal Continental no período de 2020 a 2025.
 
-% [AQUI: INSERIR PRINT DO DASHBOARD GERAL/MAPA]
 \begin{figure}[htbp]
 	\centering
-	% \includegraphics[width=1.0\linewidth]{imagens/dashboard_geral}
+	\includegraphics[width=1.0\linewidth]{imagens/dashboard_geral}
 	\caption{Dashboard de Visão Geral e Distribuição Geográfica}
 	\label{fig:dashboard_geral}
 \end{figure}
 
-A análise geográfica permite confirmar a existência de \textit{hotspots} bem definidos. Tal como identificado na fase de perfil de dados, os distritos de [Distrito A] e [Distrito B] concentram o maior número de ignições. No entanto, quando analisada a área ardida, destaca-se a região de [Região/Distrito], o que sugere que, embora haja menos ocorrências, estas tendem a ser mais severas.
 A ferramenta permite realizar \textit{drill-down} até ao nível da freguesia, facilitando a identificação de áreas prioritárias para ações de prevenção.
 
-\subsection{Análise Temporal e Sazonalidade}
-A compreensão dos padrões temporais é crítica para a alocação de recursos. A Figura \ref{fig:dashboard_temporal} ilustra a distribuição das ocorrências ao longo do tempo.
-
-% [AQUI: INSERIR PRINT DO DASHBOARD TEMPORAL]
-\begin{figure}[htbp]
-	\centering
-	% \includegraphics[width=1.0\linewidth]{imagens/dashboard_temporal}
-	\caption{Análise da Sazonalidade Mensal e Horária}
-	\label{fig:dashboard_temporal}
-\end{figure}
-
-Observa-se uma sazonalidade marcada, com o pico de ocorrências a verificar-se nos meses de [Mês X] e [Mês Y], coincidindo com o período de verão ("época de fogos").
-Adicionalmente, a análise horária revela que a maioria das ignições ocorre entre as [Hora X] e as [Hora Y], período em que as temperaturas são tipicamente mais elevadas e a humidade relativa mais baixa. Este padrão reforça a correlação direta entre as condições atmosféricas diurnas e o risco de ignição.
+Observa-se que a maioria dos incêndios acontecem na zona norte de Portugal, tendo como principal motivo negligência.
+Adicionalmente, a análise horária revela que a maioria das ignições ocorre durante a tarde, período onde as temperaturas são tipicamente mais elevadas e a humidade relativa mais baixa. Este padrão reforça a correlação direta entre as condições atmosféricas diurnas e o risco de ignição.
 
 \subsection{Impacto das Condições Meteorológicas}
 O cruzamento dos dados operacionais com a informação meteorológica do \textit{Open-Meteo} permitiu validar a influência do clima na severidade dos incêndios.
 
-% [AQUI: INSERIR PRINT DO DASHBOARD METEOROLOGIA]
 \begin{figure}[htbp]
 	\centering
-	% \includegraphics[width=1.0\linewidth]{imagens/dashboard_meteo}
+	\includegraphics[width=1.0\linewidth]{imagens/dashboard_meteo}
 	\caption{Relação entre Variáveis Meteorológicas e Área Ardida}
 	\label{fig:dashboard_meteo}
 \end{figure}
 
-Os dados evidenciam que os grandes incêndios (área ardida superior a [X] hectares) ocorrem predominantemente em dias com temperatura média superior a [X]ºC e humidade relativa inferior a [Y]\%. A velocidade do vento mostra-se também um fator determinante na taxa de expansão das chamas.
+Os dados evidenciam que acorrem mais incêndios entre os meses com temperaturas mais altas (junho e julho). A velocidade do vento mostra-se também um fator determinante na taxa de expansão das chamas.
 O sistema permite filtrar os eventos por faixas de temperatura, confirmando que ondas de calor extremas estão associadas a um aumento exponencial da área devastada.
 
 \subsection{Monitorização da Vegetação (NDVI)}
@@ -62,5 +48,12 @@ A análise comparativa dos valores de NDVI revela uma quebra abrupta nos períme
 Verifica-se também que áreas com valores de NDVI pré-incêndio mais elevados (indicando vegetação densa e possivelmente seca no verão) tendem a registar incêndios de maior duração e intensidade, corroborando a importância da gestão de combustíveis na prevenção.
 
 \subsection{Análise da Cobertura Mediática}
-Por fim, a análise exploratória das notícias recolhidas via Google News permite visualizar o volume de atenção mediática dada aos incêndios.
-Embora a análise de sentimento automatizada seja um trabalho futuro, a contagem de notícias por distrito mostra uma forte correlação com a área ardida total, indicando que a severidade do evento é o principal motor do interesse mediático, sobrepondo-se à frequência de pequenas ignições.
+Por fim, a análise da cobertura mediática (Figura \ref{fig:dashboard_cobertura_mediatica}) permite monitorizar a atenção pública sobre os incêndios. O painel recorre a um gráfico circular para categorizar as notícias e a um gráfico de barras para correlacionar o volume de publicações com a frequência mensal de ocorrências.
+Complementarmente, a origem e o conteúdo da informação são explorados através de um \textit{treemap}, que destaca as fontes noticiosas mais ativas, e de uma nuvem de palavras, que evidencia os tópicos e localidades predominantes no discurso mediático.
+
+\begin{figure}[htbp]
+	\centering
+	\includegraphics[width=1.0\linewidth]{imagens/dashboard_cobertura_mediatica}
+	\caption{Painel de Análise da Cobertura Mediática}
+	\label{fig:dashboard_cobertura_mediatica}
+\end{figure}
